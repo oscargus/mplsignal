@@ -18,7 +18,7 @@ class PiLocator(Locator):
         Return the values of the located ticks given **vmin** and **vmax**.
         """
         # Use MaxNLocator and scale by pi
-        return math.pi*(self._locator.tick_values(vmin/math.pi, vmax/math.pi))
+        return math.pi * (self._locator.tick_values(vmin / math.pi, vmax / math.pi))
 
     def __call__(self):
         """Return the locations of the ticks."""
@@ -32,6 +32,7 @@ class PiFormatter(Formatter):
     """
     Create a string based on a tick value and location.
     """
+
     # some classes want to see all the locs to help format
     # individual ones
     locs = []

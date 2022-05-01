@@ -5,15 +5,18 @@
 # Distributed under the terms of the Modified BSD License.
 
 __all__ = [
-    "freqz_tf", "freqz_zpk",
+    "freqz_tf",
+    "freqz_zpk",
 ]
-import numpy as np
-from scipy import signal
+
+from .tools import import_module
+
+_scipy_signal = import_module('scipy.signal')
 
 
 def freqz_tf(num, den, w):
     """
-
+    Evaluate transfer function to determine frequency response.
 
     Parameters
     ----------
@@ -26,15 +29,21 @@ def freqz_tf(num, den, w):
 
     Returns
     -------
-    ndarray with complex frequency response.
+    w : ndarray
+        The angular frequencies at which *h* was computed.
+    h : ndarray
+        The frequency response.
 
     """
-    return signal.freqz(num, den, w)
+    if _scipy_signal:
+        return _scipy_signal.freqz(num, den, worN=w)
+    else:
+        raise ImportError("SciPy not installed.")
 
 
 def freqz_zpk(zeros, poles, gain, w):
     """
-
+    Evaluate transfer function to determine frequency response.
 
     Parameters
     ----------
@@ -49,6 +58,13 @@ def freqz_zpk(zeros, poles, gain, w):
 
     Returns
     -------
-    ndarray with complex frequency response.
+    w : ndarray
+        The angular frequencies at which *h* was computed.
+    h : ndarray
+        The frequency response.
 
     """
+    if _scipy_signal:
+        return _scipy_signal.freqz_zpk(zeros, poles, gain, worN=w)
+    else:
+        raise ImportError("SciPy not installed.")

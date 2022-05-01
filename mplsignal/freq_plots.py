@@ -5,7 +5,9 @@
 # Distributed under the terms of the Modified BSD License.
 
 __all__ = [
-    "freqz", "freqz_tf", "freqz_fir",
+    "freqz",
+    "freqz_tf",
+    "freqz_fir",
 ]
 import numpy as np
 import matplotlib.pyplot as plt
@@ -13,9 +15,19 @@ from mplsignal import _utils
 from mplsignal.ticker import PiFormatter, PiLocator
 
 
-def freqz(num=None, den=None, zeros=None, poles=None, gain=1,
-          w=None, freq_units='rad', phase_units='rad', ax=None, style=None,
-          **kwargs):
+def freqz(
+    num=None,
+    den=None,
+    zeros=None,
+    poles=None,
+    gain=1,
+    w=None,
+    freq_units='rad',
+    phase_units='rad',
+    ax=None,
+    style=None,
+    **kwargs,
+):
     r"""
     Plot the frequency response of a discrete-time system.
 
@@ -53,7 +65,6 @@ def freqz(num=None, den=None, zeros=None, poles=None, gain=1,
     """
     # if Axes not provided
 
-
     if num is None and zeros is None:
         raise ValueError("At least one of 'num' and 'zeros' must be provided.")
 
@@ -81,7 +92,11 @@ def freqz(num=None, den=None, zeros=None, poles=None, gain=1,
     if zeros is not None and poles is not None and gain is not None:
         _, h = _utils.freqz_zpk(zeros, poles, gain, w)
 
-    magnitude = 20*np.log10(np.abs(h))
+    _plot_h(w, h, ax=ax, **kwargs)
+
+
+def _plot_h(w, h, ax=None, style='stacked', **kwargs):
+    magnitude = 20 * np.log10(np.abs(h))
     if style != 'magnitude':
         phase = np.unwrap(np.angle(h))
     minx = w.min()
@@ -97,36 +112,63 @@ def freqz(num=None, den=None, zeros=None, poles=None, gain=1,
                     fig, ax = plt.subplots(2, 1)
                 else:
                     ax = plt.gca()
-                    ax2 = ax.twinx()
+                    _ = ax.twinx()
                     ax = fig.axes
             else:
                 ax = fig.axes
         else:
             fig = ax[0].figure
         if len(ax) != 2:
-            raise ValueError("Must have exactly two axes for 'stacked'.")
-        _mag_plot_z(ax[0], w, magnitude, xmin=minx, xmax=maxx, ylabel=maglabel,
-                    **kwargs)
+            raise ValueError("Must have exactly two axes for 'stacked' or" " 'twin'.")
+        _mag_plot_z(
+            ax[0], w, magnitude, xmin=minx, xmax=maxx, ylabel=maglabel, **kwargs
+        )
 
-        _phase_plot_z(ax[1], w, phase, xmin=minx, xmax=maxx, ylabel=phaselabel,
-                      xlabel=freqlabel,  **kwargs)
+        _phase_plot_z(
+            ax[1],
+            w,
+            phase,
+            xmin=minx,
+            xmax=maxx,
+            ylabel=phaselabel,
+            xlabel=freqlabel,
+            **kwargs,
+        )
         return fig
     if style == 'magnitude':
         if ax is None:
             ax = plt.gca()
-        _mag_plot_z(ax, w, magnitude, xmin=minx, xmax=maxx, ylabel=maglabel,
-                    **kwargs)
+        _mag_plot_z(ax, w, magnitude, xmin=minx, xmax=maxx, ylabel=maglabel, **kwargs)
         return ax.figure
     if style == 'phase':
         if ax is None:
             ax = plt.gca()
-        _phase_plot_z(ax[1], w, phase, xmin=minx, xmax=maxx, ylabel=phaselabel,
-                      xlabel=freqlabel,  **kwargs)
+        _phase_plot_z(
+            ax,
+            w,
+            phase,
+            xmin=minx,
+            xmax=maxx,
+            ylabel=phaselabel,
+            xlabel=freqlabel,
+            **kwargs,
+        )
         return ax.figure
+    raise ValueError(f"Unknown style: {style!r}")
 
 
-def _mag_plot_z(ax, w, magnitude, xmin=None, xmax=None, xlabel=None, ylabel=None,
-                 xlocator=None, ylocator=None, **kwargs):
+def _mag_plot_z(
+    ax,
+    w,
+    magnitude,
+    xmin=None,
+    xmax=None,
+    xlabel=None,
+    ylabel=None,
+    xlocator=None,
+    ylocator=None,
+    **kwargs,
+):
     "Plot magnitude response"
     ax.plot(w, magnitude, **kwargs)
 
@@ -151,8 +193,18 @@ def _mag_plot_z(ax, w, magnitude, xmin=None, xmax=None, xlabel=None, ylabel=None
     ax.set_xlim(xmin, xmax)
 
 
-def _phase_plot_z(ax, w, phase, xmin=None, xmax=None, xlabel=None, ylabel=None,
-                 xlocator=None, ylocator=None,  **kwargs):
+def _phase_plot_z(
+    ax,
+    w,
+    phase,
+    xmin=None,
+    xmax=None,
+    xlabel=None,
+    ylabel=None,
+    xlocator=None,
+    ylocator=None,
+    **kwargs,
+):
     "Plot phase response"
     ax.plot(w, phase, **kwargs)
 
@@ -184,7 +236,6 @@ def freqz_tf(num, den, **kwargs):
     Plot the frequency response of a discrete-time system represented using a
     transfer function.
 
-
     Parameters
     ----------
     num : array-like
@@ -205,7 +256,6 @@ def freqz_tf(num, den, **kwargs):
 def freqz_fir(num, **kwargs):
     """
     Plot the frequency response of a discrete-time FIR filter.
-
 
     Parameters
     ----------
