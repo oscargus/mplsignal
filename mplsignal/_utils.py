@@ -9,9 +9,9 @@ __all__ = [
     "freqz_zpk",
 ]
 
-from .tools import import_module
+from ._tools import import_module
 
-_scipy_signal = import_module('scipy.signal')
+signal = import_module('scipy,signal')
 
 
 def freqz_tf(num, den, w):
@@ -35,8 +35,8 @@ def freqz_tf(num, den, w):
         The frequency response.
 
     """
-    if _scipy_signal:
-        return _scipy_signal.freqz(num, den, worN=w)
+    if signal:
+        return signal.freqz(num, den, worN=w)
     else:
         raise ImportError("SciPy not installed.")
 
@@ -64,7 +64,7 @@ def freqz_zpk(zeros, poles, gain, w):
         The frequency response.
 
     """
-    if _scipy_signal:
-        return _scipy_signal.freqz_zpk(zeros, poles, gain, worN=w)
+    if signal:
+        return signal.freqz_zpk(zeros, poles, gain, worN=w)
     else:
         raise ImportError("SciPy not installed.")
