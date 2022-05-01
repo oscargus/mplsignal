@@ -1,4 +1,4 @@
-name: Test
+name: Tests
 
 on:
   push:
@@ -58,7 +58,7 @@ jobs:
 
 
   test-scipy:
-    name: Python - scipy
+    name: SciPy - Python ${{ matrix.python-version }} - mpl ${{ matrix.mpl-version }}
     runs-on: ubuntu-latest
     strategy:
       matrix:

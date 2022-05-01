@@ -92,11 +92,12 @@ def freqz(
     if zeros is not None and poles is not None and gain is not None:
         _, h = _utils.freqz_zpk(zeros, poles, gain, w)
 
-    _plot_h(w, h, ax=ax, **kwargs)
+    return _plot_h(w, h, ax=ax, style=style, **kwargs)
 
 
 def _plot_h(w, h, ax=None, style='stacked', **kwargs):
-    magnitude = 20 * np.log10(np.abs(h))
+    if style != 'phase':
+        magnitude = 20 * np.log10(np.abs(h))
     if style != 'magnitude':
         phase = np.unwrap(np.angle(h))
     minx = w.min()
@@ -138,7 +139,16 @@ def _plot_h(w, h, ax=None, style='stacked', **kwargs):
     if style == 'magnitude':
         if ax is None:
             ax = plt.gca()
-        _mag_plot_z(ax, w, magnitude, xmin=minx, xmax=maxx, ylabel=maglabel, **kwargs)
+        _mag_plot_z(
+            ax,
+            w,
+            magnitude,
+            xmin=minx,
+            xmax=maxx,
+            ylabel=maglabel,
+            xlabel=freqlabel,
+            **kwargs,
+        )
         return ax.figure
     if style == 'phase':
         if ax is None:
@@ -250,7 +260,7 @@ def freqz_tf(num, den, **kwargs):
     None.
 
     """
-    freqz(num=num, den=den, **kwargs)
+    return freqz(num=num, den=den, **kwargs)
 
 
 def freqz_fir(num, **kwargs):
@@ -269,4 +279,4 @@ def freqz_fir(num, **kwargs):
     None.
 
     """
-    freqz(num=num, den=np.array([1.0]), **kwargs)
+    return freqz(num=num, den=np.array([1.0]), **kwargs)

@@ -1,3 +1,5 @@
+[![Build status](https://github.com/oscargus/mplsignal/workflows/Tests/badge.svg)](https://github.com/oscargus/mplsignal/actions?query=workflow%3ATests)
+
 # mplsignal
 
 Matplotlib extension for signal processing

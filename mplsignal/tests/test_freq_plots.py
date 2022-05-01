@@ -6,12 +6,37 @@
 
 
 import pytest
+import matplotlib.pyplot as plt
 from mplsignal import freqz
 
 
-@pytest.mark.mpl_image_compare(filename="test_example.png")
 def test_freqz():
+    plt.figure()
     num = [1, 2, 1]
     den = [1, -1.5, 0.5]
     fig = freqz(num=num, den=den)
-    return fig
+    assert len(fig.axes) == 2
+
+
+def test_freqz_twin():
+    plt.figure()
+    num = [1, 2, 1]
+    den = [1, -1.5, 0.5]
+    fig = freqz(num=num, den=den, style='twin')
+    assert len(fig.axes) == 2
+
+
+def test_freqz_magnitude():
+    plt.figure()
+    num = [1, 2, 1]
+    den = [1, -1.5, 0.5]
+    fig = freqz(num=num, den=den, style='magnitude')
+    assert len(fig.axes) == 1
+
+
+def test_freqz_phase():
+    plt.figure()
+    num = [1, 2, 1]
+    den = [1, -1.5, 0.5]
+    fig = freqz(num=num, den=den, style='phase')
+    assert len(fig.axes) == 1
