@@ -14,7 +14,8 @@ from mplsignal.ticker import PiFormatter, PiLocator
 
 
 def freqz(num=None, den=None, zeros=None, poles=None, gain=1,
-          w=None, freq_units='rad', phase_units='rad', ax=None, **kwargs):
+          w=None, freq_units='rad', phase_units='rad', ax=None, style=None,
+          **kwargs):
     r"""
     Plot the frequency response of a discrete-time system.
 
@@ -40,6 +41,8 @@ def freqz(num=None, den=None, zeros=None, poles=None, gain=1,
         Units for frequency axes.
     ax : `Axes`, optional
         Axes to plot in.
+    style : {'stacked', 'twin', 'magnitude', 'phase'}
+        Plotting style.
     **kwargs
         Additional arguments.
 
@@ -49,8 +52,7 @@ def freqz(num=None, den=None, zeros=None, poles=None, gain=1,
 
     """
     # if Axes not provided
-    if ax is None:
-        ax = plt.gca()
+
 
     if num is None and zeros is None:
         raise ValueError("At least one of 'num' and 'zeros' must be provided.")
@@ -62,10 +64,13 @@ def freqz(num=None, den=None, zeros=None, poles=None, gain=1,
         raise ValueError("At least one of 'den' and 'poles' must be provided.")
 
     if den is not None and poles is not None:
-        raise ValueError("At most one of 'deb' and 'poles' must be provided.")
+        raise ValueError("At most one of 'den' and 'poles' must be provided.")
 
     if w is None:
         w = 512
+
+    if style is None:
+        style = 'stacked'
 
     if isinstance(w, int):
         w = np.linspace(0, np.pi, w)
@@ -77,24 +82,53 @@ def freqz(num=None, den=None, zeros=None, poles=None, gain=1,
         _, h = _utils.freqz_zpk(zeros, poles, gain, w)
 
     magnitude = 20*np.log10(np.abs(h))
-    phase = np.unwrap(np.angle(h))
-    fig, ax = plt.subplots(2, 1)
+    if style != 'magnitude':
+        phase = np.unwrap(np.angle(h))
     minx = w.min()
     maxx = w.max()
     maglabel = kwargs.get('maglabel', 'Magnitude, dB')
-    _mag_plot_z(ax[0], w, magnitude, xmin=minx, xmax=maxx, ylabel=maglabel)
-
     phaselabel = kwargs.get('phaselabel', 'Phase, rad')
     freqlabel = kwargs.get('freqlabel', 'Frequency, rad')
-    _phase_plot_z(ax[1], w, phase, xmin=minx, xmax=maxx, ylabel=phaselabel,
-                  xlabel=freqlabel)
-    return fig
+    if style in ('stacked', 'twin'):
+        if ax is None:
+            fig = plt.gcf()
+            if len(fig.axes) == 0:
+                if style == 'stacked':
+                    fig, ax = plt.subplots(2, 1)
+                else:
+                    ax = plt.gca()
+                    ax2 = ax.twinx()
+                    ax = fig.axes
+            else:
+                ax = fig.axes
+        else:
+            fig = ax[0].figure
+        if len(ax) != 2:
+            raise ValueError("Must have exactly two axes for 'stacked'.")
+        _mag_plot_z(ax[0], w, magnitude, xmin=minx, xmax=maxx, ylabel=maglabel,
+                    **kwargs)
+
+        _phase_plot_z(ax[1], w, phase, xmin=minx, xmax=maxx, ylabel=phaselabel,
+                      xlabel=freqlabel,  **kwargs)
+        return fig
+    if style == 'magnitude':
+        if ax is None:
+            ax = plt.gca()
+        _mag_plot_z(ax, w, magnitude, xmin=minx, xmax=maxx, ylabel=maglabel,
+                    **kwargs)
+        return ax.figure
+    if style == 'phase':
+        if ax is None:
+            ax = plt.gca()
+        _phase_plot_z(ax[1], w, phase, xmin=minx, xmax=maxx, ylabel=phaselabel,
+                      xlabel=freqlabel,  **kwargs)
+        return ax.figure
 
 
 def _mag_plot_z(ax, w, magnitude, xmin=None, xmax=None, xlabel=None, ylabel=None,
-                 xlocator=None, ylocator=None):
+                 xlocator=None, ylocator=None, **kwargs):
     "Plot magnitude response"
-    ax.plot(w, magnitude)
+    ax.plot(w, magnitude, **kwargs)
 
     if xlabel is not None:
         ax.set_xlabel(xlabel)
@@ -118,9 +152,9 @@ def _mag_plot_z(ax, w, magnitude, xmin=None, xmax=None, xlabel=None, ylabel=None
 
 
 def _phase_plot_z(ax, w, phase, xmin=None, xmax=None, xlabel=None, ylabel=None,
-                 xlocator=None, ylocator=None):
+                 xlocator=None, ylocator=None,  **kwargs):
     "Plot phase response"
-    ax.plot(w, phase)
+    ax.plot(w, phase, **kwargs)
 
     if xlabel is not None:
         ax.set_xlabel(xlabel)
