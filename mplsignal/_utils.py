@@ -9,9 +9,10 @@ __all__ = [
     "freqz_zpk",
 ]
 
-from ._tools import import_module
-
-signal = import_module('scipy,signal')
+try:
+    import scipy.signal as signal
+except ImportError:
+    signal = None
 
 
 def freqz_tf(num, den, w):

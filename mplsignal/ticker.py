@@ -37,6 +37,10 @@ class PiFormatter(Formatter):
     # individual ones
     locs = []
 
+    def __init__(self, digits=3, **kwargs):
+        self._digits = digits
+        super().__init__(**kwargs)
+
     def __call__(self, x, pos=None):
         """
         Return the format for tick value *x* at position pos.
@@ -49,5 +53,5 @@ class PiFormatter(Formatter):
             return r"$\pi$"
         if abs(pimult + 1.0) < 1e-9:
             return r"$-\pi$"
-        pimult = round(pimult, 3)
+        pimult = round(pimult, self._digits)
         return fr"${pimult}\pi$"
