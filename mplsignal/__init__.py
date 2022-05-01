@@ -9,3 +9,4 @@
 from ._version import __version__
 
 from .example import example_function
+from .freq_plots import freqz, freqz_tf, freqz_fir
