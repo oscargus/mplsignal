@@ -40,3 +40,25 @@ def test_freqz_phase():
     den = [1, -1.5, 0.5]
     fig = freqz(num=num, den=den, style='phase')
     assert len(fig.axes) == 1
+
+
+@pytest.mark.parametrize(
+    'kwargs,error,msg',
+    [
+        ({'den': [1, 1]}, ValueError, "At least one of 'num'"),
+        ({'num': [1, 1]}, ValueError, "At least one of 'den'"),
+        ({'poles': [1, 1]}, ValueError, "At least one of 'num'"),
+        ({'zeros': [1, 1]}, ValueError, "At least one of 'den'"),
+        (
+            {'den': [1, 1], 'num': [1, 1], 'poles': [-0.5, 0.5]},
+            ValueError,
+            "At most one of 'den'",
+        ),
+        ({'num': [1, 1], 'zeros': [-0.5, 0.5]}, ValueError, "At most one of 'num'"),
+        ({'den': [1, 1], 'num': [1, 1], 'style': "foo"}, ValueError, "Unknown style"),
+    ],
+)
+def test_freqz_errors(kwargs, error, msg):
+    plt.figure()
+    with pytest.raises(error, match=msg):
+        freqz(**kwargs)

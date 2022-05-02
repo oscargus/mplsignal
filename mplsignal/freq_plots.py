@@ -120,7 +120,7 @@ def _plot_h(w, h, ax=None, style='stacked', **kwargs):
         else:
             fig = ax[0].figure
         if len(ax) != 2:
-            raise ValueError("Must have exactly two axes for 'stacked' or" " 'twin'.")
+            raise ValueError("Must have exactly two axes for 'stacked' or 'twin'.")
         _mag_plot_z(
             ax[0], w, magnitude, xmin=minx, xmax=maxx, ylabel=maglabel, **kwargs
         )

@@ -45,7 +45,8 @@ def test_pilocator_adjust_locations():
 def test_piformatter():
     formatter = PiFormatter()
     assert formatter(math.pi) == r'$\pi$'
-    assert formatter(2 * math.pi) == r'$2.0\pi$'
+    assert formatter(-math.pi) == r'$-\pi$'
+    assert formatter(2 * math.pi) == r'$2\pi$'
     assert formatter(0.2 * math.pi) == r'$0.2\pi$'
     assert formatter(0.25 * math.pi) == r'$0.25\pi$'
     assert formatter(0) == r'$0$'
@@ -56,7 +57,8 @@ def test_piformatter():
 def test_piformatter_adjust_digits():
     formatter = PiFormatter(digits=4)
     assert formatter(math.pi) == r'$\pi$'
-    assert formatter(2 * math.pi) == r'$2.0\pi$'
+    assert formatter(-math.pi) == r'$-\pi$'
+    assert formatter(2 * math.pi) == r'$2\pi$'
     assert formatter(0.2 * math.pi) == r'$0.2\pi$'
     assert formatter(0.25 * math.pi) == r'$0.25\pi$'
     assert formatter(0) == r'$0$'
@@ -65,7 +67,8 @@ def test_piformatter_adjust_digits():
 
     formatter = PiFormatter(digits=2)
     assert formatter(math.pi) == r'$\pi$'
-    assert formatter(2 * math.pi) == r'$2.0\pi$'
+    assert formatter(-math.pi) == r'$-\pi$'
+    assert formatter(2 * math.pi) == r'$2\pi$'
     assert formatter(0.2 * math.pi) == r'$0.2\pi$'
     assert formatter(0.25 * math.pi) == r'$0.25\pi$'
     assert formatter(0) == r'$0$'
