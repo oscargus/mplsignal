@@ -13,6 +13,7 @@ try:
     import scipy.signal as signal
 except ImportError:
     signal = None
+import numpy as np
 
 
 def freqz_tf(num, den, w):
@@ -37,9 +38,13 @@ def freqz_tf(num, den, w):
 
     """
     if signal:
-        return signal.freqz(num, den, worN=w)
+        return signal.freqz(num, den, worN=w)[1]
     else:
-        raise ImportError("SciPy not installed.")
+        wexp = np.exp(-1j * w)
+        h = np.polynomial.polynomial.polyval(
+            wexp, num, tensor=False
+        ) / np.polynomial.polynomial.polyval(wexp, den, tensor=False)
+        return h
 
 
 def freqz_zpk(zeros, poles, gain, w):
@@ -66,6 +71,10 @@ def freqz_zpk(zeros, poles, gain, w):
 
     """
     if signal:
-        return signal.freqz_zpk(zeros, poles, gain, worN=w)
+        return signal.freqz_zpk(zeros, poles, gain, worN=w)[1]
     else:
-        raise ImportError("SciPy not installed.")
+        wexp = np.exp(1j * w)
+        h = np.polynomial.polynomial.polyvalfromroots(
+            wexp, zeros
+        ) / np.polynomial.polynomial.polyvalfromroots(wexp, poles)
+        return h

@@ -87,10 +87,10 @@ def freqz(
         w = np.linspace(0, np.pi, w)
 
     if num is not None and den is not None:
-        _, h = _utils.freqz_tf(num, den, w)
+        h = _utils.freqz_tf(num, den, w)
 
     if zeros is not None and poles is not None and gain is not None:
-        _, h = _utils.freqz_zpk(zeros, poles, gain, w)
+        h = _utils.freqz_zpk(zeros, poles, gain, w)
 
     return _plot_h(w, h, ax=ax, style=style, **kwargs)
 
