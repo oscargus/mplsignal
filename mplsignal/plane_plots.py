@@ -26,6 +26,7 @@ def zplane(
     zeromarker='o',
     polemarker='x',
     unitcircle=True,
+    markercolor=None,
     **kwargs,
 ):
     r"""
@@ -64,6 +65,8 @@ def zplane(
         ax = plt.gca()
     ax.axvline(color=linecolor, linewidth=linewidth)
     ax.axhline(color=linecolor, linewidth=linewidth)
+    if markercolor is None:
+        markercolor = ax._get_lines.get_next_color()
     if unitcircle:
         ax.add_patch(
             plt.Circle(
@@ -71,7 +74,13 @@ def zplane(
             )
         )
     texts = _plot_plane(
-        zeros, poles, zeromarker=zeromarker, polemarker=polemarker, ax=ax, **kwargs
+        zeros,
+        poles,
+        zeromarker=zeromarker,
+        polemarker=polemarker,
+        markercolor=markercolor,
+        ax=ax,
+        **kwargs,
     )
     for _ in range(adjust):
         adjustText.adjust_text(texts)
@@ -113,18 +122,18 @@ def _get_positions(items):
     return xpos, ypos, texts_x, texts_y, texts
 
 
-def _plot_plane(zeros, poles, zeromarker, polemarker, ax=None, **kwargs):
+def _plot_plane(zeros, poles, zeromarker, polemarker, markercolor, ax=None, **kwargs):
     ret = []
     if zeros is not None:
         zeros_d = _get_multiples(zeros)
         xpos, ypos, texts_x, texts_y, texts = _get_positions(zeros_d)
-        ax.plot(xpos, ypos, marker=zeromarker, ls='')
+        ax.plot(xpos, ypos, marker=zeromarker, ls='', color=markercolor, **kwargs)
         ret += [ax.text(x, y, text) for x, y, text in zip(texts_x, texts_y, texts)]
 
     if poles is not None:
         poles_d = _get_multiples(poles)
         xpos, ypos, texts_x, texts_y, texts = _get_positions(poles_d)
-        ax.plot(xpos, ypos, marker=polemarker, ls='')
+        ax.plot(xpos, ypos, marker=polemarker, ls='', color=markercolor, **kwargs)
         ret += [ax.text(x, y, text) for x, y, text in zip(texts_x, texts_y, texts)]
 
     return ret
