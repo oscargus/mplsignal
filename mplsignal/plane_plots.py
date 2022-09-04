@@ -72,7 +72,11 @@ def zplane(
     if unitcircle:
         ax.add_patch(
             plt.Circle(
-                (0, 0), radius=1, fill=False, edgecolor=spinecolor, linewidth=spinelinewidth
+                (0, 0),
+                radius=1,
+                fill=False,
+                edgecolor=spinecolor,
+                linewidth=spinelinewidth,
             )
         )
     texts = _plot_plane(
