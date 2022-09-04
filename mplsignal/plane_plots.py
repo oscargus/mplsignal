@@ -21,8 +21,8 @@ def zplane(
     poles=None,
     ax=None,
     adjust=1,
-    linewidth=0.2,
-    linecolor='black',
+    spinelinewidth=0.2,
+    spinecolor='black',
     zeromarker='o',
     polemarker='x',
     unitcircle=True,
@@ -40,18 +40,20 @@ def zplane(
         Poles of transfer function.
     ax : `Axes`, optional
         Axes to plot in.
-    adjust: int, optional. Default: 1
+    adjust : int, optional. Default: 1
         Number of times to execute text adjustment. Set to 0 to disable.
-    linewidth : float. Default: 0.2
-        Line width of axes.
-    linecolor : color
-        Line color of axes.
+    spinelinewidth : float. Default: 0.2
+        Line width of spines.
+    spinecolor : color. Default: 'black'
+        Line color of spines.
     unitcircle : bool. Default: True
         If a unit circle is drawn.
-    zeromarker : marker
-        Marker to use for zeros. Default: 'o'
-    polemarker : marker
+    zeromarker : marker. Default: 'o'
+        Marker to use for zeros.
+    polemarker : marker. Default: 'x'
         Marker to use for poles. Default: 'x'
+    markercolor : color
+        Color to use for pole and zero markers. Default: None
     **kwargs
         Additional arguments.
 
@@ -63,14 +65,14 @@ def zplane(
     # if Axes not provided
     if ax is None:
         ax = plt.gca()
-    ax.axvline(color=linecolor, linewidth=linewidth)
-    ax.axhline(color=linecolor, linewidth=linewidth)
+    ax.axvline(color=spinecolor, linewidth=spinelinewidth)
+    ax.axhline(color=spinecolor, linewidth=spinelinewidth)
     if markercolor is None:
         markercolor = ax._get_lines.get_next_color()
     if unitcircle:
         ax.add_patch(
             plt.Circle(
-                (0, 0), radius=1, fill=False, edgecolor=linecolor, linewidth=linewidth
+                (0, 0), radius=1, fill=False, edgecolor=spinecolor, linewidth=spinelinewidth
             )
         )
     texts = _plot_plane(

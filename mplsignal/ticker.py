@@ -90,8 +90,6 @@ class PiFormatter(FactorFormatter):
 class SampleFrequencyFormatter(FactorFormatter):
     r"""
     Create a string with multiple of sample frequency, :math:`f_s`.
-
-
     """
 
     def __init__(self, digits=3, fs=1.0, **kwargs):
