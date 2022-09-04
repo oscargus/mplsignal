@@ -15,7 +15,7 @@ from .freq_plots import _plot_h
 
 def freqz(w, h):
     """
-    Utility function to easily plot the result from `scipy.signal.freqz`.
+    Utility function to easily plot the result from :func:`scipy.signal.freqz`.
 
     The magnitude and phase responses are plotted in two different subplots.
 
@@ -42,7 +42,7 @@ def freqz(w, h):
 
 def freqz_twin(w, h):
     """
-    Utility function to easily plot the result from `scipy.signal.freqz`.
+    Utility function to easily plot the result from :func:`scipy.signal.freqz`.
 
     The magnitude and phase responses are plotted in the same plot using
     different y-axes.
@@ -70,7 +70,7 @@ def freqz_twin(w, h):
 
 def freqz_magnitude(w, h):
     """
-    Utility function to easily plot the result from `scipy.signal.freqz`.
+    Utility function to easily plot the result from :func:`scipy.signal.freqz`.
 
     Only the magnitude is plotted.
 
@@ -97,7 +97,7 @@ def freqz_magnitude(w, h):
 
 def freqz_phase(w, h):
     """
-    Utility function to easily plot the result from `scipy.signal.freqz`.
+    Utility function to easily plot the result from :func:`scipy.signal.freqz`.
 
     Only the magnitude is plotted.
 

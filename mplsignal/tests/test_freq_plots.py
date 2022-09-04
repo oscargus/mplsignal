@@ -96,3 +96,20 @@ def test_freqz_phase_image():
     num = [1, 2, 1]
     den = [1, -1.2, 0.5]
     freqz(num=num, den=den, style='phase', ax=ax)
+
+
+@image_comparison(['freqz_group_delay.png'], style='mpl20')
+def test_freqz_group_delay_image():
+    fig, ax = plt.subplots()
+    num = [1, 2, 1]
+    den = [1, -1.2, 0.5]
+    freqz(num=num, den=den, style='group_delay', ax=ax)
+
+
+@image_comparison(['freqz_tristacked.png'], style='mpl20')
+def test_freqz_tristacked_image():
+    fig, ax = plt.subplots(3, 1)
+    num = [1, 2, 1]
+    den = [1, -1.2, 0.5]
+    freqz(num=num, den=den, style='tristacked', ax=ax)
+    plt.tight_layout()

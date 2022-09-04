@@ -42,7 +42,7 @@ def zplane(
         Zeros of transfer function.
     poles : array-like, optional
         Poles of transfer function.
-    ax : `Axes`, optional
+    ax : :class:`~matplotlib.axes.Axes`, optional
         Axes to plot in.
     adjust : int, optional. Default: 1
         Number of times to execute text adjustment. Set to 0 to disable.

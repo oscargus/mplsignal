@@ -124,6 +124,7 @@ def group_delay_from_h(w, h):
     """
     angle = np.unwrap(np.angle(h))
     angle_diff = np.diff(angle)
+    angle_diff[np.abs(angle_diff) > 3] = np.nan
     w_diff = np.diff(w)
     w_new = w[0:-1] + w_diff / 2
     gd = -angle_diff / w_diff

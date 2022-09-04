@@ -29,7 +29,7 @@ def freqz(
     magnitude_scale='log',
     **kwargs,
 ):
-    r"""
+    """
     Plot the frequency response of a discrete-time system.
 
     Parameters
@@ -46,15 +46,16 @@ def freqz(
         The gain of pole-zero-based transfer function.
     w : integer or array-like, optional
         If a single integer, compute at that many frequency points in the
-        range :math:`[0, \pi]`. Default: 512.
+        range :math:`[0, \\pi]`. Default: 512.
         If array-like, frequencies to determine transfer function at.
     freq_units : {'rad', 'deg', 'norm', 'fs'}. Default: 'rad'
         Units for frequency axes.
     phase_units : {'rad', 'deg'}. Default: 'rad'
         Units for phase.
-    ax : `Axes`, optional
+    ax : :class:`~matplotlib.axes.Axes`, optional
         Axes to plot in.
-    style : {'stacked', 'twin', 'magnitude', 'phase'}. Default: 'stacked'
+    style : {'stacked', 'twin', 'magnitude', 'phase', 'group_delay', \
+'tristacked'}. Default: 'stacked'
         Plotting style.
     magnitude_scale : {'linear', 'log'}. Default: 'log'
         Whether magnitude is plotted in linear or logarithmig (dB) scale.
@@ -82,7 +83,10 @@ def freqz(
 
     _api.check_in_iterable(('rad', 'deg', 'norm', 'fs'), freq_units=freq_units)
     _api.check_in_iterable(('rad', 'deg'), phase_units=phase_units)
-    _api.check_in_iterable(('stacked', 'twin', 'magnitude', 'phase'), style=style)
+    _api.check_in_iterable(
+        ('stacked', 'twin', 'magnitude', 'phase', 'group_delay', 'tristacked'),
+        style=style,
+    )
     _api.check_in_iterable(('linear', 'log'), magnitude_scale=magnitude_scale)
 
     if w is None:
@@ -119,15 +123,12 @@ def _plot_h(
     magnitude_scale='log',
     **kwargs,
 ):
-    if style != 'phase':
-        magnitude = 20 * np.log10(np.abs(h))
-    if style != 'magnitude':
-        phase = np.unwrap(np.angle(h))
     minx = w.min()
     maxx = w.max()
     maglabel = kwargs.get('maglabel', 'Magnitude, dB')
     phaselabel = kwargs.get('phaselabel', 'Phase, rad')
     freqlabel = kwargs.get('freqlabel', 'Frequency, rad')
+    group_delay_label = kwargs.get('gdlabel', 'Group delay, samples')
     if style in ('stacked', 'twin'):
         if ax is None:
             fig = plt.gcf()
@@ -150,7 +151,7 @@ def _plot_h(
         _mag_plot_z(
             ax[0],
             w,
-            magnitude,
+            h,
             xmin=minx,
             xmax=maxx,
             xlabel=(freqlabel if style == 'twin' else None),
@@ -161,7 +162,7 @@ def _plot_h(
         _phase_plot_z(
             ax[1],
             w,
-            phase,
+            h,
             xmin=minx,
             xmax=maxx,
             ylabel=phaselabel,
@@ -175,10 +176,24 @@ def _plot_h(
         _mag_plot_z(
             ax,
             w,
-            magnitude,
+            h,
             xmin=minx,
             xmax=maxx,
             ylabel=maglabel,
+            xlabel=freqlabel,
+            **kwargs,
+        )
+        return ax.figure
+    if style == 'group_delay':
+        if ax is None:
+            ax = plt.gca()
+        _group_delay_plot_z(
+            ax,
+            w,
+            h,
+            xmin=minx,
+            xmax=maxx,
+            ylabel=group_delay_label,
             xlabel=freqlabel,
             **kwargs,
         )
@@ -189,7 +204,7 @@ def _plot_h(
         _phase_plot_z(
             ax,
             w,
-            phase,
+            h,
             xmin=minx,
             xmax=maxx,
             ylabel=phaselabel,
@@ -197,13 +212,56 @@ def _plot_h(
             **kwargs,
         )
         return ax.figure
+    if style == 'tristacked':
+        if ax is None:
+            fig = plt.gcf()
+            if len(fig.axes) == 0:
+                ax = fig.subplots(3, 1)
+            else:
+                ax = fig.axes
+        else:
+            fig = ax[0].figure
+        if len(ax) != 3:
+            raise ValueError("Must have exactly three axes for 'tristacked'.")
+        _mag_plot_z(
+            ax[0],
+            w,
+            h,
+            xmin=minx,
+            xmax=maxx,
+            xlabel=None,
+            ylabel=maglabel,
+            **kwargs,
+        )
+
+        _phase_plot_z(
+            ax[1],
+            w,
+            h,
+            xmin=minx,
+            xmax=maxx,
+            ylabel=phaselabel,
+            xlabel=None,
+            **kwargs,
+        )
+        _group_delay_plot_z(
+            ax[2],
+            w,
+            h,
+            xmin=minx,
+            xmax=maxx,
+            ylabel=group_delay_label,
+            xlabel=freqlabel,
+            **kwargs,
+        )
+        return fig
     raise ValueError(f"Unknown style: {style!r}")
 
 
 def _mag_plot_z(
     ax,
     w,
-    magnitude,
+    h,
     xmin=None,
     xmax=None,
     xlabel=None,
@@ -213,6 +271,7 @@ def _mag_plot_z(
     **kwargs,
 ):
     "Plot magnitude response"
+    magnitude = 20 * np.log10(np.abs(h))
     ax.plot(w, magnitude, **kwargs)
 
     if xlabel is not None:
@@ -239,7 +298,7 @@ def _mag_plot_z(
 def _phase_plot_z(
     ax,
     w,
-    phase,
+    h,
     xmin=None,
     xmax=None,
     xlabel=None,
@@ -249,6 +308,7 @@ def _phase_plot_z(
     **kwargs,
 ):
     "Plot phase response"
+    phase = np.unwrap(np.angle(h))
     ax.plot(w, phase, **kwargs)
 
     if xlabel is not None:
@@ -265,7 +325,45 @@ def _phase_plot_z(
     if ylocator is None:
         ax.yaxis.set_major_formatter(PiFormatter())
         ylocator = PiLocator()
-    ax.yaxis.set_major_locator(ylocator)
+    if ylocator is not None:
+        ax.yaxis.set_major_locator(ylocator)
+
+    if xmin is None:
+        xmin = w.min()
+    if xmax is None:
+        xmax = w.max()
+    ax.set_xlim(xmin, xmax)
+
+
+def _group_delay_plot_z(
+    ax,
+    w,
+    h,
+    xmin=None,
+    xmax=None,
+    xlabel=None,
+    ylabel=None,
+    xlocator=None,
+    ylocator=None,
+    **kwargs,
+):
+    "Plot group delay"
+    gd, w = _utils.group_delay_from_h(w, h)
+    ax.plot(w, gd, **kwargs)
+
+    if xlabel is not None:
+        ax.set_xlabel(xlabel)
+    if ylabel is not None:
+        ax.set_ylabel(ylabel)
+
+    if xlocator is None:
+        ax.xaxis.set_major_formatter(PiFormatter())
+        xlocator = PiLocator()
+    if xlocator is not None:
+        ax.xaxis.set_major_locator(xlocator)
+
+    if ylocator is not None:
+        ax.yaxis.set_major_locator(ylocator)
 
     if xmin is None:
         xmin = w.min()
