@@ -29,6 +29,8 @@ def zplane(
     markercolor=None,
     zerofillstyle='none',
     polefillstyle='none',
+    reallabel=None,
+    imaglabel=None,
     **kwargs,
 ):
     r"""
@@ -60,6 +62,10 @@ def zplane(
         Fill style to use for zeros.
     polefillstyle : fill style. Default: 'none'
         Fill style to use for poles.
+    reallabel : str or None, Default None
+        Label for real axis. None gives "Real part"
+    imaglabel : str or None, Default: None
+        Label for imaginary axis. None gives "Imaginary part"
     **kwargs
         Additional arguments.
 
@@ -75,6 +81,10 @@ def zplane(
     ax.axhline(color=spinecolor, linewidth=spinelinewidth)
     if markercolor is None:
         markercolor = ax._get_lines.get_next_color()
+    if reallabel is None:
+        reallabel = "Real part"
+    if imaglabel is None:
+        imaglabel = "Imaginary part"
     if unitcircle:
         ax.add_patch(
             plt.Circle(
@@ -94,6 +104,8 @@ def zplane(
         ax=ax,
         zerofillstyle=zerofillstyle,
         polefillstyle=polefillstyle,
+        reallabel=reallabel,
+        imaglabel=imaglabel,
         **kwargs,
     )
     for _ in range(adjust):
@@ -144,6 +156,8 @@ def _plot_plane(
     markercolor,
     zerofillstyle,
     polefillstyle,
+    reallabel,
+    imaglabel,
     ax=None,
     **kwargs,
 ):
@@ -176,6 +190,8 @@ def _plot_plane(
         )
         ret += [ax.text(x, y, text) for x, y, text in zip(texts_x, texts_y, texts)]
 
+    ax.set_xlabel(reallabel)
+    ax.set_ylabel(imaglabel)
     return ret
 
 
