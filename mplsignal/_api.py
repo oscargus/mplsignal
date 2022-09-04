@@ -1,4 +1,3 @@
-
 def check_in_iterable(_values, *, _print_supported_values=True, **kwargs):
     """
     For each *key, value* pair in *kwargs*, check that *value* is in *_values*.

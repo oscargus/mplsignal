@@ -97,14 +97,28 @@ def freqz(
     if zeros is not None and poles is not None and gain is not None:
         h = _utils.freqz_zpk(zeros, poles, gain, w)
 
-    return _plot_h(w, h, ax=ax, style=style, freq_units=freq_units,
-                   phase_units=phase_units, magnitude_scale=magnitude_scale,
-                   **kwargs)
+    return _plot_h(
+        w,
+        h,
+        ax=ax,
+        style=style,
+        freq_units=freq_units,
+        phase_units=phase_units,
+        magnitude_scale=magnitude_scale,
+        **kwargs,
+    )
 
 
-def _plot_h(w, h, ax=None, style='stacked', freq_units='rad',
-    phase_units='rad', magnitude_scale='log',
-    **kwargs):
+def _plot_h(
+    w,
+    h,
+    ax=None,
+    style='stacked',
+    freq_units='rad',
+    phase_units='rad',
+    magnitude_scale='log',
+    **kwargs,
+):
     if style != 'phase':
         magnitude = 20 * np.log10(np.abs(h))
     if style != 'magnitude':
