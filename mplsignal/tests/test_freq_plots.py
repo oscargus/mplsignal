@@ -7,37 +7,34 @@
 
 import pytest
 import matplotlib.pyplot as plt
+from matplotlib.testing.decorators import image_comparison
 from mplsignal import freqz
 
 
 def test_freqz():
-    plt.figure()
     num = [1, 2, 1]
-    den = [1, -1.5, 0.5]
+    den = [1, -1.2, 0.5]
     fig = freqz(num=num, den=den)
     assert len(fig.axes) == 2
 
 
 def test_freqz_twin():
-    plt.figure()
     num = [1, 2, 1]
-    den = [1, -1.5, 0.5]
+    den = [1, -1.2, 0.5]
     fig = freqz(num=num, den=den, style='twin')
     assert len(fig.axes) == 2
 
 
 def test_freqz_magnitude():
-    plt.figure()
     num = [1, 2, 1]
-    den = [1, -1.5, 0.5]
+    den = [1, -1.2, 0.5]
     fig = freqz(num=num, den=den, style='magnitude')
     assert len(fig.axes) == 1
 
 
 def test_freqz_phase():
-    plt.figure()
     num = [1, 2, 1]
-    den = [1, -1.5, 0.5]
+    den = [1, -1.2, 0.5]
     fig = freqz(num=num, den=den, style='phase')
     assert len(fig.axes) == 1
 
@@ -62,3 +59,32 @@ def test_freqz_errors(kwargs, error, msg):
     plt.figure()
     with pytest.raises(error, match=msg):
         freqz(**kwargs)
+
+
+@image_comparison(['freqz_default.png'])
+def test_freqz_default_image():
+    num = [1, 2, 1]
+    den = [1, -1.2, 0.5]
+    fig = freqz(num=num, den=den)
+
+
+@image_comparison(['freqz_magnitude.png'])
+def test_freqz_magnitude_image():
+    num = [1, 2, 1]
+    den = [1, -1.2, 0.5]
+    fig = freqz(num=num, den=den, style='magnitude')
+
+
+@image_comparison(['freqz_twin.png'])
+def test_freqz_twin_image():
+    num = [1, 2, 1]
+    den = [1, -1.2, 0.5]
+    fig = freqz(num=num, den=den, style='twin')
+
+
+@image_comparison(['freqz_phase.png'])
+def test_freqz_phase_image():
+    plt.figure()
+    num = [1, 2, 1]
+    den = [1, -1.2, 0.5]
+    fig = freqz(num=num, den=den, style='phase')

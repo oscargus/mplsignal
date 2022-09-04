@@ -79,28 +79,23 @@ class FactorFormatter(Formatter):
 
 
 class PiFormatter(FactorFormatter):
+    r"""
+    Create a string with multiple of :math:`\pi`.
     """
-    Create a string based on a tick value and location.
-    """
-
-    # some classes want to see all the locs to help format
-    # individual ones
-    locs = []
-
     def __init__(self, digits=3, **kwargs):
         super().__init__(digits=digits, factor=math.pi, name=r"\pi", **kwargs)
 
 
 class SampleFrequencyFormatter(FactorFormatter):
-    """
-    Create a string based on a tick value and location.
-    """
+    r"""
+    Create a string with multiple of sample frequency, :math:`f_s`.
 
-    # some classes want to see all the locs to help format
-    # individual ones
-    locs = []
 
+    """
     def __init__(self, digits=3, fs=1.0, **kwargs):
+        """
+
+        """
         super().__init__(
             digits=digits, factor=fs / (2 * math.pi), name=r"f_s", **kwargs
         )

@@ -11,7 +11,7 @@ __all__ = [
 ]
 import numpy as np
 import matplotlib.pyplot as plt
-from mplsignal import _utils
+from mplsignal import _utils, _api
 from mplsignal.ticker import PiFormatter, PiLocator
 
 
@@ -25,7 +25,8 @@ def freqz(
     freq_units='rad',
     phase_units='rad',
     ax=None,
-    style=None,
+    style='stacked',
+    magnitude_scale='log',
     **kwargs,
 ):
     r"""
@@ -47,14 +48,16 @@ def freqz(
         If a single integer, compute at that many frequency points in the
         range :math:`[0, \pi]`. Default: 512.
         If array-like, frequencies to determine transfer function at.
-    freq_units : {'rad', 'deg', 'norm'}. Default: 'rad'
-        Units for frequency axes--.
-    phase_units : {'rad', 'deg'}. Default: 'rad'
+    freq_units : {'rad', 'deg', 'norm', 'fs'}. Default: 'rad'
         Units for frequency axes.
+    phase_units : {'rad', 'deg'}. Default: 'rad'
+        Units for phase.
     ax : `Axes`, optional
         Axes to plot in.
-    style : {'stacked', 'twin', 'magnitude', 'phase'}
+    style : {'stacked', 'twin', 'magnitude', 'phase'}. Default: 'stacked'
         Plotting style.
+    magnitude_scale : {'linear', 'log'}. Default: 'log'
+        Whether magnitude is plotted in linear or logarithmig (dB) scale.
     **kwargs
         Additional arguments.
 
@@ -77,11 +80,13 @@ def freqz(
     if den is not None and poles is not None:
         raise ValueError("At most one of 'den' and 'poles' must be provided.")
 
+    _api.check_in_iterable(('rad', 'deg', 'norm', 'fs'), freq_units=freq_units)
+    _api.check_in_iterable(('rad', 'deg'), phase_units=phase_units)
+    _api.check_in_iterable(('stacked', 'twin', 'magnitude', 'phase'), style=style)
+    _api.check_in_iterable(('linear', 'log'), magnitude_scale=magnitude_scale)
+
     if w is None:
         w = 512
-
-    if style is None:
-        style = 'stacked'
 
     if isinstance(w, int):
         w = np.linspace(0, np.pi, w)
@@ -92,10 +97,14 @@ def freqz(
     if zeros is not None and poles is not None and gain is not None:
         h = _utils.freqz_zpk(zeros, poles, gain, w)
 
-    return _plot_h(w, h, ax=ax, style=style, **kwargs)
+    return _plot_h(w, h, ax=ax, style=style, freq_units=freq_units,
+                   phase_units=phase_units, magnitude_scale=magnitude_scale,
+                   **kwargs)
 
 
-def _plot_h(w, h, ax=None, style='stacked', **kwargs):
+def _plot_h(w, h, ax=None, style='stacked', freq_units='rad',
+    phase_units='rad', magnitude_scale='log',
+    **kwargs):
     if style != 'phase':
         magnitude = 20 * np.log10(np.abs(h))
     if style != 'magnitude':
@@ -110,7 +119,7 @@ def _plot_h(w, h, ax=None, style='stacked', **kwargs):
             fig = plt.gcf()
             if len(fig.axes) == 0:
                 if style == 'stacked':
-                    fig, ax = plt.subplots(2, 1)
+                    ax = fig.subplots(2, 1)
                 else:
                     ax = plt.gca()
                     _ = ax.twinx()
