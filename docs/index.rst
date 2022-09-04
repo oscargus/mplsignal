@@ -24,9 +24,8 @@ to ask it is: https://discourse.matplotlib.org/c/3rdparty/18.
    :maxdepth: 3
 
    examples/index
-   API
+   api/index
    Contributing
-
 
 
 Indices and tables
