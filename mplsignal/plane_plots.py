@@ -27,6 +27,8 @@ def zplane(
     polemarker='x',
     unitcircle=True,
     markercolor=None,
+    zerofillstyle='none',
+    polefillstyle='none',
     **kwargs,
 ):
     r"""
@@ -51,9 +53,13 @@ def zplane(
     zeromarker : marker. Default: 'o'
         Marker to use for zeros.
     polemarker : marker. Default: 'x'
-        Marker to use for poles. Default: 'x'
+        Marker to use for poles.
     markercolor : color
         Color to use for pole and zero markers. Default: None
+    zerofillstyle : fill style. Default: 'none'
+        Fill style to use for zeros.
+    polefillstyle : fill style. Default: 'none'
+        Fill style to use for poles.
     **kwargs
         Additional arguments.
 
@@ -86,6 +92,8 @@ def zplane(
         polemarker=polemarker,
         markercolor=markercolor,
         ax=ax,
+        zerofillstyle=zerofillstyle,
+        polefillstyle=polefillstyle,
         **kwargs,
     )
     for _ in range(adjust):
@@ -128,18 +136,44 @@ def _get_positions(items):
     return xpos, ypos, texts_x, texts_y, texts
 
 
-def _plot_plane(zeros, poles, zeromarker, polemarker, markercolor, ax=None, **kwargs):
+def _plot_plane(
+    zeros,
+    poles,
+    zeromarker,
+    polemarker,
+    markercolor,
+    zerofillstyle,
+    polefillstyle,
+    ax=None,
+    **kwargs,
+):
     ret = []
     if zeros is not None:
         zeros_d = _get_multiples(zeros)
         xpos, ypos, texts_x, texts_y, texts = _get_positions(zeros_d)
-        ax.plot(xpos, ypos, marker=zeromarker, ls='', color=markercolor, **kwargs)
+        ax.plot(
+            xpos,
+            ypos,
+            marker=zeromarker,
+            ls='none',
+            fillstyle=zerofillstyle,
+            color=markercolor,
+            **kwargs,
+        )
         ret += [ax.text(x, y, text) for x, y, text in zip(texts_x, texts_y, texts)]
 
     if poles is not None:
         poles_d = _get_multiples(poles)
         xpos, ypos, texts_x, texts_y, texts = _get_positions(poles_d)
-        ax.plot(xpos, ypos, marker=polemarker, ls='', color=markercolor, **kwargs)
+        ax.plot(
+            xpos,
+            ypos,
+            marker=polemarker,
+            fillstyle=polefillstyle,
+            ls='none',
+            color=markercolor,
+            **kwargs,
+        )
         ret += [ax.text(x, y, text) for x, y, text in zip(texts_x, texts_y, texts)]
 
     return ret
