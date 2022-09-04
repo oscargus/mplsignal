@@ -31,8 +31,6 @@ def freqz_tf(num, den, w):
 
     Returns
     -------
-    w : ndarray
-        The angular frequencies at which *h* was computed.
     h : ndarray
         The frequency response.
 
@@ -64,8 +62,6 @@ def freqz_zpk(zeros, poles, gain, w):
 
     Returns
     -------
-    w : ndarray
-        The angular frequencies at which *h* was computed.
     h : ndarray
         The frequency response.
 
@@ -78,3 +74,57 @@ def freqz_zpk(zeros, poles, gain, w):
             wexp, zeros
         ) / np.polynomial.polynomial.polyvalfromroots(wexp, poles)
         return h
+
+
+def group_delay(num, den, w):
+    """
+    Evaluate transfer function to determine group delay.
+
+    Parameters
+    ----------
+    num : array-like
+        Numerator.
+    den : array-like
+        Denominator.
+    w : array-like
+        Frequency-points.
+
+    Returns
+    -------
+    gd : ndarray
+        The group delay.
+
+    """
+    if signal:
+        return signal.group_delay((num, den), w=w)[1]
+    else:
+        # TODO: compute actual group delay
+        gd, _ = group_delay_from_h(w, freqz_tf(num, den, w))
+        gd.append(0)
+        return gd
+
+
+def group_delay_from_h(w, h):
+    """
+    Estimate group delay from frequency response.
+
+    Parameters
+    ----------
+    w : array-like
+        Frequency-points.
+    h : array-like
+        Frequency response.
+
+    Returns
+    -------
+    gd : ndarray
+        The estimated group delay.
+    w : ndarray
+        The frequency points where the group delay is estimated.
+    """
+    angle = np.unwrap(np.angle(h))
+    angle_diff = np.diff(angle)
+    w_diff = np.diff(w)
+    w_new = w[0:-1] + w_diff / 2
+    gd = -angle_diff / w_diff
+    return gd, w_new
