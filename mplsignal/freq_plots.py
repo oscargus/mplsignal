@@ -141,11 +141,21 @@ def _plot_h(
             else:
                 ax = fig.axes
         else:
+            if style == 'twin':
+                _ = ax.twinx()
+                ax = ax.figure.axes
             fig = ax[0].figure
         if len(ax) != 2:
             raise ValueError("Must have exactly two axes for 'stacked' or 'twin'.")
         _mag_plot_z(
-            ax[0], w, magnitude, xmin=minx, xmax=maxx, ylabel=maglabel, **kwargs
+            ax[0],
+            w,
+            magnitude,
+            xmin=minx,
+            xmax=maxx,
+            xlabel=(freqlabel if style == 'twin' else None),
+            ylabel=maglabel,
+            **kwargs,
         )
 
         _phase_plot_z(
@@ -155,7 +165,7 @@ def _plot_h(
             xmin=minx,
             xmax=maxx,
             ylabel=phaselabel,
-            xlabel=freqlabel,
+            xlabel=(freqlabel if style == 'stacked' else None),
             **kwargs,
         )
         return fig

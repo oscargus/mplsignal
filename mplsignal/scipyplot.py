@@ -3,7 +3,13 @@
 
 # Copyright (c) Oscar Gustafsson.
 # Distributed under the terms of the Modified BSD License.
+"""
+The module contains utility functions to easily interact with SciPy.
 
+The SciPy functions :func:`scipy.signal.freqz` and  :func:`scipy.signal.freqz`
+have a `plot` argument to provide a plotting callback function.
+The functions provided in this module is aimed to be used as such a callback.
+"""
 from .freq_plots import _plot_h
 
 

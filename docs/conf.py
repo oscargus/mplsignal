@@ -52,6 +52,7 @@ sphinx_gallery_conf = {
 intersphinx_mapping = {
     'python': ('https://docs.python.org/3/', None),
     'matplotlib': ('https://matplotlib.org/', None),
+    'scipy': ('https://docs.scipy.org/doc/scipy/', None),
 }
 
 # Add any paths that contain templates here, relative to this directory.
