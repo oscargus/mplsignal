@@ -174,7 +174,9 @@ def _plot_plane(
             color=markercolor,
             **kwargs,
         )
-        ret += [ax.text(x, y, text) for x, y, text in zip(texts_x, texts_y, texts)]
+        ret += [
+            ax.text(x, y, text) for x, y, text in zip(texts_x, texts_y, texts)
+        ]
 
     if poles is not None:
         poles_d = _get_multiples(poles)
@@ -188,7 +190,9 @@ def _plot_plane(
             color=markercolor,
             **kwargs,
         )
-        ret += [ax.text(x, y, text) for x, y, text in zip(texts_x, texts_y, texts)]
+        ret += [
+            ax.text(x, y, text) for x, y, text in zip(texts_x, texts_y, texts)
+        ]
 
     ax.set_xlabel(reallabel)
     ax.set_ylabel(imaglabel)
@@ -196,7 +200,9 @@ def _plot_plane(
 
 
 def _is_close(x, y):
-    return math.isclose(np.real(x), np.real(y)) and math.isclose(np.imag(x), np.imag(y))
+    return math.isclose(np.real(x), np.real(y)) and math.isclose(
+        np.imag(x), np.imag(y)
+    )
 
 
 def _get_multiples(x):

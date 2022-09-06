@@ -51,7 +51,11 @@ def test_freqz_phase():
             ValueError,
             "At most one of 'den'",
         ),
-        ({'num': [1, 1], 'zeros': [-0.5, 0.5]}, ValueError, "At most one of 'num'"),
+        (
+            {'num': [1, 1], 'zeros': [-0.5, 0.5]},
+            ValueError,
+            "At most one of 'num'",
+        ),
         (
             {'den': [1, 1], 'num': [1, 1], 'style': "foo"},
             ValueError,

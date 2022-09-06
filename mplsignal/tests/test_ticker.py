@@ -38,7 +38,9 @@ def test_pilocator_adjust_locations():
     locator = PiLocator(5)
     np.testing.assert_allclose(
         locator.tick_values(0, math.pi),
-        np.array([0.0, 0.62831853, 1.25663706, 1.88495559, 2.51327412, 3.14159265]),
+        np.array(
+            [0.0, 0.62831853, 1.25663706, 1.88495559, 2.51327412, 3.14159265]
+        ),
     )
 
 
