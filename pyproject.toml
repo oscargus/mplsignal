@@ -1,11 +1,66 @@
+[project]
+name = "mplsignal"
+description = "Matplotlib extension for signal processing-related plots"
+authors = [
+{name = "Oscar Gustafsson", email = "oscar.gustafsson@gmail.com"}
+]
+requires-python = ">=3.6"
+license = {file = "LICENSE"}
+readme = "README.md"
+dynamic = [
+   "version"
+]
+dependencies = [
+    "matplotlib",
+    "adjustText"
+    ]
+
+classifiers = [
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: BSD License",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Framework :: Matplotlib",
+]
+
+[project.optional-dependencies]
+test = [
+     "black",
+     "pytest",
+     "pytest-mpl"
+     ]
+doc = [
+     "sphinx",
+     "numpydoc",
+     "sphinx_rtd_theme",
+     "sphinx-copybutton",
+     "sphinx-autobuild",
+     "sphinx_gallery>=0.8.2",
+     "autoapi",
+     "furo",
+     ]
+
+[project.urls]
+homepage = "https://github.com/oscargus/mplsignal"
+
+[build-system]
+requires = ["setuptools>=45", "setuptools_scm[toml]>=6.2"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools_scm]
+write_to = "mplsignal/_version.py"
+version_scheme = "release-branch-semver"
+local_scheme = "node-and-date"
+parentdir_prefix_version = "mplsignal-"
+fallback_version = "0.0+UNKNOWN"
+
 [tool.black]
 skip-string-normalization = true
+line-length = 79
 
 [tool.pytest.ini_options]
 testpaths = [
     "mplsignal/tests"
 ]
 
-[build-system]
-requires = ["setuptools>=42", "wheel"]
-build-backend = "setuptools.build_meta"

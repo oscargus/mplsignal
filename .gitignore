@@ -25,6 +25,9 @@ share/python-wheels/
 .installed.cfg
 *.egg
 MANIFEST
+result_images/
+mplsignal/_version.py
+docs/examples/
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -153,3 +156,6 @@ cython_debug/
 
 ## vscode
 .vscode
+
+## pycharm
+.idea/
