@@ -16,21 +16,9 @@ def test_pilocator():
     locator = PiLocator()
     np.testing.assert_allclose(
         locator.tick_values(0, math.pi),
-        np.array(
-            [
-                0.0,
-                0.31415927,
-                0.62831853,
-                0.9424778,
-                1.25663706,
-                1.57079633,
-                1.88495559,
-                2.19911486,
-                2.51327412,
-                2.82743339,
-                3.14159265,
-            ]
-        ),
+        np.array([0.0, 0.628319, 1.256637, 1.884956, 2.513274, 3.141593]),
+        rtol=1e-6,
+        atol=1e-6,
     )
 
 

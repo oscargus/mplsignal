@@ -1,9 +1,23 @@
 Welcome to mplsignal's documentation!
-===================================================================
+=====================================
 
-A library makes for making awesome plots like this one:
+A library for easily making Matplotlib plots related to signal processing.
 
-.. image:: _static/images/front-page-image.png
+.. plot::
+   :include-source:
+
+   from scipy.signal import ellip
+   import matplotlib.pyplot as plt
+   from mplsignal.freq_plots import freqz
+   from mplsignal.plane_plots import zplane_tf
+
+   a, b = ellip(5, 0.2, 40, 0.3)
+   fig, axes = plt.subplots(2, 2)
+   zplane_tf(a, b, ax=axes[0][0])
+   freqz(a, b, style='magnitude', ax=axes[0][1])
+   freqz(a, b, style='phase', ax=axes[1][0])
+   freqz(a, b, style='group_delay', ax=axes[1][1])
+   plt.tight_layout()
 
 
 Installation

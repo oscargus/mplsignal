@@ -27,6 +27,8 @@ def freqz(
     ax=None,
     style='stacked',
     magnitude_scale='log',
+    whole=False,
+    include_nyquist=False,
     **kwargs,
 ):
     """
@@ -60,6 +62,13 @@ def freqz(
         Plotting style.
     magnitude_scale : {'linear', 'log'}. Default: 'log'
         Whether magnitude is plotted in linear or logarithmig (dB) scale.
+    whole : bool, optional
+        Plot from 0 to :math:`2\\pi` if True. Otherwise plot from 0 to
+        :math:`\\pi`.
+    include_nyquist: bool, optional
+        If *whole* is False and *w* is an integer, setting *include_nyquist*
+        to True will include the last frequency (Nyquist frequency) and is
+        otherwise ignored.
     **kwargs
         Additional arguments.
 
@@ -97,7 +106,11 @@ def freqz(
         w = 512
 
     if isinstance(w, int):
-        w = np.linspace(0, np.pi, w)
+        w = np.linspace(
+            0, 2 * np.pi if whole else np.pi, w, endpoint=include_nyquist
+        )
+        if kwargs.get('xmax', None) is None and not include_nyquist:
+            kwargs['xmax'] = 2 * np.pi if whole else np.pi
 
     if num is not None and den is not None:
         h = _utils.freqz_tf(num, den, w)
@@ -128,7 +141,7 @@ def _plot_h(
     **kwargs,
 ):
     minx = w.min()
-    maxx = w.max()
+    maxx = kwargs.pop('xmax', w.max())
     maglabel = kwargs.get('maglabel', 'Magnitude, dB')
     phaselabel = kwargs.get('phaselabel', 'Phase, rad')
     freqlabel = kwargs.get('freqlabel', 'Frequency, rad')
