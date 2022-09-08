@@ -14,7 +14,9 @@ def _is_close_to_int(x):
 
 class FactorLocator(Locator):
     def __init__(self, factor=1.0, nbins=None, **kwargs):
-        steps = kwargs.pop('steps', [1, 2, 5])
+        steps = kwargs.pop('steps', [1, 2, 3, 4, 5, 6, 8, 10])
+        if nbins is None:
+            nbins = 'auto'
         self._factor = factor
         self._locator = MaxNLocator(nbins, steps=steps, **kwargs)
 
@@ -22,7 +24,7 @@ class FactorLocator(Locator):
         """
         Return the values of the located ticks given **vmin** and **vmax**.
         """
-        # Use MaxNLocator and scale by pi
+        # Use MaxNLocator and scale by factor
         return self._factor * (
             self._locator.tick_values(vmin / self._factor, vmax / self._factor)
         )

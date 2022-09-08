@@ -37,6 +37,7 @@ extensions = [
     'sphinx.ext.inheritance_diagram',
     'sphinx.ext.intersphinx',
     'numpydoc',
+    'matplotlib.sphinxext.plot_directive',
     "sphinx_copybutton",
     "sphinx_gallery.gen_gallery",
     "sphinx.ext.napoleon",
