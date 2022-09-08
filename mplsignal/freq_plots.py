@@ -52,8 +52,9 @@ def freqz(
         Units for frequency axes.
     phase_units : {'rad', 'deg'}. Default: 'rad'
         Units for phase.
-    ax : :class:`~matplotlib.axes.Axes`, optional
-        Axes to plot in.
+    ax : :class:`~matplotlib.axes.Axes` or iterable of \
+:class:`~matplotlib.axes.Axes`, optional
+        Axes or iterable of Axes to plot in. If None, create required Axes.
     style : {'stacked', 'twin', 'magnitude', 'phase', 'group_delay', \
 'tristacked'}. Default: 'stacked'
         Plotting style.
@@ -88,6 +89,9 @@ def freqz(
         style=style,
     )
     _api.check_in_iterable(('linear', 'log'), magnitude_scale=magnitude_scale)
+
+    if not np.iterable(ax) and ax is not None:
+        ax = [ax]
 
     if w is None:
         w = 512
@@ -143,12 +147,12 @@ def _plot_h(
                 ax = fig.axes
         else:
             if style == 'twin':
-                _ = ax.twinx()
-                ax = ax.figure.axes
+                _ = ax[0].twinx()
+                ax = ax[0].figure.axes
             fig = ax[0].figure
-        if len(ax) != 2:
+        if len(ax) < 2:
             raise ValueError(
-                "Must have exactly two axes for 'stacked' or 'twin'."
+                "Must have at least two axes for 'stacked' or 'twin'."
             )
         _mag_plot_z(
             ax[0],
@@ -174,9 +178,9 @@ def _plot_h(
         return fig
     if style == 'magnitude':
         if ax is None:
-            ax = plt.gca()
+            ax = [plt.gca()]
         _mag_plot_z(
-            ax,
+            ax[0],
             w,
             h,
             xmin=minx,
@@ -185,12 +189,12 @@ def _plot_h(
             xlabel=freqlabel,
             **kwargs,
         )
-        return ax.figure
+        return ax[0].figure
     if style == 'group_delay':
         if ax is None:
-            ax = plt.gca()
+            ax = [plt.gca()]
         _group_delay_plot_z(
-            ax,
+            ax[0],
             w,
             h,
             xmin=minx,
@@ -199,12 +203,12 @@ def _plot_h(
             xlabel=freqlabel,
             **kwargs,
         )
-        return ax.figure
+        return ax[0].figure
     if style == 'phase':
         if ax is None:
-            ax = plt.gca()
+            ax = [plt.gca()]
         _phase_plot_z(
-            ax,
+            ax[0],
             w,
             h,
             xmin=minx,
@@ -213,7 +217,7 @@ def _plot_h(
             xlabel=freqlabel,
             **kwargs,
         )
-        return ax.figure
+        return ax[0].figure
     if style == 'tristacked':
         if ax is None:
             fig = plt.gcf()
@@ -223,8 +227,8 @@ def _plot_h(
                 ax = fig.axes
         else:
             fig = ax[0].figure
-        if len(ax) != 3:
-            raise ValueError("Must have exactly three axes for 'tristacked'.")
+        if len(ax) < 3:
+            raise ValueError("Must have at least three axes for 'tristacked'.")
         _mag_plot_z(
             ax[0],
             w,
@@ -235,7 +239,6 @@ def _plot_h(
             ylabel=maglabel,
             **kwargs,
         )
-
         _phase_plot_z(
             ax[1],
             w,
