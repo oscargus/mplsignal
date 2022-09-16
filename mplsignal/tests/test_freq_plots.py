@@ -117,3 +117,70 @@ def test_freqz_tristacked_image():
     den = [1, -1.2, 0.5]
     freqz(num=num, den=den, style='tristacked', ax=ax)
     plt.tight_layout()
+
+
+@image_comparison(['freqz_freq_units.png'], style='mpl20')
+def test_freqz_freq_units_image():
+    fig, axes = plt.subplots(5, 1, figsize=(3, 10))
+    num = [1, 2, 1]
+    den = [1, -1.2, 0.5]
+    for i, freq_units in enumerate(('rad', 'deg', 'norm', 'normfs', 'fs')):
+        freqz(
+            num=num,
+            den=den,
+            style='phase',
+            freq_units=freq_units,
+            ax=axes[i],
+            fs=1e6,
+        )
+    plt.tight_layout()
+
+
+@image_comparison(['freqz_phase_units.png'], style='mpl20')
+def test_freqz_phase_units_image():
+    fig, axes = plt.subplots(2, 1, figsize=(3, 6))
+    num = [1, 2, 1]
+    den = [1, -1.2, 0.5]
+    for i, phase_units in enumerate(('rad', 'deg')):
+        freqz(
+            num=num,
+            den=den,
+            style='phase',
+            phase_units=phase_units,
+            ax=axes[i],
+        )
+    plt.tight_layout()
+
+
+@image_comparison(['freqz_magnitude_scale.png'], style='mpl20')
+def test_freqz_magnitude_scale_image():
+    fig, axes = plt.subplots(2, 1, figsize=(3, 6))
+    num = [1, 2, 1]
+    den = [1, -1.2, 0.5]
+    for i, magnitude_scale in enumerate(('log', 'linear')):
+        freqz(
+            num=num,
+            den=den,
+            style='magnitude',
+            magnitude_scale=magnitude_scale,
+            ax=axes[i],
+        )
+    plt.tight_layout()
+
+
+@image_comparison(['freqz_freq_units_log.png'], style='mpl20')
+def test_freqz_freq_units_log_image():
+    fig, axes = plt.subplots(5, 1, figsize=(3, 10))
+    num = [1, 2, 1]
+    den = [1, -1.2, 0.5]
+    for i, freq_units in enumerate(('rad', 'deg', 'norm', 'normfs', 'fs')):
+        freqz(
+            num=num,
+            den=den,
+            style='magnitude',
+            freq_units=freq_units,
+            ax=axes[i],
+            frequency_scale='log',
+            fs=1e6,
+        )
+    plt.tight_layout()
