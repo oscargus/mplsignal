@@ -7,6 +7,7 @@
 __all__ = [
     "freqz",
     "freqz_tf",
+    "freqz_zpk",
     "freqz_fir",
 ]
 import numpy as np

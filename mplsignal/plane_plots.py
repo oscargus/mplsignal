@@ -6,7 +6,9 @@
 
 __all__ = [
     "zplane",
+    "zplane_tf",
     "splane",
+    "splane_tf",
 ]
 
 import math
@@ -123,7 +125,7 @@ def splane(
     """
     Plot the s-plane of a continuous-time system.
 
-    Basically identical to func:`zplane`, except that *unitcircle* is False.
+    Identical to :func:`zplane`, except that *unitcircle* is False.
     """
     return zplane(zeros=zeros, poles=poles, ax=ax, unitcircle=False, **kwargs)
 
@@ -140,7 +142,7 @@ def zplane_tf(num=None, den=None, **kwargs):
     den : array-like, optional
         Denominator of transfer function.
     **kwargs
-        Additional arguments passed to :func:`splane`.
+        Additional arguments passed to :func:`zplane`.
     """
     zeros = None if num is None else np.roots(num)
     poles = None if den is None else np.roots(den)
