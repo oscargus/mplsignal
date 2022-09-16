@@ -71,7 +71,7 @@ def freqz(
     magnitude_scale : {'linear', 'log'}. Default: 'log'
         Whether magnitude is plotted in linear or logarithmic (dB) scale.
     frequency_scale : {'linear', 'log'}. Default: 'linear'
-        Whether magnitude is plotted in linear or logarithmic scale.
+        Whether frequency is plotted in linear or logarithmic scale.
     whole : bool, optional
         Plot from 0 to :math:`2\\pi` if True. Otherwise, plot from 0 to
         :math:`\\pi`.
@@ -477,7 +477,7 @@ def freqz_tf(num, den, **kwargs):
     den : array-like
         Denominator of transfer function.
     **kwargs
-        Additional arguments.
+        Additional arguments passed to :func:`freqz`.
 
     Returns
     -------
@@ -496,7 +496,7 @@ def freqz_fir(num, **kwargs):
     num : array-like
         Numerator of transfer function.
     **kwargs
-        Additional arguments.
+        Additional arguments  passed to :func:`freqz`.
 
     Returns
     -------
@@ -504,6 +504,30 @@ def freqz_fir(num, **kwargs):
 
     """
     return freqz(num=num, den=np.array([1.0]), **kwargs)
+
+
+def freqz_zpk(zeros, poles, gain=1, **kwargs):
+    """
+    Plot the frequency response of a discrete-time system represented using
+    zeros, poles and gain.
+
+    Parameters
+    ----------
+    zeros : array-like
+        Zeros of system.
+    poles : array-like
+        Poles of system.
+    gain : float
+        Gain of system.
+    **kwargs
+        Additional arguments passed to :func:`freqz`.
+
+    Returns
+    -------
+    None.
+
+    """
+    return freqz(zeros=zeros, poles=poles, gain=gain, **kwargs)
 
 
 def _get_freq_scale(freq_units, fs):

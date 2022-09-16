@@ -4,6 +4,8 @@
 
 Matplotlib extension for signal processing
 
+Documentation can be found [here](https://mplsignal.readthedocs.io/).
+
 ## Installation
 
 You can install using `pip`:
@@ -18,4 +20,3 @@ pip install mplsignal
 ```bash
 pip install -e ".[dev]"
 ```
-
