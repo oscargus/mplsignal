@@ -63,9 +63,9 @@ def zplane(
     polefillstyle : fill style. Default: 'none'
         Fill style to use for poles.
     reallabel : str or None, Default None
-        Label for real axis. None gives "Real part"
+        Label for real axis. None gives "Real part".
     imaglabel : str or None, Default: None
-        Label for imaginary axis. None gives "Imaginary part"
+        Label for imaginary axis. None gives "Imaginary part".
     **kwargs
         Additional arguments.
 
@@ -120,13 +120,50 @@ def splane(
     ax=None,
     **kwargs,
 ):
+    """
+    Plot the s-plane of a continuous-time system.
+
+    Basically identical to func:`zplane`, except that *unitcircle* is False.
+    """
     return zplane(zeros=zeros, poles=poles, ax=ax, unitcircle=False, **kwargs)
 
 
 def zplane_tf(num=None, den=None, **kwargs):
+    """
+    Plot the z-plane of a discrete-time system represented as a transfer
+    function.
+
+    Parameters
+    ----------
+    num : array-like, optional
+        Numerator of transfer function.
+    den : array-like, optional
+        Denominator of transfer function.
+    **kwargs
+        Additional arguments passed to :func:`splane`.
+    """
     zeros = None if num is None else np.roots(num)
     poles = None if den is None else np.roots(den)
     return zplane(zeros=zeros, poles=poles, **kwargs)
+
+
+def splane_tf(num=None, den=None, **kwargs):
+    """
+    Plot the s-plane of a continuous-time system represented as a transfer
+    function.
+
+    Parameters
+    ----------
+    num : array-like, optional
+        Numerator of transfer function.
+    den : array-like, optional
+        Denominator of transfer function.
+    **kwargs
+        Additional arguments passed to :func:`splane`.
+    """
+    zeros = None if num is None else np.roots(num)
+    poles = None if den is None else np.roots(den)
+    return splane(zeros=zeros, poles=poles, **kwargs)
 
 
 def _get_positions(items):
@@ -200,12 +237,14 @@ def _plot_plane(
 
 
 def _is_close(x, y):
+    """Check if poles/zeros are close."""
     return math.isclose(np.real(x), np.real(y)) and math.isclose(
         np.imag(x), np.imag(y)
     )
 
 
 def _get_multiples(x):
+    """Turn list of poles/zeros into a dict with location and multiplicity."""
     res = dict()
     for val in x:
         existed = False

@@ -4,7 +4,7 @@
 
 .. inheritance-diagram:: mplsignal.ticker
    :parts: 1
-   :top-classes: mplsignal.ticker.FactorLocator, mplsignal.ticker.FactorFormatter
+   :top-classes: matplotlib.ticker.Locator, matplotlib.ticker.Formatter
 
 .. automodule:: mplsignal.ticker
    :members:

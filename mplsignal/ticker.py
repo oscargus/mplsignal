@@ -39,18 +39,21 @@ class FactorLocator(Locator):
 
 class PiLocator(FactorLocator):
     """Locator for finding multiples of :math:`\\pi`."""
+
     def __init__(self, nbins=None, **kwargs):
         super().__init__(factor=math.pi, nbins=nbins, **kwargs)
 
 
 class SampleFrequencyLocator(FactorLocator):
     """Locator for finding multiples of sample frequency."""
+
     def __init__(self, nbins=None, fs=1.0, **kwargs):
         super().__init__(factor=fs / (2 * math.pi), nbins=nbins, **kwargs)
 
 
 class DegreeLocator(MaxNLocator):
     """Locator for finding multiples that are nice when using degrees."""
+
     def __init__(self, nbins=None, **kwargs):
         steps = kwargs.pop('steps', [1, 1.5, 2, 3, 5, 6, 10])
         if nbins is None:
