@@ -1,6 +1,6 @@
-import pytest
 import matplotlib.pyplot as plt
 from matplotlib.testing.decorators import image_comparison
+
 from mplsignal import plane_plots
 
 

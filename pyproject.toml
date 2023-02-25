@@ -23,6 +23,7 @@ classifiers = [
     "License :: OSI Approved :: BSD License",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
@@ -73,3 +74,6 @@ testpaths = [
 profile = "black"
 line_length = 88
 src_paths = ["mplsignal"]
+
+[tool.flake8]
+max-line-length = 88

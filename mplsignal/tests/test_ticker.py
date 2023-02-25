@@ -5,11 +5,11 @@
 # Distributed under the terms of the Modified BSD License.
 
 
-import pytest
 import math
+
 import numpy as np
 
-from mplsignal.ticker import PiLocator, PiFormatter
+from mplsignal.ticker import PiFormatter, PiLocator
 
 
 def test_pilocator():
