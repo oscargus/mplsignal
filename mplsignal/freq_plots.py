@@ -65,8 +65,8 @@ def freqz(
         Units for frequency axes.
     phase_units : {'rad', 'deg'}. Default: 'rad'
         Units for phase.
-    ax : :class:`~matplotlib.axes.Axes` or iterable of \
-:class:`~matplotlib.axes.Axes`, optional
+    ax : :class:`~matplotlib.axes.Axes` or iterable of :class:`~matplotlib.axes.Axes`,\
+ optional
         Axes or iterable of Axes to plot in. If None, create required Axes.
     style : {'stacked', 'twin', 'magnitude', 'phase', 'group_delay', \
 'tristacked'}. Default: 'stacked'
@@ -184,11 +184,7 @@ def _plot_h(
     phase_units
     magnitude_scale
     frequency_scale
-    kwargs
-
-    Returns
-    -------
-
+    **kwargs
     """
     minx = kwargs.pop('xmin', w.min())
     maxx = kwargs.pop('xmax', w.max())
@@ -456,7 +452,7 @@ def _group_delay_plot_z(
     fs=1,
     **kwargs,
 ):
-    "Plot group delay"
+    """Plot group delay."""
     gd, w = _utils.group_delay_from_h(w, h)
     wscale = _get_freq_scale(freq_units, fs)
     w = wscale * w

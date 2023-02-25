@@ -27,9 +27,9 @@ class FactorLocator(Locator):
         ----------
         factor : float
             The factor to extract.
-        nbins :
+        nbins : int
             Number of bins to aim for, see `~matplotlib.tickers.MaxNLocator`.
-        **kwargs :
+        **kwargs
             Additional arguments passed to `~matplotlib.tickers.MaxNLocator`.
         """
         steps = kwargs.pop('steps', [1, 2, 3, 4, 5, 6, 8, 10])
