@@ -46,27 +46,27 @@ def zplane(
         Poles of transfer function.
     ax : :class:`~matplotlib.axes.Axes`, optional
         Axes to plot in.
-    adjust : int, optional. Default: 1
+    adjust : int, optional, default: 1
         Number of times to execute text adjustment. Set to 0 to disable.
-    spinelinewidth : float. Default: 0.2
+    spinelinewidth : float, default: 0.2
         Line width of spines.
-    spinecolor : color. Default: 'black'
+    spinecolor : color, default: 'black'
         Line color of spines.
-    unitcircle : bool. Default: True
+    unitcircle : bool, default: True
         If a unit circle is drawn.
-    zeromarker : marker. Default: 'o'
+    zeromarker : marker, default: 'o'
         Marker to use for zeros.
-    polemarker : marker. Default: 'x'
+    polemarker : marker, default: 'x'
         Marker to use for poles.
     markercolor : color
-        Color to use for pole and zero markers. Default: None
-    zerofillstyle : fill style. Default: 'none'
+        Color to use for pole and zero markers, default: None
+    zerofillstyle : fill style, default: 'none'
         Fill style to use for zeros.
-    polefillstyle : fill style. Default: 'none'
+    polefillstyle : fill style, default: 'none'
         Fill style to use for poles.
-    reallabel : str or None, Default None
+    reallabel : str, optional
         Label for real axis. None gives "Real part".
-    imaglabel : str or None, Default: None
+    imaglabel : str, optional
         Label for imaginary axis. None gives "Imaginary part".
     **kwargs
         Additional arguments.

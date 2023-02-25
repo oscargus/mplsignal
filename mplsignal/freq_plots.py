@@ -59,21 +59,21 @@ def freqz(
         The gain of pole-zero-based transfer function.
     w : integer or array-like, optional
         If a single integer, compute at that many frequency points in the
-        range :math:`[0, \\pi]`. Default: 512.
+        range :math:`[0, \\pi]`, default: 512.
         If array-like, frequencies to determine transfer function at.
-    freq_units : {'rad', 'deg', 'norm', 'fs', 'normfs'}. Default: 'rad'
+    freq_units : {'rad', 'deg', 'norm', 'fs', 'normfs'}, default: 'rad'
         Units for frequency axes.
-    phase_units : {'rad', 'deg'}. Default: 'rad'
+    phase_units : {'rad', 'deg'}, default: 'rad'
         Units for phase.
     ax : :class:`~matplotlib.axes.Axes` or iterable of :class:`~matplotlib.axes.Axes`,\
  optional
         Axes or iterable of Axes to plot in. If None, create required Axes.
     style : {'stacked', 'twin', 'magnitude', 'phase', 'group_delay', \
-'tristacked'}. Default: 'stacked'
+'tristacked'}, default: 'stacked'
         Plotting style.
-    magnitude_scale : {'linear', 'log'}. Default: 'log'
+    magnitude_scale : {'linear', 'log'}, default: 'log'
         Whether magnitude is plotted in linear or logarithmic (dB) scale.
-    frequency_scale : {'linear', 'log'}. Default: 'linear'
+    frequency_scale : {'linear', 'log'}, default: 'linear'
         Whether frequency is plotted in linear or logarithmic scale.
     whole : bool, optional
         Plot from 0 to :math:`2\\pi` if True. Otherwise, plot from 0 to
