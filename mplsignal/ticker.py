@@ -102,15 +102,15 @@ class FactorFormatter(Formatter):
         """
         if x == 0.0:
             return "$0$"
-        factormult = x / self._factor
-        if abs(factormult - 1.0) < 1e-9:
+        factor_mult = x / self._factor
+        if abs(factor_mult - 1.0) < 1e-9:
             return fr"${self._name}$"
-        if abs(factormult + 1.0) < 1e-9:
+        if abs(factor_mult + 1.0) < 1e-9:
             return fr"$-{self._name}$"
-        factormult = round(factormult, self._digits)
-        if _is_close_to_int(factormult):
-            factormult = round(factormult)
-        return fr"${factormult}{self._name}$"
+        factor_mult = round(factor_mult, self._digits)
+        if _is_close_to_int(factor_mult):
+            factor_mult = round(factor_mult)
+        return fr"${factor_mult}{self._name}$"
 
 
 class PiFormatter(FactorFormatter):

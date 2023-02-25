@@ -243,10 +243,10 @@ def _plot_plane(
     ret = []
     if zeros is not None:
         zeros_d = _get_multiples(zeros)
-        xpos, ypos, texts_x, texts_y, texts = _get_positions(zeros_d)
+        x_pos, y_pos, texts_x, texts_y, texts = _get_positions(zeros_d)
         ax.plot(
-            xpos,
-            ypos,
+            x_pos,
+            y_pos,
             marker=zeromarker,
             ls='none',
             fillstyle=zerofillstyle,
@@ -257,10 +257,10 @@ def _plot_plane(
 
     if poles is not None:
         poles_d = _get_multiples(poles)
-        xpos, ypos, texts_x, texts_y, texts = _get_positions(poles_d)
+        x_pos, y_pos, texts_x, texts_y, texts = _get_positions(poles_d)
         ax.plot(
-            xpos,
-            ypos,
+            x_pos,
+            y_pos,
             marker=polemarker,
             fillstyle=polefillstyle,
             ls='none',

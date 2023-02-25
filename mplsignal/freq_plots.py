@@ -31,8 +31,8 @@ def freqz(
     poles=None,
     gain=1,
     w=None,
-    freq_units='rad',
-    phase_units='rad',
+    freq_unit='rad',
+    phase_unit='rad',
     ax=None,
     style='stacked',
     magnitude_scale='log',
@@ -61,10 +61,10 @@ def freqz(
         If a single integer, compute at that many frequency points in the
         range :math:`[0, \\pi]`, default: 512.
         If array-like, frequencies to determine transfer function at.
-    freq_units : {'rad', 'deg', 'norm', 'fs', 'normfs'}, default: 'rad'
-        Units for frequency axes.
-    phase_units : {'rad', 'deg'}, default: 'rad'
-        Units for phase.
+    freq_unit : {'rad', 'deg', 'norm', 'fs', 'normfs'}, default: 'rad'
+        Unit for frequency axes.
+    phase_unit : {'rad', 'deg'}, default: 'rad'
+        Unit for phase.
     ax : :class:`~matplotlib.axes.Axes` or iterable of :class:`~matplotlib.axes.Axes`,\
  optional
         Axes or iterable of Axes to plot in. If None, create required Axes.
@@ -78,7 +78,7 @@ def freqz(
     whole : bool, optional
         Plot from 0 to :math:`2\\pi` if True. Otherwise, plot from 0 to
         :math:`\\pi`.
-    include_nyquist: bool, optional
+    include_nyquist : bool, optional
         If *whole* is False and *w* is an integer, setting *include_nyquist*
         to True will include the last frequency (Nyquist frequency) and is
         otherwise ignored.
@@ -106,10 +106,8 @@ def freqz(
     if den is not None and poles is not None:
         raise ValueError("At most one of 'den' and 'poles' must be provided.")
 
-    _api.check_in_iterable(
-        ('rad', 'deg', 'norm', 'fs', 'normfs'), freq_units=freq_units
-    )
-    _api.check_in_iterable(('rad', 'deg'), phase_units=phase_units)
+    _api.check_in_iterable(('rad', 'deg', 'norm', 'fs', 'normfs'), freq_unit=freq_unit)
+    _api.check_in_iterable(('rad', 'deg'), phase_unit=phase_unit)
     _api.check_in_iterable(
         ('stacked', 'twin', 'magnitude', 'phase', 'group_delay', 'tristacked'),
         style=style,
@@ -149,8 +147,8 @@ def freqz(
         h,
         ax=ax,
         style=style,
-        freq_units=freq_units,
-        phase_units=phase_units,
+        freq_unit=freq_unit,
+        phase_unit=phase_unit,
         magnitude_scale=magnitude_scale,
         frequency_scale=frequency_scale,
         fs=fs,
@@ -161,11 +159,11 @@ def freqz(
 def _plot_h(
     w,
     h,
-    fs,
+    fs=None,
     ax=None,
     style='stacked',
-    freq_units='rad',
-    phase_units='rad',
+    freq_unit='rad',
+    phase_unit='rad',
     magnitude_scale='log',
     frequency_scale='linear',
     **kwargs,
@@ -180,8 +178,8 @@ def _plot_h(
     fs
     ax
     style
-    freq_units
-    phase_units
+    freq_unit
+    phase_unit
     magnitude_scale
     frequency_scale
     **kwargs
@@ -192,8 +190,8 @@ def _plot_h(
         'maglabel',
         'Magnitude, dB' if magnitude_scale == 'log' else "Magnitude",
     )
-    phaselabel = kwargs.get('phaselabel', 'Phase, %s' % (phase_units))
-    freqlabel = kwargs.get('freqlabel', _get_freq_units_text(freq_units))
+    phaselabel = kwargs.get('phaselabel', 'Phase, %s' % (phase_unit))
+    freqlabel = kwargs.get('freqlabel', _get_freq_unit_text(freq_unit))
 
     group_delay_label = kwargs.get('gdlabel', 'Group delay, samples')
     if style in ('stacked', 'twin'):
@@ -234,7 +232,7 @@ def _plot_h(
             h,
             xmin=minx,
             xmax=maxx,
-            phase_units=phase_units,
+            phase_unit=phase_unit,
             ylabel=phaselabel,
             xlabel=(freqlabel if style == 'stacked' else None),
             fs=fs,
@@ -282,8 +280,8 @@ def _plot_h(
             h,
             xmin=minx,
             xmax=maxx,
-            freq_units=freq_units,
-            phase_units=phase_units,
+            freq_unit=freq_unit,
+            phase_unit=phase_unit,
             ylabel=phaselabel,
             xlabel=freqlabel,
             frequency_scale=frequency_scale,
@@ -320,7 +318,7 @@ def _plot_h(
             h,
             xmin=minx,
             xmax=maxx,
-            phase_units=phase_units,
+            phase_unit=phase_unit,
             ylabel=phaselabel,
             xlabel=None,
             frequency_scale=frequency_scale,
@@ -347,7 +345,7 @@ def _mag_plot_z(
     h,
     xmin=None,
     xmax=None,
-    freq_units=None,
+    freq_unit=None,
     xlabel=None,
     ylabel=None,
     xlocator=None,
@@ -361,7 +359,7 @@ def _mag_plot_z(
     magnitude = np.abs(h)
     if magnitude_scale == 'log':
         magnitude = 20 * np.log10(np.abs(h))
-    wscale = _get_freq_scale(freq_units, fs)
+    wscale = _get_freq_scale(freq_unit, fs)
     w = wscale * w
     ax.plot(w, magnitude, **kwargs)
 
@@ -371,7 +369,7 @@ def _mag_plot_z(
         ax.set_ylabel(ylabel)
 
     if xlocator is None:
-        xlocator = _set_freq_formatter(freq_units, ax.xaxis)
+        xlocator = _set_freq_formatter(freq_unit, ax.xaxis)
     if xlocator is not None:
         ax.xaxis.set_major_locator(xlocator)
 
@@ -394,8 +392,8 @@ def _phase_plot_z(
     h,
     xmin=None,
     xmax=None,
-    freq_units=None,
-    phase_units=None,
+    freq_unit=None,
+    phase_unit=None,
     xlabel=None,
     ylabel=None,
     xlocator=None,
@@ -406,9 +404,9 @@ def _phase_plot_z(
 ):
     """Plot phase response"""
     phase = np.unwrap(np.angle(h))
-    if phase_units == 'deg':
+    if phase_unit == 'deg':
         phase = 180 / np.pi * phase
-    wscale = _get_freq_scale(freq_units, fs)
+    wscale = _get_freq_scale(freq_unit, fs)
     w = wscale * w
     ax.plot(w, phase, **kwargs)
 
@@ -418,12 +416,12 @@ def _phase_plot_z(
         ax.set_ylabel(ylabel)
 
     if xlocator is None:
-        xlocator = _set_freq_formatter(freq_units, ax.xaxis)
+        xlocator = _set_freq_formatter(freq_unit, ax.xaxis)
     if xlocator is not None:
         ax.xaxis.set_major_locator(xlocator)
 
     if ylocator is None:
-        ylocator = _set_phase_formatter(phase_units, ax.yaxis)
+        ylocator = _set_phase_formatter(phase_unit, ax.yaxis)
     if ylocator is not None:
         ax.yaxis.set_major_locator(ylocator)
 
@@ -443,7 +441,7 @@ def _group_delay_plot_z(
     h,
     xmin=None,
     xmax=None,
-    freq_units=None,
+    freq_unit=None,
     xlabel=None,
     ylabel=None,
     xlocator=None,
@@ -454,7 +452,7 @@ def _group_delay_plot_z(
 ):
     """Plot group delay."""
     gd, w = _utils.group_delay_from_h(w, h)
-    wscale = _get_freq_scale(freq_units, fs)
+    wscale = _get_freq_scale(freq_unit, fs)
     w = wscale * w
 
     ax.plot(w, gd, **kwargs)
@@ -465,7 +463,7 @@ def _group_delay_plot_z(
         ax.set_ylabel(ylabel)
 
     if xlocator is None:
-        xlocator = _set_freq_formatter(freq_units, ax.xaxis)
+        xlocator = _set_freq_formatter(freq_unit, ax.xaxis)
     if xlocator is not None:
         ax.xaxis.set_major_locator(xlocator)
 
@@ -547,45 +545,47 @@ def freqz_zpk(zeros, poles, gain=1, **kwargs):
     return freqz(zeros=zeros, poles=poles, gain=gain, **kwargs)
 
 
-def _get_freq_scale(freq_units, fs):
+def _get_freq_scale(freq_unit, fs):
     """Return scale factor based on named option."""
-    if freq_units == 'deg':
+    if freq_unit == 'deg':
         return 180 / np.pi
-    if freq_units in ('norm', 'normfs'):
+    if freq_unit in ('norm', 'normfs'):
         return 1 / (2 * np.pi)
-    if freq_units == 'fs':
+    if freq_unit == 'fs':
+        if fs is None:
+            raise ValueError("Cannot use freq_unit = 'fs' without providing fs")
         return fs / (2 * np.pi)
     return 1
 
 
-def _set_freq_formatter(freq_units, axis):
+def _set_freq_formatter(freq_unit, axis):
     """Set major formatter for frequency based on named option."""
-    if freq_units == 'deg':
+    if freq_unit == 'deg':
         axis.set_major_formatter(DegreeFormatter())
         return DegreeLocator()
-    if freq_units in ('fs', 'norm'):
+    if freq_unit in ('fs', 'norm'):
         return None
-    if freq_units == 'normfs':
+    if freq_unit == 'normfs':
         axis.set_major_formatter(SampleFrequencyFormatter(fs=2 * np.pi))
         return None
     axis.set_major_formatter(PiFormatter())
     return PiLocator()
 
 
-def _get_freq_units_text(freq_units):
+def _get_freq_unit_text(freq_unit):
     """Return frequency axis label based on named option."""
-    if freq_units == 'deg':
+    if freq_unit == 'deg':
         return "Frequency, deg/sample"
-    if freq_units in ('norm', 'normfs'):
+    if freq_unit in ('norm', 'normfs'):
         return 'Normalized frequency'
-    if freq_units == 'fs':
+    if freq_unit == 'fs':
         return "Frequency, Hz"
     return "Frequency, rad/sample"
 
 
-def _set_phase_formatter(phase_units, axis):
-    """Set major formatter for phase based on units"""
-    if phase_units == 'deg':
+def _set_phase_formatter(phase_unit, axis):
+    """Set major formatter for phase based on unit."""
+    if phase_unit == 'deg':
         axis.set_major_formatter(DegreeFormatter())
         return DegreeLocator()
     axis.set_major_formatter(PiFormatter())

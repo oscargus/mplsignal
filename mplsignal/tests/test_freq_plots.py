@@ -5,9 +5,10 @@
 # Distributed under the terms of the Modified BSD License.
 
 
-import pytest
 import matplotlib.pyplot as plt
+import pytest
 from matplotlib.testing.decorators import image_comparison
+
 from mplsignal import freqz
 
 
@@ -124,12 +125,12 @@ def test_freqz_freq_units_image():
     fig, axes = plt.subplots(5, 1, figsize=(3, 10))
     num = [1, 2, 1]
     den = [1, -1.2, 0.5]
-    for i, freq_units in enumerate(('rad', 'deg', 'norm', 'normfs', 'fs')):
+    for i, freq_unit in enumerate(('rad', 'deg', 'norm', 'normfs', 'fs')):
         freqz(
             num=num,
             den=den,
             style='phase',
-            freq_units=freq_units,
+            freq_unit=freq_unit,
             ax=axes[i],
             fs=1e6,
         )
@@ -141,12 +142,12 @@ def test_freqz_phase_units_image():
     fig, axes = plt.subplots(2, 1, figsize=(3, 6))
     num = [1, 2, 1]
     den = [1, -1.2, 0.5]
-    for i, phase_units in enumerate(('rad', 'deg')):
+    for i, phase_unit in enumerate(('rad', 'deg')):
         freqz(
             num=num,
             den=den,
             style='phase',
-            phase_units=phase_units,
+            phase_unit=phase_unit,
             ax=axes[i],
         )
     plt.tight_layout()
@@ -173,12 +174,12 @@ def test_freqz_freq_units_log_image():
     fig, axes = plt.subplots(5, 1, figsize=(3, 10))
     num = [1, 2, 1]
     den = [1, -1.2, 0.5]
-    for i, freq_units in enumerate(('rad', 'deg', 'norm', 'normfs', 'fs')):
+    for i, freq_unit in enumerate(('rad', 'deg', 'norm', 'normfs', 'fs')):
         freqz(
             num=num,
             den=den,
             style='magnitude',
-            freq_units=freq_units,
+            freq_unit=freq_unit,
             ax=axes[i],
             frequency_scale='log',
             fs=1e6,
