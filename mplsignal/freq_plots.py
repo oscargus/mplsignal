@@ -11,14 +11,15 @@ __all__ = [
     "freqz_zpk",
     "freqz_fir",
 ]
-import numpy as np
 import matplotlib.pyplot as plt
-from mplsignal import _utils, _api
+import numpy as np
+
+from mplsignal import _api, _utils
 from mplsignal.ticker import (
-    PiFormatter,
-    PiLocator,
     DegreeFormatter,
     DegreeLocator,
+    PiFormatter,
+    PiLocator,
     SampleFrequencyFormatter,
 )
 
@@ -169,6 +170,26 @@ def _plot_h(
     frequency_scale='linear',
     **kwargs,
 ):
+    """
+    Work horse for the `freq*` functions.
+
+    Parameters
+    ----------
+    w
+    h
+    fs
+    ax
+    style
+    freq_units
+    phase_units
+    magnitude_scale
+    frequency_scale
+    kwargs
+
+    Returns
+    -------
+
+    """
     minx = kwargs.pop('xmin', w.min())
     maxx = kwargs.pop('xmax', w.max())
     maglabel = kwargs.get(
@@ -340,7 +361,7 @@ def _mag_plot_z(
     fs=1,
     **kwargs,
 ):
-    "Plot magnitude response"
+    """Plot magnitude response"""
     magnitude = np.abs(h)
     if magnitude_scale == 'log':
         magnitude = 20 * np.log10(np.abs(h))
@@ -387,7 +408,7 @@ def _phase_plot_z(
     fs=1,
     **kwargs,
 ):
-    "Plot phase response"
+    """Plot phase response"""
     phase = np.unwrap(np.angle(h))
     if phase_units == 'deg':
         phase = 180 / np.pi * phase
@@ -531,6 +552,7 @@ def freqz_zpk(zeros, poles, gain=1, **kwargs):
 
 
 def _get_freq_scale(freq_units, fs):
+    """Return scale factor based on named option."""
     if freq_units == 'deg':
         return 180 / np.pi
     if freq_units in ('norm', 'normfs'):
@@ -541,6 +563,7 @@ def _get_freq_scale(freq_units, fs):
 
 
 def _set_freq_formatter(freq_units, axis):
+    """Set major formatter for frequency based on named option."""
     if freq_units == 'deg':
         axis.set_major_formatter(DegreeFormatter())
         return DegreeLocator()
@@ -554,6 +577,7 @@ def _set_freq_formatter(freq_units, axis):
 
 
 def _get_freq_units_text(freq_units):
+    """Return frequency axis label based on named option."""
     if freq_units == 'deg':
         return "Frequency, deg/sample"
     if freq_units in ('norm', 'normfs'):
@@ -564,6 +588,7 @@ def _get_freq_units_text(freq_units):
 
 
 def _set_phase_formatter(phase_units, axis):
+    """Set major formatter for phase based on units"""
     if phase_units == 'deg':
         axis.set_major_formatter(DegreeFormatter())
         return DegreeLocator()

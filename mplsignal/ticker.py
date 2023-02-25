@@ -15,7 +15,23 @@ def _is_close_to_int(x):
 
 
 class FactorLocator(Locator):
+    """Locator for finding multiples of *factor*."""
+
     def __init__(self, factor=1.0, nbins=None, **kwargs):
+        """
+        Locator for finding multiples of *factor*.
+
+        Wraps an :class:`~matplotlib.tickers.MaxNLocator`.
+
+        Parameters
+        ----------
+        factor : float
+            The factor to extract.
+        nbins :
+            Number of bins to aim for, see `~matplotlib.tickers.MaxNLocator`.
+        **kwargs :
+            Additional arguments passed to `~matplotlib.tickers.MaxNLocator`.
+        """
         steps = kwargs.pop('steps', [1, 2, 3, 4, 5, 6, 8, 10])
         if nbins is None:
             nbins = 'auto'

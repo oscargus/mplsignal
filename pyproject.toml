@@ -68,3 +68,8 @@ line-length = 88
 testpaths = [
     "mplsignal/tests"
 ]
+
+[tool.isort]
+profile = "black"
+line_length = 88
+src_paths = ["mplsignal"]
