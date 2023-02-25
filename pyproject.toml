@@ -4,7 +4,7 @@ description = "Matplotlib extension for signal processing-related plots"
 authors = [
 {name = "Oscar Gustafsson", email = "oscar.gustafsson@gmail.com"}
 ]
-requires-python = ">=3.6"
+requires-python = ">=3.8"
 license = {file = "LICENSE"}
 readme = "README.md"
 dynamic = [
@@ -16,12 +16,18 @@ dependencies = [
     ]
 
 classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Framework :: Matplotlib",
     "Intended Audience :: Developers",
     "Intended Audience :: Science/Research",
     "License :: OSI Approved :: BSD License",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
-    "Framework :: Matplotlib",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    'Topic :: Scientific/Engineering :: Visualization',
 ]
 
 [project.optional-dependencies]
@@ -57,7 +63,7 @@ fallback_version = "0.0+UNKNOWN"
 
 [tool.black]
 skip-string-normalization = true
-line-length = 79
+line-length = 88
 
 [tool.pytest.ini_options]
 testpaths = [

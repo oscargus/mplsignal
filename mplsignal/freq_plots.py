@@ -196,9 +196,7 @@ def _plot_h(
                 ax = ax[0].figure.axes
             fig = ax[0].figure
         if len(ax) < 2:
-            raise ValueError(
-                "Must have at least two axes for 'stacked' or 'twin'."
-            )
+            raise ValueError("Must have at least two axes for 'stacked' or 'twin'.")
         _mag_plot_z(
             ax[0],
             w,
