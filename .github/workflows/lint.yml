@@ -18,10 +18,5 @@ jobs:
            src: "."
       - name: docstrings
         run: |
-          pip install flit
-          pushd $(mktemp -d)
-          git clone https://github.com/Carreau/velin.git --single-branch --depth 1
-          cd velin
-          flit install
-          popd
-          velin . --check
+          pip install velin
+          velin . --check --black

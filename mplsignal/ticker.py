@@ -11,6 +11,7 @@ from matplotlib.ticker import Formatter, Locator, MaxNLocator
 
 
 def _is_close_to_int(x):
+    """Return True if *x* is close to an integer."""
     return math.isclose(x, round(x))
 
 
@@ -127,7 +128,6 @@ class SampleFrequencyFormatter(FactorFormatter):
     """
 
     def __init__(self, digits=3, fs=1.0, **kwargs):
-        """ """
         super().__init__(
             digits=digits, factor=fs / (2 * math.pi), name=r"f_s", **kwargs
         )

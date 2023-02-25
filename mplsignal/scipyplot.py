@@ -33,8 +33,9 @@ def freqz(w, h):
     Examples
     --------
     >>> from scipy import signal
-    >>> from mplsignal import scipyplot
-    >>> signal.freqz([1, 1, 1, 1], plot=scipyplot.freqz)
+    ... from mplsignal import scipyplot
+    ...
+    ... signal.freqz([1, 1, 1, 1], plot=scipyplot.freqz)
 
     """
     _plot_h(w, h)
@@ -61,8 +62,9 @@ def freqz_twin(w, h):
     Examples
     --------
     >>> from scipy import signal
-    >>> from mplsignal import scipyplot
-    >>> signal.freqz([1, 1, 1, 1], plot=scipyplot.freqz_twin)
+    ... from mplsignal import scipyplot
+    ...
+    ... signal.freqz([1, 1, 1, 1], plot=scipyplot.freqz_twin)
 
     """
     _plot_h(w, h, style='twin')
@@ -88,8 +90,9 @@ def freqz_magnitude(w, h):
     Examples
     --------
     >>> from scipy import signal
-    >>> from mplsignal import scipyplot
-    >>> signal.freqz([1, 1, 1, 1], plot=scipyplot.freqz_magnitude)
+    ... from mplsignal import scipyplot
+    ...
+    ... signal.freqz([1, 1, 1, 1], plot=scipyplot.freqz_magnitude)
 
     """
     _plot_h(w, h, style='magnitude')
@@ -115,8 +118,9 @@ def freqz_phase(w, h):
     Examples
     --------
     >>> from scipy import signal
-    >>> from mplsignal import scipyplot
-    >>> signal.freqz([1, 1, 1, 1], plot=scipyplot.freqz_phase)
+    ... from mplsignal import scipyplot
+    ...
+    ... signal.freqz([1, 1, 1, 1], plot=scipyplot.freqz_phase)
 
     """
     _plot_h(w, h, style='phase')

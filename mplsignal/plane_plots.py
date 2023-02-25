@@ -170,6 +170,24 @@ def splane_tf(num=None, den=None, **kwargs):
 
 
 def _get_positions(items):
+    """
+    Convert complex poles and zeros to x- and y-positions.
+
+    For poles and zeros with multiplicity, add multiplicity strings
+    and x- and y-positions.
+
+    Parameters
+    ----------
+    items
+
+    Returns
+    -------
+    xpos
+    ypos
+    texts_x
+    texts_y
+    texts
+    """
     xpos = []
     ypos = []
     texts_x = []
@@ -201,6 +219,27 @@ def _plot_plane(
     ax=None,
     **kwargs,
 ):
+    """
+    Internal function for plotting poles and zeros.
+
+    Parameters
+    ----------
+    zeros
+    poles
+    zeromarker
+    polemarker
+    markercolor
+    zerofillstyle
+    polefillstyle
+    reallabel
+    imaglabel
+    ax
+    **kwargs
+
+    Returns
+    -------
+    List of texts.
+    """
     ret = []
     if zeros is not None:
         zeros_d = _get_multiples(zeros)
