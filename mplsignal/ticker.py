@@ -1,14 +1,13 @@
+# Copyright (c) Oscar Gustafsson.
+# Distributed under the terms of the Modified BSD License.
 """
 This module contains Matplotlib :class:`~matplotlib.tickers.Ticker` and
 :class:`~matplotlib.tickers.Locator` classes suitable for signal processing
 plots.
 """
-
-# Copyright (c) Oscar Gustafsson.
-# Distributed under the terms of the Modified BSD License.
+import math
 
 from matplotlib.ticker import Formatter, Locator, MaxNLocator
-import math
 
 
 def _is_close_to_int(x):

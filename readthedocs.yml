@@ -1,6 +1,6 @@
 version: 2
 python:
-    version: 3.8
+    version: 3.9
     install:
       - method: pip
         path: .
@@ -10,4 +10,3 @@ python:
 # Build documentation in the docs/ directory with Sphinx
 sphinx:
   configuration: docs/conf.py
-

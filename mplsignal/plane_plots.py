@@ -1,9 +1,8 @@
+# Copyright (c) Oscar Gustafsson.
+# Distributed under the terms of the Modified BSD License.
 """
 Functions for pole-zero plots.
 """
-
-# Copyright (c) Oscar Gustafsson.
-# Distributed under the terms of the Modified BSD License.
 
 __all__ = [
     "zplane",
