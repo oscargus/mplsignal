@@ -1,5 +1,8 @@
-#!/usr/bin/env python
-# coding: utf-8
+"""
+This module contains Matplotlib :class:`~matplotlib.tickers.Ticker` and
+:class:`~matplotlib.tickers.Locator` classes suitable for signal processing
+plots.
+"""
 
 # Copyright (c) Oscar Gustafsson.
 # Distributed under the terms of the Modified BSD License.

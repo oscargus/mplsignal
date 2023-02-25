@@ -6,7 +6,7 @@
 """
 The module contains utility functions to easily interact with SciPy.
 
-The SciPy functions :func:`scipy.signal.freqz` and  :func:`scipy.signal.freqz`
+The SciPy functions :func:`scipy.signal.freqs` and  :func:`scipy.signal.freqz`
 have a `plot` argument to provide a plotting callback function.
 The functions provided in this module is aimed to be used as such a callback.
 """

@@ -12,8 +12,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ['3.8', '3.9', '3.10']
-        mpl-version: ['3.4', '3.5', 'latest']
+        python-version: ['3.8', '3.9', '3.10', '3.11']
+        mpl-version: ['3.6', '3.7', 'latest']
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -61,7 +61,7 @@ jobs:
     strategy:
       matrix:
         python-version: ['3.10']
-        mpl-version: ['3.5', 'latest']
+        mpl-version: ['3.7', 'latest']
     steps:
       - name: Checkout
         uses: actions/checkout@v3
