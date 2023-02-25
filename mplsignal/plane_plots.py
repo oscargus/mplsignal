@@ -110,8 +110,9 @@ def zplane(
         imaglabel=imaglabel,
         **kwargs,
     )
-    for _ in range(adjust):
-        adjustText.adjust_text(texts)
+    if texts:
+        for _ in range(adjust):
+            adjustText.adjust_text(texts)
     ax.axis('equal')
     return ax
 
