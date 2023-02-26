@@ -57,7 +57,7 @@ def freqz(
         Poles of transfer function.
     gain : float, optional
         The gain of pole-zero-based transfer function.
-    w : integer or array-like, optional
+    w : int or array-like, optional
         If a single integer, compute at that many frequency points in the
         range :math:`[0, \\pi]`, default: 512.
         If array-like, frequencies to determine transfer function at.
@@ -90,7 +90,6 @@ def freqz(
     Returns
     -------
     None.
-
     """
     # if Axes not provided
 
@@ -355,7 +354,7 @@ def _mag_plot_z(
     fs=1,
     **kwargs,
 ):
-    """Plot magnitude response"""
+    """Plot magnitude response."""
     magnitude = np.abs(h)
     if magnitude_scale == 'log':
         magnitude = 20 * np.log10(np.abs(h))
@@ -402,7 +401,7 @@ def _phase_plot_z(
     fs=1,
     **kwargs,
 ):
-    """Plot phase response"""
+    """Plot phase response."""
     phase = np.unwrap(np.angle(h))
     if phase_unit == 'deg':
         phase = 180 / np.pi * phase
@@ -497,7 +496,6 @@ def freqz_tf(num, den, **kwargs):
     Returns
     -------
     None.
-
     """
     return freqz(num=num, den=den, **kwargs)
 
@@ -516,7 +514,6 @@ def freqz_fir(num, **kwargs):
     Returns
     -------
     None.
-
     """
     return freqz(num=num, den=np.array([1.0]), **kwargs)
 
@@ -540,7 +537,6 @@ def freqz_zpk(zeros, poles, gain=1, **kwargs):
     Returns
     -------
     None.
-
     """
     return freqz(zeros=zeros, poles=poles, gain=gain, **kwargs)
 

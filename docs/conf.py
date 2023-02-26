@@ -79,3 +79,6 @@ html_theme = 'furo'
 html_static_path = ['_static']
 
 autosummary_generate = False
+
+# Uncomment to validate numpydoc
+# numpydoc_validation_checks = {"all"}
