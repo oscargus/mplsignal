@@ -36,7 +36,7 @@ def zplane(
     **kwargs,
 ):
     r"""
-    Plot the z-plane of a discrete-time system
+    Plot the z-plane of a discrete-time system.
 
     Parameters
     ----------
@@ -69,12 +69,11 @@ def zplane(
     imaglabel : str, optional
         Label for imaginary axis. None gives "Imaginary part".
     **kwargs
-        Additional arguments.
+        Additional arguments passed to :meth:`matplotlib.Axes.plot`.
 
     Returns
     -------
     None.
-
     """
     # if Axes not provided
     if ax is None:
@@ -133,8 +132,7 @@ def splane(
 
 def zplane_tf(num=None, den=None, **kwargs):
     """
-    Plot the z-plane of a discrete-time system represented as a transfer
-    function.
+    Plot the z-plane of a discrete-time system represented as a transfer function.
 
     Parameters
     ----------
@@ -152,8 +150,7 @@ def zplane_tf(num=None, den=None, **kwargs):
 
 def splane_tf(num=None, den=None, **kwargs):
     """
-    Plot the s-plane of a continuous-time system represented as a transfer
-    function.
+    Plot the s-plane of a continuous-time system represented as a transfer function.
 
     Parameters
     ----------
