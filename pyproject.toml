@@ -45,6 +45,7 @@ doc = [
      "sphinx_gallery>=0.8.2",
      "autoapi",
      "furo",
+     "scipy"
      ]
 
 [project.urls]
