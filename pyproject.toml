@@ -12,7 +12,7 @@ dynamic = [
 ]
 dependencies = [
     "matplotlib",
-    "adjustText"
+    "adjustText!=0.8"
     ]
 
 classifiers = [
