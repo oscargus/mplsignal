@@ -49,14 +49,25 @@ doc = [
      ]
 
 [project.urls]
-homepage = "https://github.com/oscargus/mplsignal"
+Homepage = "https://github.com/oscargus/mplsignal"
+Documentation = "https://mplsignal.readthedocs.io/"
 
 [build-system]
-requires = ["setuptools>=45", "setuptools_scm[toml]>=6.2"]
+requires = ["setuptools>=45", "setuptools_scm[toml]>=6.2", "wheel"]
 build-backend = "setuptools.build_meta"
 
+[tool.setuptools]
+platforms = ["any"]
+zip-safe = false
+include-package-data = false
+
+[tool.setuptools.packages.find]
+where = ["lib"]
+include = ["mplsignal*"]
+exclude = ["doc*", "examples*", "tests*"]
+
 [tool.setuptools_scm]
-write_to = "mplsignal/_version.py"
+write_to = "lib/mplsignal/_version.py"
 version_scheme = "release-branch-semver"
 local_scheme = "node-and-date"
 parentdir_prefix_version = "mplsignal-"
