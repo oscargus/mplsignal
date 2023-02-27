@@ -40,7 +40,7 @@ to ask it is: https://discourse.matplotlib.org/c/3rdparty/18.
    examples/index
    api/index
    Contributing
-
+   changelog
 
 Indices and tables
 ==================
@@ -48,3 +48,4 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
+* :ref:`changelog`
