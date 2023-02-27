@@ -33,6 +33,8 @@ def zplane(
     polefillstyle='none',
     reallabel=None,
     imaglabel=None,
+    zero_props=None,
+    pole_props=None,
     multiplicity_props=None,
     **kwargs,
 ):
@@ -69,9 +71,24 @@ def zplane(
         Label for real axis. None gives "Real part".
     imaglabel : str, optional
         Label for imaginary axis. None gives "Imaginary part".
+    zero_props : dict, optional
+        Additional arguments for the zero markers when calling
+        :meth:`~matplotlib.Axes.plot`. This can be used instead of *zeromarker*
+        ('marker'), *markercolor* ('color'), and/or *zerofillstyle* ('fillstyle'),
+        but also for all other arguments of :meth:`~matplotlib.Axes.plot`.
+        Any arguments provided here will override other arguments.
+        .. versionadded:: 0.2.0
+    pole_props : dict, optional
+        Additional arguments for the zero markers when calling
+        :meth:`~matplotlib.Axes.plot`. This can be used instead of *polemarker*
+        ('marker'), *markercolor* ('color'), and/or *polefillstyle* ('fillstyle'),
+        but also for all other arguments of :meth:`~matplotlib.Axes.plot`.
+        Any arguments provided here will override other arguments.
+        .. versionadded:: 0.2.0
     multiplicity_props : dict, optional
         Arguments to :meth:`~matplotlib.Axes.text` for changing the
         properties of the texts showing multiplicity.
+        .. versionadded:: 0.2.0
     **kwargs
         Additional arguments passed to :meth:`matplotlib.Axes.plot`.
 
@@ -90,6 +107,31 @@ def zplane(
         reallabel = "Real part"
     if imaglabel is None:
         imaglabel = "Imaginary part"
+
+    # Update zero properties
+    if zero_props is None:
+        zero_props = {}
+    if "marker" not in zero_props:
+        zero_props["marker"] = zeromarker
+    if "fillstyle" not in zero_props:
+        zero_props["fillstyle"] = zerofillstyle
+    if "color" not in zero_props:
+        zero_props["color"] = markercolor
+    if "ls" not in zero_props and "linestyle" not in zero_props:
+        zero_props["ls"] = 'none'
+
+    # Update pole properties
+    if pole_props is None:
+        pole_props = {}
+    if "marker" not in pole_props:
+        pole_props["marker"] = polemarker
+    if "fillstyle" not in pole_props:
+        pole_props["fillstyle"] = polefillstyle
+    if "color" not in pole_props:
+        pole_props["color"] = markercolor
+    if "ls" not in pole_props and "linestyle" not in pole_props:
+        pole_props["ls"] = 'none'
+
     if unitcircle:
         ax.add_patch(
             plt.Circle(
@@ -103,14 +145,11 @@ def zplane(
     texts = _plot_plane(
         zeros,
         poles,
-        zeromarker=zeromarker,
-        polemarker=polemarker,
-        markercolor=markercolor,
         ax=ax,
-        zerofillstyle=zerofillstyle,
-        polefillstyle=polefillstyle,
         reallabel=reallabel,
         imaglabel=imaglabel,
+        zero_props=zero_props,
+        pole_props=pole_props,
         multiplicity_props=multiplicity_props,
         **kwargs,
     )
@@ -211,14 +250,11 @@ def _get_positions(items):
 def _plot_plane(
     zeros,
     poles,
-    zeromarker,
-    polemarker,
-    markercolor,
-    zerofillstyle,
-    polefillstyle,
     reallabel,
     imaglabel,
     ax=None,
+    zero_props=None,
+    pole_props=None,
     multiplicity_props=None,
     **kwargs,
 ):
@@ -229,14 +265,11 @@ def _plot_plane(
     ----------
     zeros
     poles
-    zeromarker
-    polemarker
-    markercolor
-    zerofillstyle
-    polefillstyle
     reallabel
     imaglabel
     ax
+    zero_props
+    pole_props
     multiplicity_props
     **kwargs
 
@@ -248,29 +281,23 @@ def _plot_plane(
     if multiplicity_props is None:
         multiplicity_props = {}
     if zeros is not None:
-        zeros_d = _get_multiples(zeros)
+        zeros_d = _get_multiplicities(zeros)
         x_pos, y_pos, texts = _get_positions(zeros_d)
         ax.plot(
             x_pos,
             y_pos,
-            marker=zeromarker,
-            ls='none',
-            fillstyle=zerofillstyle,
-            color=markercolor,
+            **zero_props,
             **kwargs,
         )
         ret += [ax.text(x, y, text, **multiplicity_props) for x, y, text in texts]
 
     if poles is not None:
-        poles_d = _get_multiples(poles)
+        poles_d = _get_multiplicities(poles)
         x_pos, y_pos, texts = _get_positions(poles_d)
         ax.plot(
             x_pos,
             y_pos,
-            marker=polemarker,
-            fillstyle=polefillstyle,
-            ls='none',
-            color=markercolor,
+            **pole_props,
             **kwargs,
         )
         ret += [ax.text(x, y, text, **multiplicity_props) for x, y, text in texts]
@@ -285,7 +312,7 @@ def _is_close(x, y):
     return math.isclose(np.real(x), np.real(y)) and math.isclose(np.imag(x), np.imag(y))
 
 
-def _get_multiples(x):
+def _get_multiplicities(x):
     """Turn list of poles/zeros into a dict with location and multiplicity."""
     res = dict()
     for val in x:
