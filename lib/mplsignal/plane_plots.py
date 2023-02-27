@@ -45,50 +45,70 @@ def zplane(
     ----------
     zeros : array-like, optional
         Zeros of transfer function.
+
     poles : array-like, optional
         Poles of transfer function.
+
     ax : :class:`~matplotlib.axes.Axes`, optional
         Axes to plot in.
+
     adjust : int, optional, default: 1
         Number of times to execute text adjustment. Set to 0 to disable.
+
     spinelinewidth : float, default: 0.2
         Line width of spines.
+
     spinecolor : color, default: 'black'
         Line color of spines.
+
     unitcircle : bool, default: True
         If a unit circle is drawn.
+
     zeromarker : marker, default: 'o'
         Marker to use for zeros.
+
     polemarker : marker, default: 'x'
         Marker to use for poles.
+
     markercolor : color
         Color to use for pole and zero markers, default: None
+
     zerofillstyle : fill style, default: 'none'
         Fill style to use for zeros.
+
     polefillstyle : fill style, default: 'none'
         Fill style to use for poles.
+
     reallabel : str, optional
         Label for real axis. None gives "Real part".
+
     imaglabel : str, optional
         Label for imaginary axis. None gives "Imaginary part".
+
     zero_props : dict, optional
         Additional arguments for the zero markers when calling
         :meth:`~matplotlib.Axes.plot`. This can be used instead of *zeromarker*
         ('marker'), *markercolor* ('color'), and/or *zerofillstyle* ('fillstyle'),
         but also for all other arguments of :meth:`~matplotlib.Axes.plot`.
         Any arguments provided here will override other arguments.
+
         .. versionadded:: 0.2.0
+
     pole_props : dict, optional
         Additional arguments for the zero markers when calling
         :meth:`~matplotlib.Axes.plot`. This can be used instead of *polemarker*
         ('marker'), *markercolor* ('color'), and/or *polefillstyle* ('fillstyle'),
         but also for all other arguments of :meth:`~matplotlib.Axes.plot`.
         Any arguments provided here will override other arguments.
+
         .. versionadded:: 0.2.0
+
     multiplicity_props : dict, optional
         Arguments to :meth:`~matplotlib.Axes.text` for changing the
         properties of the texts showing multiplicity.
+
         .. versionadded:: 0.2.0
+
     **kwargs
         Additional arguments passed to :meth:`matplotlib.Axes.plot`.
 
@@ -162,18 +182,13 @@ def zplane(
     return ax
 
 
-def splane(
-    zeros=None,
-    poles=None,
-    ax=None,
-    **kwargs,
-):
+def splane(zeros=None, poles=None, **kwargs):
     """
     Plot the s-plane of a continuous-time system.
 
     Identical to :func:`zplane`, except that *unitcircle* is False.
     """
-    return zplane(zeros=zeros, poles=poles, ax=ax, unitcircle=False, **kwargs)
+    return zplane(zeros=zeros, poles=poles, unitcircle=False, **kwargs)
 
 
 def zplane_tf(num=None, den=None, **kwargs):
