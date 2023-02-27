@@ -111,7 +111,9 @@ def zplane(
     )
     if texts:
         for _ in range(adjust):
-            adjustText.adjust_text(texts)
+            # Fix for adjustText = 0.8
+            ax.figure.draw_without_rendering()
+            adjustText.adjust_text(texts, ax=ax)
     ax.axis('equal')
     return ax
 
