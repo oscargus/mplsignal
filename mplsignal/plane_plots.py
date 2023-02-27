@@ -33,6 +33,7 @@ def zplane(
     polefillstyle='none',
     reallabel=None,
     imaglabel=None,
+    multiplicity_props=None,
     **kwargs,
 ):
     r"""
@@ -68,6 +69,9 @@ def zplane(
         Label for real axis. None gives "Real part".
     imaglabel : str, optional
         Label for imaginary axis. None gives "Imaginary part".
+    multiplicity_props : dict, optional
+        Arguments to :meth:`~matplotlib.Axes.text` for changing the
+        properties of the texts showing multiplicity.
     **kwargs
         Additional arguments passed to :meth:`matplotlib.Axes.plot`.
 
@@ -107,11 +111,14 @@ def zplane(
         polefillstyle=polefillstyle,
         reallabel=reallabel,
         imaglabel=imaglabel,
+        multiplicity_props=multiplicity_props,
         **kwargs,
     )
     if texts:
         for _ in range(adjust):
-            adjustText.adjust_text(texts)
+            # Fix for adjustText = 0.8
+            ax.figure.draw_without_rendering()
+            adjustText.adjust_text(texts, ax=ax)
     ax.axis('equal')
     return ax
 
@@ -175,32 +182,30 @@ def _get_positions(items):
 
     Parameters
     ----------
-    items
+    items : list
+        List of complex positions.
 
     Returns
     -------
-    xpos
-    ypos
-    texts_x
-    texts_y
-    texts
+    pos_x : list
+        List with x-positions for *items*.
+    pos_x : list
+        List with y-positions for *items*.
+    texts : list
+        List with (x, y, multiplicity-string)-tuples for items with multiplicity > 1.
     """
-    xpos = []
-    ypos = []
-    texts_x = []
-    texts_y = []
+    pos_x = []
+    pos_y = []
     texts = []
     for zero, mul in items.items():
         x = np.real(zero)
         y = np.imag(zero)
-        xpos.append(x)
-        ypos.append(y)
+        pos_x.append(x)
+        pos_y.append(y)
         if mul > 1:
-            texts_x.append(x)
-            texts_y.append(y)
-            texts.append(f"{mul}")
+            texts.append((x, y, f"{mul}"))
 
-    return xpos, ypos, texts_x, texts_y, texts
+    return pos_x, pos_y, texts
 
 
 def _plot_plane(
@@ -214,6 +219,7 @@ def _plot_plane(
     reallabel,
     imaglabel,
     ax=None,
+    multiplicity_props=None,
     **kwargs,
 ):
     """
@@ -231,6 +237,7 @@ def _plot_plane(
     reallabel
     imaglabel
     ax
+    multiplicity_props
     **kwargs
 
     Returns
@@ -238,9 +245,11 @@ def _plot_plane(
     List of texts.
     """
     ret = []
+    if multiplicity_props is None:
+        multiplicity_props = {}
     if zeros is not None:
         zeros_d = _get_multiples(zeros)
-        x_pos, y_pos, texts_x, texts_y, texts = _get_positions(zeros_d)
+        x_pos, y_pos, texts = _get_positions(zeros_d)
         ax.plot(
             x_pos,
             y_pos,
@@ -250,11 +259,11 @@ def _plot_plane(
             color=markercolor,
             **kwargs,
         )
-        ret += [ax.text(x, y, text) for x, y, text in zip(texts_x, texts_y, texts)]
+        ret += [ax.text(x, y, text, **multiplicity_props) for x, y, text in texts]
 
     if poles is not None:
         poles_d = _get_multiples(poles)
-        x_pos, y_pos, texts_x, texts_y, texts = _get_positions(poles_d)
+        x_pos, y_pos, texts = _get_positions(poles_d)
         ax.plot(
             x_pos,
             y_pos,
@@ -264,7 +273,7 @@ def _plot_plane(
             color=markercolor,
             **kwargs,
         )
-        ret += [ax.text(x, y, text) for x, y, text in zip(texts_x, texts_y, texts)]
+        ret += [ax.text(x, y, text, **multiplicity_props) for x, y, text in texts]
 
     ax.set_xlabel(reallabel)
     ax.set_ylabel(imaglabel)
