@@ -6,6 +6,7 @@ This module contains Matplotlib :class:`~matplotlib.tickers.Ticker` and
 plots.
 """
 import math
+from fractions import Fraction
 
 from matplotlib.ticker import Formatter, Locator, MaxNLocator
 
@@ -89,10 +90,13 @@ class FactorFormatter(Formatter):
     # individual ones
     locs = []
 
-    def __init__(self, digits=3, factor=1.0, name="constant", **kwargs):
+    def __init__(
+        self, digits=3, factor=1.0, name="constant", only_name_when_one=True, **kwargs
+    ):
         self._digits = digits
         self._factor = factor
         self._name = name
+        self._only_name_when_one = only_name_when_one
         super().__init__(**kwargs)
 
     def __call__(self, x, pos=None):
@@ -103,14 +107,15 @@ class FactorFormatter(Formatter):
         if x == 0.0:
             return "$0$"
         factor_mult = x / self._factor
-        if abs(factor_mult - 1.0) < 1e-9:
-            return fr"${self._name}$"
-        if abs(factor_mult + 1.0) < 1e-9:
-            return fr"$-{self._name}$"
+        if self._only_name_when_one:
+            if abs(factor_mult - 1.0) < 1e-9:
+                return f"${self._name}$"
+            if abs(factor_mult + 1.0) < 1e-9:
+                return f"$-{self._name}$"
         factor_mult = round(factor_mult, self._digits)
         if _is_close_to_int(factor_mult):
             factor_mult = round(factor_mult)
-        return fr"${factor_mult}{self._name}$"
+        return f"${factor_mult}{self._name}$"
 
 
 class PiFormatter(FactorFormatter):
@@ -139,4 +144,50 @@ class DegreeFormatter(FactorFormatter):
     """
 
     def __init__(self, digits=3, **kwargs):
-        super().__init__(digits=digits, factor=1, name=r"^{\circ}", **kwargs)
+        super().__init__(
+            digits=digits,
+            factor=1,
+            name=r"^{\circ}",
+            only_name_when_one=False,
+            **kwargs,
+        )
+
+
+class PiRationalFormatter(FactorFormatter):
+    r"""
+    Create a string with rational multiple of :math:`\pi`.
+    """
+
+    # some classes want to see all the locs to help format
+    # individual ones
+    locs = []
+
+    def __init__(self, digits=3, pi_always_in_numerator=True, **kwargs):
+        self._digits = digits
+        self._pi_always_in_numerator = pi_always_in_numerator
+        super().__init__(**kwargs)
+
+    def __call__(self, x, pos=None):
+        """
+        Return the format for tick value *x* at position pos.
+        ``pos=None`` indicates an unspecified location.
+        """
+        if abs(x) < 1e-9:
+            return "$0$"
+        factor_mult = x / math.pi
+        if abs(factor_mult - 1.0) < 1e-9:
+            return r"$\pi$"
+        if abs(factor_mult + 1.0) < 1e-9:
+            return r"$-\pi$"
+        sign = "-" if factor_mult < 0 else ""
+        factor_mult = abs(factor_mult)
+        factor_mult = Fraction(round(factor_mult, self._digits)).limit_denominator()
+        if factor_mult.denominator == 1:
+            return fr"${sign}{factor_mult.numerator}\pi$"
+        if self._pi_always_in_numerator:
+            if factor_mult.numerator == 1:
+                return fr"${sign}\frac{{\pi}}{{{factor_mult.denominator}}}$"
+            return fr"${sign}\frac{{{factor_mult.numerator}\pi}}{{{factor_mult.denominator}}}$"
+        return (
+            fr"${sign}\frac{{{factor_mult.numerator}}}{{{factor_mult.denominator}}}\pi$"
+        )
