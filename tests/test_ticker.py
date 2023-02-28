@@ -9,7 +9,7 @@ import math
 
 import numpy as np
 
-from mplsignal.ticker import PiFormatter, PiLocator
+from mplsignal.ticker import PiFormatter, PiLocator, PiRationalFormatter
 
 
 def test_pilocator():
@@ -62,3 +62,31 @@ def test_piformatter_adjust_digits():
     assert formatter(0) == r'$0$'
     assert formatter(0.202 * math.pi) == r'$0.2\pi$'
     assert formatter(0.20234 * math.pi) == r'$0.2\pi$'
+
+
+def test_pirationalformatter():
+    formatter = PiRationalFormatter()
+    assert formatter(math.pi) == r'$\pi$'
+    assert formatter(-math.pi) == r'$-\pi$'
+    assert formatter(2 * math.pi) == r'$2\pi$'
+    assert formatter(0.2 * math.pi) == r'$\frac{\pi}{5}$'
+    assert formatter(0.25 * math.pi) == r'$\frac{\pi}{4}$'
+    assert formatter(0.75 * math.pi) == r'$\frac{3\pi}{4}$'
+    assert formatter(-2 * math.pi) == r'$-2\pi$'
+    assert formatter(-0.2 * math.pi) == r'$-\frac{\pi}{5}$'
+    assert formatter(-0.25 * math.pi) == r'$-\frac{\pi}{4}$'
+    assert formatter(-0.75 * math.pi) == r'$-\frac{3\pi}{4}$'
+    assert formatter(0) == r'$0$'
+
+    formatter = PiRationalFormatter(pi_always_in_numerator=False)
+    assert formatter(math.pi) == r'$\pi$'
+    assert formatter(-math.pi) == r'$-\pi$'
+    assert formatter(2 * math.pi) == r'$2\pi$'
+    assert formatter(0.2 * math.pi) == r'$\frac{1}{5}\pi$'
+    assert formatter(0.25 * math.pi) == r'$\frac{1}{4}\pi$'
+    assert formatter(0.75 * math.pi) == r'$\frac{3}{4}\pi$'
+    assert formatter(-2 * math.pi) == r'$-2\pi$'
+    assert formatter(-0.2 * math.pi) == r'$-\frac{1}{5}\pi$'
+    assert formatter(-0.25 * math.pi) == r'$-\frac{1}{4}\pi$'
+    assert formatter(-0.75 * math.pi) == r'$-\frac{3}{4}\pi$'
+    assert formatter(0) == r'$0$'

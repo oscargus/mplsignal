@@ -12,6 +12,7 @@ and this project adheres to `Semantic Versioning <https://semver.org/spec/v2.0.0
 Added
 ^^^^^
 
+- ``PiRationalFormatter`` that prints rational multiples of pi.
 - ``zero_props`` and ``pole_props`` argument to ``plane_plots.*plane*``-functions
   that allows more detailed styling of pole/zero markers.
 - ``multiplicity_props`` argument to ``plane_plots.*plane*``-functions that allows
