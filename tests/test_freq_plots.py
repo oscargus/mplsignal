@@ -137,6 +137,38 @@ def test_freqz_freq_units_image():
     plt.tight_layout()
 
 
+@image_comparison(['freqz_freq_units_magnitude.png'], style='mpl20')
+def test_freqz_freq_units_magnitude_image():
+    fig, axes = plt.subplots(5, 1, figsize=(3, 10), layout='compressed')
+    num = [1, 2, 1]
+    den = [1, -1.2, 0.5]
+    for i, freq_unit in enumerate(('rad', 'deg', 'norm', 'normfs', 'fs')):
+        freqz(
+            num=num,
+            den=den,
+            style='magnitude',
+            freq_unit=freq_unit,
+            ax=axes[i],
+            fs=1e3,
+        )
+
+
+@image_comparison(['freqz_freq_units_group_delay.png'], style='mpl20')
+def test_freqz_freq_units_group_delay_image():
+    fig, axes = plt.subplots(5, 1, figsize=(3, 10), layout='compressed')
+    num = [1, 2, 1]
+    den = [1, -1.2, 0.5]
+    for i, freq_unit in enumerate(('rad', 'deg', 'norm', 'normfs', 'fs')):
+        freqz(
+            num=num,
+            den=den,
+            style='group_delay',
+            freq_unit=freq_unit,
+            ax=axes[i],
+            fs=1e3,
+        )
+
+
 @image_comparison(['freqz_phase_units.png'], style='mpl20')
 def test_freqz_phase_units_image():
     fig, axes = plt.subplots(2, 1, figsize=(3, 6))

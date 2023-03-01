@@ -19,6 +19,12 @@ Added
   styling of pole/zero multiplicity texts.
 - This changelog.
 
+Fixed
+^^^^^
+
+- ``freq_unit`` was not propagated properly in all ``freq_plots.zfreq*`` functions and
+  ``style``-combinations.
+
 Changed
 ^^^^^^^
 
