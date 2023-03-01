@@ -222,6 +222,7 @@ def _plot_h(
             ylabel=maglabel,
             frequency_scale=frequency_scale,
             magnitude_scale=magnitude_scale,
+            fs=fs,
             **kwargs,
         )
 
@@ -250,8 +251,10 @@ def _plot_h(
             xmax=maxx,
             ylabel=maglabel,
             xlabel=freqlabel,
+            freq_unit=freq_unit,
             magnitude_scale=magnitude_scale,
             frequency_scale=frequency_scale,
+            fs=fs,
             **kwargs,
         )
         return ax[0].figure
@@ -264,9 +267,11 @@ def _plot_h(
             h,
             xmin=minx,
             xmax=maxx,
+            freq_unit=freq_unit,
             ylabel=group_delay_label,
             xlabel=freqlabel,
             frequency_scale=frequency_scale,
+            fs=fs,
             **kwargs,
         )
         return ax[0].figure
@@ -307,8 +312,10 @@ def _plot_h(
             xmax=maxx,
             xlabel=None,
             ylabel=maglabel,
+            freq_unit=freq_unit,
             magnitude_scale=magnitude_scale,
             frequency_scale=frequency_scale,
+            fs=fs,
             **kwargs,
         )
         _phase_plot_z(
@@ -318,9 +325,11 @@ def _plot_h(
             xmin=minx,
             xmax=maxx,
             phase_unit=phase_unit,
+            freq_unit=freq_unit,
             ylabel=phaselabel,
             xlabel=None,
             frequency_scale=frequency_scale,
+            fs=fs,
             **kwargs,
         )
         _group_delay_plot_z(
@@ -329,9 +338,11 @@ def _plot_h(
             h,
             xmin=minx,
             xmax=maxx,
+            freq_unit=freq_unit,
             ylabel=group_delay_label,
             xlabel=freqlabel,
             frequency_scale=frequency_scale,
+            fs=fs,
             **kwargs,
         )
         return fig
@@ -382,7 +393,7 @@ def _mag_plot_z(
         xmin = w.min()
     if xmax is None:
         xmax = w.max()
-    ax.set_xlim(xmin, xmax)
+    ax.set_xlim(wscale * xmin, wscale * xmax)
 
 
 def _phase_plot_z(
@@ -476,7 +487,7 @@ def _group_delay_plot_z(
         xmin = w.min()
     if xmax is None:
         xmax = w.max()
-    ax.set_xlim(xmin, xmax)
+    ax.set_xlim(wscale * xmin, wscale * xmax)
 
 
 def freqz_tf(num, den, **kwargs):
