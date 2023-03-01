@@ -1,6 +1,6 @@
 """
 -----------------
-``freqz`` Example
+``freqz`` example
 -----------------
 
 A short example showcasing how to use :func:`~mplsignal.freq_plots.freqz`.
