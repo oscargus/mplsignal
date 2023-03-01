@@ -17,22 +17,24 @@ def _is_close_to_int(x):
 
 
 class FactorLocator(Locator):
-    """Locator for finding multiples of *factor*."""
+    """
+    Locator for finding multiples of *factor*.
+
+    Wraps a :class:`~matplotlib.tickers.MaxNLocator`.
+
+    Parameters
+    ----------
+    factor : float
+        The factor to extract.
+    nbins : int
+        Number of bins to aim for, see :class:`~matplotlib.tickers.MaxNLocator`.
+    **kwargs
+        Additional arguments passed to :class:`~matplotlib.tickers.MaxNLocator`.
+    """
 
     def __init__(self, factor=1.0, nbins=None, **kwargs):
         """
         Locator for finding multiples of *factor*.
-
-        Wraps an :class:`~matplotlib.tickers.MaxNLocator`.
-
-        Parameters
-        ----------
-        factor : float
-            The factor to extract.
-        nbins : int
-            Number of bins to aim for, see `~matplotlib.tickers.MaxNLocator`.
-        **kwargs
-            Additional arguments passed to `~matplotlib.tickers.MaxNLocator`.
         """
         steps = kwargs.pop('steps', [1, 2, 3, 4, 5, 6, 8, 10])
         if nbins is None:
@@ -58,7 +60,14 @@ class FactorLocator(Locator):
 
 
 class PiLocator(FactorLocator):
-    """Locator for finding multiples of :math:`\\pi`."""
+    """
+    Locator for finding multiples of :math:`\\pi`.
+
+    Parameters
+    ----------
+    nbins : int
+        Number of bins to aim for, see :class:`~matplotlib.tickers.MaxNLocator`.
+    """
 
     def __init__(self, nbins=None, **kwargs):
         super().__init__(factor=math.pi, nbins=nbins, **kwargs)
@@ -72,7 +81,14 @@ class SampleFrequencyLocator(FactorLocator):
 
 
 class DegreeLocator(MaxNLocator):
-    """Locator for finding multiples that are nice when using degrees."""
+    """
+    Locator for finding multiples that are nice when using degrees.
+
+    Parameters
+    ----------
+    nbins : int
+        Number of bins to aim for, see :class:`~matplotlib.tickers.MaxNLocator`.
+    """
 
     def __init__(self, nbins=None, **kwargs):
         steps = kwargs.pop('steps', [1, 1.5, 2, 3, 5, 6, 10])
@@ -83,7 +99,20 @@ class DegreeLocator(MaxNLocator):
 
 class FactorFormatter(Formatter):
     """
-    Create a string based on a tick value and location.
+    Create a string based on a tick value and location as a multiple of *factor*.
+
+    Parameters
+    ----------
+    digits : int, default: 3
+        Number of digits to round fractional numbers to.
+    factor : float, default: 1.0
+        The factor.
+    name : str, optional
+        The name of the factor.
+    only_name_when_one : bool, default True
+        If True, 1 returns *name*, if False, 1 returns 1*name*.
+    **kwargs
+        Additional arguments passed to :class:`~matplotlib.tickers.Formatter`.
     """
 
     # some classes want to see all the locs to help format
@@ -121,6 +150,14 @@ class FactorFormatter(Formatter):
 class PiFormatter(FactorFormatter):
     r"""
     Create a string with multiple of :math:`\pi`.
+
+    Parameters
+    ----------
+    digits : int, default: 3
+        Number of digits to round fractional numbers to.
+    **kwargs
+        Additional arguments passed to :class:`FactorFormatter`.
+        Cannot include *factor* and *name*.
     """
 
     def __init__(self, digits=3, **kwargs):
@@ -130,6 +167,16 @@ class PiFormatter(FactorFormatter):
 class SampleFrequencyFormatter(FactorFormatter):
     r"""
     Create a string with multiple of sample frequency, :math:`f_s`.
+
+    Parameters
+    ----------
+    digits : int, default: 3
+        Number of digits to round fractional numbers to.
+    fs : float, default: 1.0
+        The sample frequency in Hz.
+    **kwargs
+        Additional arguments passed to :class:`FactorFormatter`.
+        Cannot include *factor* and *name*.
     """
 
     def __init__(self, digits=3, fs=1.0, **kwargs):
@@ -141,6 +188,16 @@ class SampleFrequencyFormatter(FactorFormatter):
 class DegreeFormatter(FactorFormatter):
     r"""
     Create a string with a trailing :math:`^{\circ}`.
+
+    Parameters
+    ----------
+    digits : int, default: 3
+        Number of digits to round fractional numbers to.
+    fs : float, default: 1.0
+        The sample frequency in Hz.
+    **kwargs
+        Additional arguments passed to :class:`FactorFormatter`.
+        Cannot include *factor*, *name*, and *only_name_when_one*.
     """
 
     def __init__(self, digits=3, **kwargs):
@@ -153,9 +210,19 @@ class DegreeFormatter(FactorFormatter):
         )
 
 
-class PiRationalFormatter(FactorFormatter):
+class PiRationalFormatter(Formatter):
     r"""
     Create a string with rational multiple of :math:`\pi`.
+
+    Parameters
+    ----------
+    digits : int, default: 3
+        Number of digits to round fractional numbers to.
+    pi_always_in_numerator: bool, default: True
+        If True, the strings will look like :math:`\frac{2\pi}{5}`, if False,
+        like :math:`\frac{2}{5}\pi`
+    **kwargs
+        Additional arguments passed to :class:`~matplotlib.tickers.Formatter`.
     """
 
     # some classes want to see all the locs to help format
