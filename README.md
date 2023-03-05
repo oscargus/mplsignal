@@ -6,6 +6,7 @@
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/mplsignal)](https://pypi.org/project/mplsignal/)
 [![PyPI - Wheel](https://img.shields.io/pypi/wheel/mplsignal)](https://pypi.org/project/mplsignal/)
 ![GitHub top language](https://img.shields.io/github/languages/top/oscargus/mplsignal)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7699762.svg)](https://doi.org/10.5281/zenodo.7699762)
 
 # mplsignal
 
@@ -41,6 +42,11 @@ pip install mplsignal
 ```bash
 pip install -e ".[dev]"
 ```
+
+## Citing
+
+If you use mplsignal in your published work, please cite https://zenodo.org/record/7699762, e.g., using the
+[BibTeX](https://zenodo.org/record/7699763/export/hx) record.
 
 ## Related work
 
