@@ -73,7 +73,8 @@ def freqz_twin(w, h):
     ...
     ... signal.freqz([1, 1, 1, 1], plot=scipyplot.freqz_twin)
     """
-    _plot_h(w, h, style='twin')
+    fig = _plot_h(w, h, style='twin')
+    fig.legend(ncols=2, loc='upper center')
 
 
 def freqz_magnitude(w, h):

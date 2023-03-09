@@ -85,7 +85,7 @@ def freqz(
     fs : float, optional
         Sample frequency.
     **kwargs
-        Additional arguments.
+        Additional arguments passed to :func:`matplotlib.axes.Axes.plot`.
 
     Returns
     -------
@@ -212,6 +212,7 @@ def _plot_h(
             fig = ax[0].figure
         if len(ax) < 2:
             raise ValueError("Must have at least two axes for 'stacked' or 'twin'.")
+
         _mag_plot_z(
             ax[0],
             w,
@@ -223,8 +224,11 @@ def _plot_h(
             frequency_scale=frequency_scale,
             magnitude_scale=magnitude_scale,
             fs=fs,
+            color='C0',
             **kwargs,
         )
+
+        phase_color = 'C1' if style == 'twin' else 'C0'
 
         _phase_plot_z(
             ax[1],
@@ -237,6 +241,7 @@ def _plot_h(
             xlabel=(freqlabel if style == 'stacked' else None),
             fs=fs,
             frequency_scale=frequency_scale,
+            c=phase_color,
             **kwargs,
         )
         return fig
@@ -371,7 +376,7 @@ def _mag_plot_z(
         magnitude = 20 * np.log10(np.abs(h))
     wscale = _get_freq_scale(freq_unit, fs)
     w = wscale * w
-    ax.plot(w, magnitude, **kwargs)
+    ax.plot(w, magnitude, label="Magnitude", **kwargs)
 
     if xlabel is not None:
         ax.set_xlabel(xlabel)
@@ -418,7 +423,7 @@ def _phase_plot_z(
         phase = 180 / np.pi * phase
     wscale = _get_freq_scale(freq_unit, fs)
     w = wscale * w
-    ax.plot(w, phase, **kwargs)
+    ax.plot(w, phase, label="Phase", **kwargs)
 
     if xlabel is not None:
         ax.set_xlabel(xlabel)
@@ -465,7 +470,7 @@ def _group_delay_plot_z(
     wscale = _get_freq_scale(freq_unit, fs)
     w = wscale * w
 
-    ax.plot(w, gd, **kwargs)
+    ax.plot(w, gd, label="Group delay", **kwargs)
 
     if xlabel is not None:
         ax.set_xlabel(xlabel)
