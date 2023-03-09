@@ -13,9 +13,14 @@ Added
 ^^^^^
 
 - A logotype.
+- A label will automatically be added to all ``freq*``-plots that will show up when
+  using a legend. These are "Magnitude", "Phase", and "Group delay".
+- ``style='twin'`` now plots lines with different colors from the color cycle to
+  distinguish the two lines. The same holds for :func:`mplsignal.scipyplot.freqz_twin`,
+  which also adds a legend.
 
 [0.2.0] - 2023-03-05
-------------------
+--------------------
 
 Added
 ^^^^^
