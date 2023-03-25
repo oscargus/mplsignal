@@ -19,6 +19,12 @@ Added
   distinguish the two lines. The same holds for :func:`mplsignal.scipyplot.freqz_twin`,
   which also adds a legend.
 
+Changed
+^^^^^^^
+
+- BREAKING: The *only_name_when_one* argument to :class:`.FactorFormatter` was replaced with
+  *name_on_all_numbers*, so that e.g. the degree sign is always shown.
+
 [0.2.0] - 2023-03-05
 --------------------
 
