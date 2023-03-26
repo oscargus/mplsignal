@@ -109,8 +109,8 @@ class FactorFormatter(Formatter):
         The factor.
     name : str, optional
         The name of the factor.
-    only_name_when_one : bool, default True
-        If True, 1 returns *name*, if False, 1 returns 1*name*.
+    name_on_all_numbers : bool, default False
+        If True, *name* is added to all numbers, even 0, if False, *name* is not added to 0.
     **kwargs
         Additional arguments passed to :class:`~matplotlib.tickers.Formatter`.
     """
@@ -120,12 +120,12 @@ class FactorFormatter(Formatter):
     locs = []
 
     def __init__(
-        self, digits=3, factor=1.0, name="constant", only_name_when_one=True, **kwargs
+        self, digits=3, factor=1.0, name="constant", name_on_all_numbers=False, **kwargs
     ):
         self._digits = digits
         self._factor = factor
         self._name = name
-        self._only_name_when_one = only_name_when_one
+        self._name_on_all_numbers = name_on_all_numbers
         super().__init__(**kwargs)
 
     def __call__(self, x, pos=None):
@@ -134,9 +134,12 @@ class FactorFormatter(Formatter):
         ``pos=None`` indicates an unspecified location.
         """
         if x == 0.0:
-            return "$0$"
+            if self._name_on_all_numbers:
+                return f"$0{self._name}$"
+            else:
+                return "$0$"
         factor_mult = x / self._factor
-        if self._only_name_when_one:
+        if not self._name_on_all_numbers:
             if abs(factor_mult - 1.0) < 1e-9:
                 return f"${self._name}$"
             if abs(factor_mult + 1.0) < 1e-9:
@@ -205,7 +208,7 @@ class DegreeFormatter(FactorFormatter):
             digits=digits,
             factor=1,
             name=r"^{\circ}",
-            only_name_when_one=False,
+            name_on_all_numbers=True,
             **kwargs,
         )
 
