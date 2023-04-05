@@ -52,7 +52,7 @@ def zplane(
     ax : :class:`~matplotlib.axes.Axes`, optional
         Axes to plot in.
 
-    adjust : int, optional, default: 1
+    adjust : int, default: 1
         Number of times to execute text adjustment. Set to 0 to disable.
 
     spinelinewidth : float, default: 0.2
@@ -70,8 +70,8 @@ def zplane(
     polemarker : marker, default: 'x'
         Marker to use for poles.
 
-    markercolor : color
-        Color to use for pole and zero markers, default: None
+    markercolor : color, optional
+        Color to use for pole and zero markers
 
     zerofillstyle : fill style, default: 'none'
         Fill style to use for zeros.

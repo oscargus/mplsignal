@@ -8,8 +8,9 @@ to be used for the *plot* argument to, e.g., :func:`scipy.signal.freqz`.
 """
 
 import matplotlib.pyplot as plt
-from mplsignal.scipyplot import freqz
 from scipy import signal
+
+from mplsignal.scipyplot import freqz
 
 b, a = signal.ellip(7, 1, 60, 0.4)
 h, w = signal.freqz(b, a, plot=freqz)
