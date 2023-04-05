@@ -14,12 +14,13 @@ from scipy.signal import remez
 
 from mplsignal.freq_plots import freqz_fir
 
-fig, ax = plt.subplots(5, 1, figsize=(6.4, 10), layout='compressed')
+fig, ax = plt.subplots(5, 1, figsize=(6.4, 13), layout='compressed')
 
 h = remez(31, [0, 0.2, 0.25, 0.5], [1, 0])
 
 for i, freq_unit in enumerate(('rad', 'deg', 'norm', 'fs', 'normfs')):
     freqz_fir(h, freq_unit=freq_unit, style='magnitude', ax=ax[i], fs=1000)
+    ax[i].set_title(f"freq_unit={freq_unit!r}")
 
 fig.show()
 
