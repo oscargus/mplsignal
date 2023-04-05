@@ -19,7 +19,7 @@ sys.path.insert(0, os.path.abspath('../mplsignal'))
 # -- Project information -----------------------------------------------------
 
 project = 'mplsignal'
-copyright = '2022, Oscar Gustafsson'
+copyright = '2022-2023, Oscar Gustafsson'
 author = 'Oscar Gustafsson'
 
 # The full version, including alpha/beta/rc tags

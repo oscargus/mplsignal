@@ -29,7 +29,7 @@ def freqz(
     den=None,
     zeros=None,
     poles=None,
-    gain=1,
+    gain=1.0,
     w=None,
     freq_unit='rad',
     phase_unit='rad',
@@ -534,7 +534,7 @@ def freqz_fir(num, **kwargs):
     return freqz(num=num, den=np.array([1.0]), **kwargs)
 
 
-def freqz_zpk(zeros, poles, gain=1, **kwargs):
+def freqz_zpk(zeros, poles, gain=1.0, **kwargs):
     """
     Plot the frequency response of a discrete-time system represented using
     zeros, poles and gain.
@@ -545,7 +545,7 @@ def freqz_zpk(zeros, poles, gain=1, **kwargs):
         Zeros of system.
     poles : array-like
         Poles of system.
-    gain : float
+    gain : float, default: 1.0
         Gain of system.
     **kwargs
         Additional arguments passed to :func:`freqz`.
