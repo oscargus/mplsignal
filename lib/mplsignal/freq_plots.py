@@ -55,7 +55,7 @@ def freqz(
         Zeros of transfer function.
     poles : array-like, optional
         Poles of transfer function.
-    gain : float, optional
+    gain : float, default: 1.0
         The gain of pole-zero-based transfer function.
     w : int or array-like, optional
         If a single integer, compute at that many frequency points in the
@@ -75,10 +75,10 @@ def freqz(
         Whether magnitude is plotted in linear or logarithmic (dB) scale.
     frequency_scale : {'linear', 'log'}, default: 'linear'
         Whether frequency is plotted in linear or logarithmic scale.
-    whole : bool, optional
+    whole : bool, default: False
         Plot from 0 to :math:`2\\pi` if True. Otherwise, plot from 0 to
         :math:`\\pi`.
-    include_nyquist : bool, optional
+    include_nyquist : bool, default: False
         If *whole* is False and *w* is an integer, setting *include_nyquist*
         to True will include the last frequency (Nyquist frequency) and is
         otherwise ignored.
