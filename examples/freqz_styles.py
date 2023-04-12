@@ -1,7 +1,7 @@
 """
---------------------------
-``freqz`` *style* examples
---------------------------
+-------------------------
+``freqz`` *style* example
+-------------------------
 
 There are a number of different styles available when using
 :func:`~mplsignal.freq_plots.freqz` and related methods.
