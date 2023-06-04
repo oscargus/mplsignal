@@ -10,9 +10,9 @@ Here, :func:`~mplsignal.freq_plots.freqz_fir` is used as we deal with an FIR fil
 """
 
 import matplotlib.pyplot as plt
-from scipy.signal import remez
-
 from mplsignal.freq_plots import freqz_fir
+from mplsignal.ticker import PiRationalFormatter
+from scipy.signal import remez
 
 fig, ax = plt.subplots(5, 1, figsize=(6.4, 13), layout='compressed')
 
@@ -28,8 +28,6 @@ fig.show()
 # It is also possible to get rational multiples of :math:`\pi` by using
 # :class:`~mplsignal.ticker.PiRationalFormatter` as formatter. In the phase plot,
 # *pi_always_in_numerator* is set to False to illustrate the difference.
-
-from mplsignal.ticker import PiRationalFormatter
 
 fig, ax = plt.subplots(2, 1, layout='compressed')
 freqz_fir(h, ax=ax)

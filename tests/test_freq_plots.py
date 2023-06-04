@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# coding: utf-8
 
 # Copyright (c) Oscar Gustafsson.
 # Distributed under the terms of the Modified BSD License.
@@ -8,7 +7,6 @@
 import matplotlib.pyplot as plt
 import pytest
 from matplotlib.testing.decorators import image_comparison
-
 from mplsignal import freqz
 
 
@@ -29,14 +27,14 @@ def test_freqz_twin():
 def test_freqz_magnitude():
     num = [1, 2, 1]
     den = [1, -1.2, 0.5]
-    fig = freqz(num=num, den=den, style='magnitude')
+    freqz(num=num, den=den, style='magnitude')
     # assert len(fig.axes) == 1
 
 
 def test_freqz_phase():
     num = [1, 2, 1]
     den = [1, -1.2, 0.5]
-    fig = freqz(num=num, den=den, style='phase')
+    freqz(num=num, den=den, style='phase')
     # assert len(fig.axes) == 1
 
 

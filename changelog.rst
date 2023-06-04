@@ -18,6 +18,7 @@ Added
 - ``style='twin'`` now plots lines with different colors from the color cycle to
   distinguish the two lines. The same holds for :func:`mplsignal.scipyplot.freqz_twin`,
   which also adds a legend.
+- Code coverage at CodeCov.
 
 Changed
 ^^^^^^^
@@ -37,7 +38,6 @@ Added
 - ``multiplicity_props`` argument to ``plane_plots.*plane*``-functions that allows
   styling of pole/zero multiplicity texts.
 - This changelog.
-- Code coverage at CodeCov.
 
 Fixed
 ^^^^^

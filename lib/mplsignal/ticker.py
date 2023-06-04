@@ -110,7 +110,8 @@ class FactorFormatter(Formatter):
     name : str, optional
         The name of the factor.
     name_on_all_numbers : bool, default False
-        If True, *name* is added to all numbers, even 0, if False, *name* is not added to 0.
+        If True, *name* is added to all numbers, even 0, if False, *name* is not added
+        to 0.
     **kwargs
         Additional arguments passed to :class:`~matplotlib.tickers.Formatter`.
     """
@@ -257,7 +258,8 @@ class PiRationalFormatter(Formatter):
         if self._pi_always_in_numerator:
             if factor_mult.numerator == 1:
                 return fr"${sign}\frac{{\pi}}{{{factor_mult.denominator}}}$"
-            return fr"${sign}\frac{{{factor_mult.numerator}\pi}}{{{factor_mult.denominator}}}$"
+            den = factor_mult.denominator
+            return fr"${sign}\frac{{{factor_mult.numerator}\pi}}{{{den}}}$"
         return (
             fr"${sign}\frac{{{factor_mult.numerator}}}{{{factor_mult.denominator}}}\pi$"
         )
