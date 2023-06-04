@@ -1,4 +1,5 @@
 [![Build status](https://github.com/oscargus/mplsignal/workflows/Tests/badge.svg)](https://github.com/oscargus/mplsignal/actions?query=workflow%3ATests)
+[![codecov](https://codecov.io/gh/oscargus/mplsignal/branch/main/graph/badge.svg?token=0ICY4NEVJM)](https://codecov.io/gh/oscargus/mplsignal)
 [![License](https://img.shields.io/github/license/oscargus/mplsignal)](https://github.com/oscargus/mplsignal/blob/main/LICENSE)
 [![PyPI](https://img.shields.io/pypi/v/mplsignal)](https://pypi.org/project/mplsignal/)
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/oscargus/mplsignal)](https://github.com/oscargus/mplsignal/releases)
