@@ -34,7 +34,8 @@ classifiers = [
 test = [
      "black",
      "pytest",
-     "pytest-mpl"
+     "pytest-mpl",
+     "pytest-cov"
      ]
 doc = [
      "sphinx",

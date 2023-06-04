@@ -52,7 +52,10 @@ jobs:
 
       - name: Tests
         run: |
-          pytest --mpl --color=yes
+          pytest --mpl --color=yes --cov=mplsignal tests
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v3
 
 
   test-scipy:
@@ -103,4 +106,7 @@ jobs:
 
       - name: Tests
         run: |
-          pytest --mpl --color=yes
+          pytest --mpl --color=yes --cov=mplsignal tests
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v3
