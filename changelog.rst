@@ -37,6 +37,7 @@ Added
 - ``multiplicity_props`` argument to ``plane_plots.*plane*``-functions that allows
   styling of pole/zero multiplicity texts.
 - This changelog.
+- Code coverage at CodeCov.
 
 Fixed
 ^^^^^
