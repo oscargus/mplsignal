@@ -13,6 +13,9 @@
 import os
 import sys
 
+# The full version, including alpha/beta/rc tags
+from mplsignal._version import __version__
+
 sys.path.insert(0, os.path.abspath('../mplsignal'))
 
 
@@ -21,9 +24,6 @@ sys.path.insert(0, os.path.abspath('../mplsignal'))
 project = 'mplsignal'
 copyright = '2022-2023, Oscar Gustafsson'
 author = 'Oscar Gustafsson'
-
-# The full version, including alpha/beta/rc tags
-from mplsignal._version import __version__
 
 release = __version__
 
