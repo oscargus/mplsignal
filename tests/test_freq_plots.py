@@ -5,8 +5,9 @@
 
 
 import matplotlib.pyplot as plt
+import numpy as np
 import pytest
-from matplotlib.testing.decorators import image_comparison
+from matplotlib.testing.decorators import check_figures_equal, image_comparison
 from mplsignal import freqz
 
 
@@ -227,3 +228,73 @@ def test_freqz_freq_units_log_image():
             fs=1e6,
         )
     plt.tight_layout()
+
+
+@check_figures_equal(extensions=['png'])
+def test_adding_axes_stacked(fig_test, fig_ref):
+    num = [1, 2, 1]
+    den = [1, -1.2, 0.5]
+    fig_test.subplots(2, 1)
+    # Hack so that gcf() returns fig_test
+    fn = plt.gcf
+    plt.gcf = lambda: fig_test
+    freqz(num=num, den=den)
+    # Restore
+    plt.gcf = fn
+
+    ax = fig_ref.subplots(2, 1)
+    freqz(num=num, den=den, ax=ax)
+
+
+@check_figures_equal(extensions=['png'])
+def test_adding_axes_tristacked(fig_test, fig_ref):
+    num = [1, 2, 1]
+    den = [1, -1.2, 0.5]
+    fig_test.subplots(3, 1)
+    # Hack so that gcf() returns fig_test
+    fn = plt.gcf
+    plt.gcf = lambda: fig_test
+    freqz(num=num, den=den, style='tristacked')
+    # Restore
+    plt.gcf = fn
+
+    ax = fig_ref.subplots(3, 1)
+    freqz(num=num, den=den, ax=ax, style='tristacked')
+
+
+def test_incorrect_axes():
+    _, ax = plt.subplots()
+    num = [1, 2, 1]
+    den = [1, -1.2, 0.5]
+    with pytest.raises(
+        ValueError, match="Must have at least two axes for 'stacked' or 'twin'."
+    ):
+        freqz(num=num, den=den, style='stacked')
+
+    with pytest.raises(
+        ValueError, match="Must have at least two axes for 'stacked' or 'twin'."
+    ):
+        freqz(num=num, den=den, style='twin')
+
+    _, ax = plt.subplots(2, 1)
+    with pytest.raises(
+        ValueError, match="Must have at least three axes for 'tristacked'."
+    ):
+        freqz(num=num, den=den, style='tristacked')
+
+
+@image_comparison(['freqz_partial_freq_range.png'], style='mpl20')
+def test_freqz_partial_freq_range():
+    fig, axes = plt.subplots(3, 1, figsize=(3, 6), layout='constrained')
+    num = [1, 2, 1]
+    den = [1, -1.2, 0.5]
+    w = np.linspace(0, 0.3, 1000)
+    freqz(num=num, den=den, w=w, ax=axes, style='tristacked')
+
+
+@image_comparison(['freqz_whole_freq_range.png'], style='mpl20')
+def test_freqz_whole_freq_range():
+    fig, ax = plt.subplots(2, 1)
+    num = [1, 2, 1]
+    den = [1, -1.2, 0.5]
+    freqz(num=num, den=den, ax=ax, whole=True)
