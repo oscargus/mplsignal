@@ -13,7 +13,6 @@ __all__ = [
 ]
 import matplotlib.pyplot as plt
 import numpy as np
-
 from mplsignal import _api, _utils
 from mplsignal.ticker import (
     DegreeFormatter,
@@ -89,7 +88,7 @@ def freqz(
 
     Returns
     -------
-    None.
+    :class:`~matplotlib.figure.Figure`
     """
     # if Axes not provided
 

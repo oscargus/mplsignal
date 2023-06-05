@@ -11,6 +11,7 @@ from mplsignal import freqz
 
 
 def test_freqz():
+    plt.figure()
     num = [1, 2, 1]
     den = [1, -1.2, 0.5]
     fig = freqz(num=num, den=den)
@@ -18,6 +19,7 @@ def test_freqz():
 
 
 def test_freqz_twin():
+    plt.figure()
     num = [1, 2, 1]
     den = [1, -1.2, 0.5]
     fig = freqz(num=num, den=den, style='twin')
@@ -25,17 +27,27 @@ def test_freqz_twin():
 
 
 def test_freqz_magnitude():
+    plt.figure()
     num = [1, 2, 1]
     den = [1, -1.2, 0.5]
-    freqz(num=num, den=den, style='magnitude')
-    # assert len(fig.axes) == 1
+    fig = freqz(num=num, den=den, style='magnitude')
+    assert len(fig.axes) == 1
 
 
 def test_freqz_phase():
+    plt.figure()
     num = [1, 2, 1]
     den = [1, -1.2, 0.5]
-    freqz(num=num, den=den, style='phase')
-    # assert len(fig.axes) == 1
+    fig = freqz(num=num, den=den, style='phase')
+    assert len(fig.axes) == 1
+
+
+def test_freqz_tristacked():
+    plt.figure()
+    num = [1, 2, 1]
+    den = [1, -1.2, 0.5]
+    fig = freqz(num=num, den=den, style='tristacked')
+    assert len(fig.axes) == 3
 
 
 @pytest.mark.parametrize(

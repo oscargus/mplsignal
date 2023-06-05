@@ -19,6 +19,8 @@ Added
   distinguish the two lines. The same holds for :func:`mplsignal.scipyplot.freqz_twin`,
   which also adds a legend.
 - Code coverage at CodeCov.
+- :func:`mplsignal.scipyplot.freqz_tristacked` for plotting magnitude, phase, and group
+  delay in a single plot.
 
 Changed
 ^^^^^^^
