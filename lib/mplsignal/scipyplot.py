@@ -5,9 +5,11 @@
 """
 The module contains utility functions to easily interact with SciPy.
 
-The SciPy functions :func:`scipy.signal.freqs` and  :func:`scipy.signal.freqz`
-have a `plot` argument to provide a plotting callback function.
-The functions provided in this module is aimed to be used as such a callback.
+The SciPy functions :func:`scipy.signal.freqs` and  :func:`scipy.signal.freqz` have a
+*plot* argument to provide a plotting callback function. The functions provided in this
+module is aimed to be used as such a callback. The focus is to make a plot that can be
+used to see the results clearly and quickly. For publication quality plots, the
+functions in :mod:`~mplsignal.freq_plots` are generally preferred.
 """
 from .freq_plots import _plot_h
 
@@ -40,7 +42,8 @@ def freqz(w, h):
     ...
     ... signal.freqz([1, 1, 1, 1], plot=scipyplot.freqz)
     """
-    _plot_h(w, h)
+    fig = _plot_h(w, h)
+    fig.set_layout_engine("constrained")
 
 
 def freqz_twin(w, h):
@@ -73,6 +76,7 @@ def freqz_twin(w, h):
     ... signal.freqz([1, 1, 1, 1], plot=scipyplot.freqz_twin)
     """
     fig = _plot_h(w, h, style='twin')
+    fig.set_layout_engine("constrained")
     fig.legend(ncols=2, loc='upper center')
 
 
@@ -104,7 +108,8 @@ def freqz_magnitude(w, h):
     ...
     ... signal.freqz([1, 1, 1, 1], plot=scipyplot.freqz_magnitude)
     """
-    _plot_h(w, h, style='magnitude')
+    fig = _plot_h(w, h, style='magnitude')
+    fig.set_layout_engine("constrained")
 
 
 def freqz_phase(w, h):
@@ -135,7 +140,8 @@ def freqz_phase(w, h):
     ...
     ... signal.freqz([1, 1, 1, 1], plot=scipyplot.freqz_phase)
     """
-    _plot_h(w, h, style='phase')
+    fig = _plot_h(w, h, style='phase')
+    fig.set_layout_engine("constrained")
 
 
 def freqz_tristacked(w, h):
@@ -165,6 +171,7 @@ def freqz_tristacked(w, h):
     >>> from scipy import signal
     ... from mplsignal import scipyplot
     ...
-    ... signal.freqz([1, 1, 1, 1], plot=scipyplot.freqz)
+    ... signal.freqz([1, 1, 1, 1], plot=scipyplot.freqz_tristacked)
     """
-    _plot_h(w, h, style='tristacked')
+    fig = _plot_h(w, h, style='tristacked')
+    fig.set_layout_engine("constrained")

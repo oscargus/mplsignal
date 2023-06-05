@@ -21,12 +21,15 @@ Added
 - Code coverage at CodeCov.
 - :func:`mplsignal.scipyplot.freqz_tristacked` for plotting magnitude, phase, and group
   delay in a single plot.
+- BREAKING: argument *align_ylabels* to all ``freq*``-plots which is ``True`` by default.
 
 Changed
 ^^^^^^^
 
 - BREAKING: The *only_name_when_one* argument to :class:`.FactorFormatter` was replaced with
   *name_on_all_numbers*, so that e.g. the degree sign is always shown.
+- BREAKING: All functions in :mod:`mplsignal.scipyplot` now uses a constrained layout. This
+  will in general make the plot clearer, although at the expense of margin.
 
 [0.2.0] - 2023-03-05
 --------------------

@@ -39,6 +39,7 @@ def freqz(
     whole=False,
     include_nyquist=False,
     fs=2 * np.pi,
+    align_ylabels=True,
     **kwargs,
 ):
     """
@@ -83,6 +84,8 @@ def freqz(
         otherwise ignored.
     fs : float, optional
         Sample frequency.
+    align_ylabels : bool, default: True
+        Align the y-labels when *style* is 'stacked' or 'tristacked'
     **kwargs
         Additional arguments passed to :func:`matplotlib.axes.Axes.plot`.
 
@@ -150,6 +153,7 @@ def freqz(
         magnitude_scale=magnitude_scale,
         frequency_scale=frequency_scale,
         fs=fs,
+        align_ylabels=align_ylabels,
         **kwargs,
     )
 
@@ -164,6 +168,7 @@ def _plot_h(
     phase_unit='rad',
     magnitude_scale='log',
     frequency_scale='linear',
+    align_ylabels=True,
     **kwargs,
 ):
     """
@@ -243,6 +248,8 @@ def _plot_h(
             c=phase_color,
             **kwargs,
         )
+        if align_ylabels and style == 'stacked':
+            fig.align_ylabels([ax[0], ax[1]])
         return fig
     if style == 'magnitude':
         if ax is None:
@@ -349,6 +356,8 @@ def _plot_h(
             fs=fs,
             **kwargs,
         )
+        if align_ylabels:
+            fig.align_ylabels([ax[0], ax[1], ax[2]])
         return fig
     raise ValueError(f"Unknown style: {style!r}")
 
