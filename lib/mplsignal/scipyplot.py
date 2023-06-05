@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# coding: utf-8
 
 # Copyright (c) Oscar Gustafsson.
 # Distributed under the terms of the Modified BSD License.
@@ -32,7 +31,7 @@ def freqz(w, h):
 
     See Also
     --------
-    freqz_magnitude, freqz_phase, freqz_twin
+    freqz_magnitude, freqz_phase, freqz_tristacked, freqz_twin
 
     Examples
     --------
@@ -64,7 +63,7 @@ def freqz_twin(w, h):
 
     See Also
     --------
-    freqz, freqz_magnitude, freqz_phase
+    freqz, freqz_magnitude, freqz_phase, freqz_tristacked
 
     Examples
     --------
@@ -96,7 +95,7 @@ def freqz_magnitude(w, h):
 
     See Also
     --------
-    freqz, freqz_phase, freqz_twin
+    freqz, freqz_phase, freqz_tristacked, freqz_twin
 
     Examples
     --------
@@ -112,7 +111,7 @@ def freqz_phase(w, h):
     """
     Utility function to easily plot the result from :func:`scipy.signal.freqz`.
 
-    Only the magnitude is plotted.
+    Only the phase is plotted.
 
     Parameters
     ----------
@@ -127,7 +126,7 @@ def freqz_phase(w, h):
 
     See Also
     --------
-    freqz, freqz_magnitude, freqz_twin
+    freqz, freqz_magnitude, freqz_tristacked, freqz_twin
 
     Examples
     --------
@@ -137,3 +136,35 @@ def freqz_phase(w, h):
     ... signal.freqz([1, 1, 1, 1], plot=scipyplot.freqz_phase)
     """
     _plot_h(w, h, style='phase')
+
+
+def freqz_tristacked(w, h):
+    """
+    Utility function to easily plot the result from :func:`scipy.signal.freqz`.
+
+    The magnitude, phase, and group delay responses are plotted in three different
+    subplots.
+
+    Parameters
+    ----------
+    w : array-like
+        Frequency points.
+    h : array-like
+        Transfer function evaluated at *w*.
+
+    Returns
+    -------
+    None.
+
+    See Also
+    --------
+    freqz, freqz_magnitude, freqz_phase, freqz_twin
+
+    Examples
+    --------
+    >>> from scipy import signal
+    ... from mplsignal import scipyplot
+    ...
+    ... signal.freqz([1, 1, 1, 1], plot=scipyplot.freqz)
+    """
+    _plot_h(w, h, style='tristacked')
