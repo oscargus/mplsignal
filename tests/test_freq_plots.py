@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pytest
 from matplotlib.testing.decorators import check_figures_equal, image_comparison
-from mplsignal import freqz
+from mplsignal import freqz, freqz_fir, freqz_tf, freqz_zpk
 
 
 def test_freqz():
@@ -298,3 +298,43 @@ def test_freqz_whole_freq_range():
     num = [1, 2, 1]
     den = [1, -1.2, 0.5]
     freqz(num=num, den=den, ax=ax, whole=True)
+
+
+@image_comparison(['freqz_roots.png'], style='mpl20')
+def test_freqz_roots():
+    fig, ax = plt.subplots(2, 1)
+    z = np.roots([1, 2, 1])
+    p = np.roots([1, -1.2, 0.5])
+    freqz(zeros=z, poles=p, ax=ax)
+
+
+@check_figures_equal(extensions=["png"])
+def test_freqz_zpk(fig_test, fig_ref):
+    z = np.roots([1, 2, 1])
+    p = np.roots([1, -1.2, 0.5])
+    ax_ref = fig_ref.subplots(2, 1)
+    freqz(poles=p, zeros=z, gain=1e-2, ax=ax_ref)
+
+    ax_test = fig_test.subplots(2, 1)
+    freqz_zpk(z, p, 1e-2, ax=ax_test)
+
+
+@check_figures_equal(extensions=["png"])
+def test_freqz_fir(fig_test, fig_ref):
+    h = [1, 2, 1]
+    ax_ref = fig_ref.subplots(2, 1)
+    freqz(num=h, den=1, ax=ax_ref)
+
+    ax_test = fig_test.subplots(2, 1)
+    freqz_fir(h, ax=ax_test)
+
+
+@check_figures_equal(extensions=["png"])
+def test_freqz_tf(fig_test, fig_ref):
+    num = [1, 2, 1]
+    den = [1, -1.2, 0.5]
+    ax_ref = fig_ref.subplots(2, 1)
+    freqz(num=num, den=den, ax=ax_ref)
+
+    ax_test = fig_test.subplots(2, 1)
+    freqz_tf(num, den, ax=ax_test)
