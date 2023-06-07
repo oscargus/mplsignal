@@ -12,8 +12,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ['3.9', '3.10', '3.11']
-        mpl-version: ['3.6', '3.7', 'latest']
+        python-version: ["3.9", "3.10", "3.11"]
+        mpl-version: ["3.6", "3.7", "latest"]
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -22,7 +22,7 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
-          architecture: 'x64'
+          architecture: "x64"
 
       - name: Get pip cache dir
         id: pip-cache
@@ -57,14 +57,13 @@ jobs:
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3
 
-
   test-scipy:
     name: SciPy - Python ${{ matrix.python-version }} - mpl ${{ matrix.mpl-version }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ['3.10']
-        mpl-version: ['3.7', 'latest']
+        python-version: ["3.10"]
+        mpl-version: ["3.7", "latest"]
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -73,7 +72,7 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
-          architecture: 'x64'
+          architecture: "x64"
 
       - name: Get pip cache dir
         id: pip-cache
@@ -110,3 +109,5 @@ jobs:
 
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
