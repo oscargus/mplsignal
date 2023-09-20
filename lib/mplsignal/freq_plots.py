@@ -228,11 +228,15 @@ def _plot_h(
             frequency_scale=frequency_scale,
             magnitude_scale=magnitude_scale,
             fs=fs,
-            color='C0',
+            color=ax[0]._get_lines.get_next_color(),
             **kwargs,
         )
 
-        phase_color = 'C1' if style == 'twin' else 'C0'
+        phase_color = (
+            ax[0]._get_lines.get_next_color()
+            if style == 'twin'
+            else ax[1]._get_lines.get_next_color()
+        )
 
         _phase_plot_z(
             ax[1],
