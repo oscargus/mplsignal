@@ -11,6 +11,8 @@ __all__ = [
     "freqz_zpk",
     "freqz_fir",
 ]
+from typing import Literal
+
 import matplotlib.pyplot as plt
 import numpy as np
 from mplsignal import _api, _utils
@@ -28,18 +30,20 @@ def freqz(
     den=None,
     zeros=None,
     poles=None,
-    gain=1.0,
+    gain: float = 1.0,
     w=None,
-    freq_unit='rad',
-    phase_unit='rad',
+    freq_unit: Literal['rad', 'deg', 'norm', 'fs', 'normfs'] = 'rad',
+    phase_unit: Literal['rad', 'deg'] = 'rad',
     ax=None,
-    style='stacked',
-    magnitude_scale='log',
-    frequency_scale='linear',
-    whole=False,
-    include_nyquist=False,
-    fs=2 * np.pi,
-    align_ylabels=True,
+    style: Literal[
+        'stacked', 'twin', 'magnitude', 'phase', 'group_delay', 'tristacked'
+    ] = 'stacked',
+    magnitude_scale: Literal['log', 'linear'] = 'log',
+    frequency_scale: Literal['log', 'linear'] = 'linear',
+    whole: bool = False,
+    include_nyquist: bool = False,
+    fs: float = 2 * np.pi,
+    align_ylabels: bool = True,
     **kwargs,
 ):
     """
@@ -225,6 +229,7 @@ def _plot_h(
             xmax=maxx,
             xlabel=(freqlabel if style == 'twin' else None),
             ylabel=maglabel,
+            freq_unit=freq_unit,
             frequency_scale=frequency_scale,
             magnitude_scale=magnitude_scale,
             fs=fs,
@@ -245,6 +250,7 @@ def _plot_h(
             xmin=minx,
             xmax=maxx,
             phase_unit=phase_unit,
+            freq_unit=freq_unit,
             ylabel=phaselabel,
             xlabel=(freqlabel if style == 'stacked' else None),
             fs=fs,
