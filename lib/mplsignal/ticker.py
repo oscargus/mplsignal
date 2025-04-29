@@ -7,7 +7,6 @@ plots.
 """
 import math
 from fractions import Fraction
-from typing import Optional
 
 from matplotlib.ticker import Formatter, Locator, MaxNLocator
 
@@ -33,7 +32,7 @@ class FactorLocator(Locator):
         Additional arguments passed to :class:`~matplotlib.tickers.MaxNLocator`.
     """
 
-    def __init__(self, factor: float = 1.0, nbins: Optional[int] = None, **kwargs):
+    def __init__(self, factor: float = 1.0, nbins: int | None = None, **kwargs):
         """
         Locator for finding multiples of *factor*.
         """
@@ -70,14 +69,14 @@ class PiLocator(FactorLocator):
         Number of bins to aim for, see :class:`~matplotlib.tickers.MaxNLocator`.
     """
 
-    def __init__(self, nbins: Optional[int] = None, **kwargs):
+    def __init__(self, nbins: int | None = None, **kwargs):
         super().__init__(factor=math.pi, nbins=nbins, **kwargs)
 
 
 class SampleFrequencyLocator(FactorLocator):
     """Locator for finding multiples of sample frequency."""
 
-    def __init__(self, nbins: Optional[int] = None, fs: float = 1.0, **kwargs):
+    def __init__(self, nbins: int | None = None, fs: float = 1.0, **kwargs):
         super().__init__(factor=fs / (2 * math.pi), nbins=nbins, **kwargs)
 
 
@@ -91,7 +90,7 @@ class DegreeLocator(MaxNLocator):
         Number of bins to aim for, see :class:`~matplotlib.tickers.MaxNLocator`.
     """
 
-    def __init__(self, nbins: Optional[int] = None, **kwargs):
+    def __init__(self, nbins: int | None = None, **kwargs):
         steps = kwargs.pop('steps', [1, 1.5, 2, 3, 5, 6, 10])
         if nbins is None:
             nbins = 'auto'

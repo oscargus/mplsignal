@@ -12,7 +12,6 @@ __all__ = [
 ]
 
 import math
-from typing import Optional
 
 import adjustText
 import matplotlib.pyplot as plt
@@ -32,8 +31,8 @@ def zplane(
     markercolor=None,
     zerofillstyle='none',
     polefillstyle='none',
-    reallabel: Optional[str] = None,
-    imaglabel: Optional[str] = None,
+    reallabel: str | None = None,
+    imaglabel: str | None = None,
     zero_props=None,
     pole_props=None,
     multiplicity_props=None,

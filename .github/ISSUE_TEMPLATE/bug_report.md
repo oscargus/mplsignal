@@ -35,11 +35,13 @@ any necessary plotted data.
 <!--If this used to work in an earlier version of Matplotlib, please note the version it used to work on-->
 
 **Version Info**
+
 <!--Please specify your platform and versions of the relevant libraries you are using:-->
-  * Operating system:
-  * mplsignal version:
-  * Matplotlib version:
-  * Matplotlib backend (`print(matplotlib.get_backend())`):
-  * Python version:
-  * Jupyter version (if applicable):
-  * Other libraries:
+
+- Operating system:
+- mplsignal version:
+- Matplotlib version:
+- Matplotlib backend (`print(matplotlib.get_backend())`):
+- Python version:
+- Jupyter version (if applicable):
+- Other libraries:
