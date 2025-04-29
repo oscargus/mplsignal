@@ -1,53 +1,40 @@
 [project]
 name = "mplsignal"
 description = "Matplotlib extension for signal processing-related plots"
-authors = [
-{name = "Oscar Gustafsson", email = "oscar.gustafsson@gmail.com"}
-]
-requires-python = ">=3.8"
-license = {file = "LICENSE"}
+authors = [{ name = "Oscar Gustafsson", email = "oscar.gustafsson@gmail.com" }]
+requires-python = ">=3.10"
+license = { file = "LICENSE" }
 readme = "README.md"
-dynamic = [
-   "version"
-]
-dependencies = [
-    "matplotlib",
-    "adjustText"
-    ]
-
+dynamic = ["version"]
+dependencies = ["matplotlib>=3.9", "adjustText"]
 classifiers = [
-    "Development Status :: 3 - Alpha",
-    "Framework :: Matplotlib",
-    "Intended Audience :: Developers",
-    "Intended Audience :: Science/Research",
-    "License :: OSI Approved :: BSD License",
-    "Programming Language :: Python",
-    "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.11",
-    'Topic :: Scientific/Engineering :: Visualization',
+  "Development Status :: 3 - Alpha",
+  "Framework :: Matplotlib",
+  "Intended Audience :: Developers",
+  "Intended Audience :: Science/Research",
+  "License :: OSI Approved :: BSD License",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  'Topic :: Scientific/Engineering :: Visualization',
 ]
 
 [project.optional-dependencies]
-test = [
-     "black",
-     "pytest",
-     "pytest-mpl",
-     "pytest-cov"
-     ]
+test = ["black", "pytest", "pytest-mpl", "pytest-cov"]
 doc = [
-     "sphinx",
-     "numpydoc",
-     "sphinx_rtd_theme",
-     "sphinx-copybutton",
-     "sphinx-autobuild",
-     "sphinx_gallery>=0.8.2",
-     "autoapi",
-     "furo",
-     "scipy"
-     ]
+  "sphinx",
+  "numpydoc",
+  "sphinx_rtd_theme",
+  "sphinx-copybutton",
+  "sphinx-autobuild",
+  "sphinx_gallery>=0.8.2",
+  "autoapi",
+  "furo",
+  "scipy"
+]
 
 [project.urls]
 Homepage = "https://github.com/oscargus/mplsignal"
@@ -79,9 +66,7 @@ skip-string-normalization = true
 line-length = 88
 
 [tool.pytest.ini_options]
-testpaths = [
-    "mplsignal/tests"
-]
+testpaths = ["mplsignal/tests"]
 
 [tool.isort]
 profile = "black"

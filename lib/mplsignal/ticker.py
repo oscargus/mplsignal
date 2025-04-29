@@ -7,6 +7,7 @@ plots.
 """
 import math
 from fractions import Fraction
+from typing import Optional
 
 from matplotlib.ticker import Formatter, Locator, MaxNLocator
 
@@ -24,15 +25,15 @@ class FactorLocator(Locator):
 
     Parameters
     ----------
-    factor : float
+    factor : float, default: 1.0
         The factor to extract.
-    nbins : int
+    nbins : int, optional
         Number of bins to aim for, see :class:`~matplotlib.tickers.MaxNLocator`.
     **kwargs
         Additional arguments passed to :class:`~matplotlib.tickers.MaxNLocator`.
     """
 
-    def __init__(self, factor=1.0, nbins=None, **kwargs):
+    def __init__(self, factor: float = 1.0, nbins: Optional[int] = None, **kwargs):
         """
         Locator for finding multiples of *factor*.
         """
@@ -65,18 +66,18 @@ class PiLocator(FactorLocator):
 
     Parameters
     ----------
-    nbins : int
+    nbins : int, optional
         Number of bins to aim for, see :class:`~matplotlib.tickers.MaxNLocator`.
     """
 
-    def __init__(self, nbins=None, **kwargs):
+    def __init__(self, nbins: Optional[int] = None, **kwargs):
         super().__init__(factor=math.pi, nbins=nbins, **kwargs)
 
 
 class SampleFrequencyLocator(FactorLocator):
     """Locator for finding multiples of sample frequency."""
 
-    def __init__(self, nbins=None, fs=1.0, **kwargs):
+    def __init__(self, nbins: Optional[int] = None, fs: float = 1.0, **kwargs):
         super().__init__(factor=fs / (2 * math.pi), nbins=nbins, **kwargs)
 
 
@@ -86,11 +87,11 @@ class DegreeLocator(MaxNLocator):
 
     Parameters
     ----------
-    nbins : int
+    nbins : int, optional
         Number of bins to aim for, see :class:`~matplotlib.tickers.MaxNLocator`.
     """
 
-    def __init__(self, nbins=None, **kwargs):
+    def __init__(self, nbins: Optional[int] = None, **kwargs):
         steps = kwargs.pop('steps', [1, 1.5, 2, 3, 5, 6, 10])
         if nbins is None:
             nbins = 'auto'
@@ -121,7 +122,12 @@ class FactorFormatter(Formatter):
     locs = []
 
     def __init__(
-        self, digits=3, factor=1.0, name="constant", name_on_all_numbers=False, **kwargs
+        self,
+        digits: int = 3,
+        factor: float = 1.0,
+        name: str = "constant",
+        name_on_all_numbers: bool = False,
+        **kwargs,
     ):
         self._digits = digits
         self._factor = factor
@@ -164,7 +170,7 @@ class PiFormatter(FactorFormatter):
         Cannot include *factor* and *name*.
     """
 
-    def __init__(self, digits=3, **kwargs):
+    def __init__(self, digits: int = 3, **kwargs):
         super().__init__(digits=digits, factor=math.pi, name=r"\pi", **kwargs)
 
 
@@ -183,7 +189,7 @@ class SampleFrequencyFormatter(FactorFormatter):
         Cannot include *factor* and *name*.
     """
 
-    def __init__(self, digits=3, fs=1.0, **kwargs):
+    def __init__(self, digits: int = 3, fs: float = 1.0, **kwargs):
         super().__init__(
             digits=digits, factor=fs / (2 * math.pi), name=r"f_s", **kwargs
         )
@@ -204,7 +210,7 @@ class DegreeFormatter(FactorFormatter):
         Cannot include *factor*, *name*, and *only_name_when_one*.
     """
 
-    def __init__(self, digits=3, **kwargs):
+    def __init__(self, digits: int = 3, **kwargs):
         super().__init__(
             digits=digits,
             factor=1,
@@ -233,7 +239,7 @@ class PiRationalFormatter(Formatter):
     # individual ones
     locs = []
 
-    def __init__(self, digits=3, pi_always_in_numerator=True, **kwargs):
+    def __init__(self, digits: int = 3, pi_always_in_numerator: bool = True, **kwargs):
         self._digits = digits
         self._pi_always_in_numerator = pi_always_in_numerator
         super().__init__(**kwargs)

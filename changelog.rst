@@ -22,6 +22,7 @@ Added
 - :func:`mplsignal.scipyplot.freqz_tristacked` for plotting magnitude, phase, and group
   delay in a single plot.
 - BREAKING: argument *align_ylabels* to all ``freq*``-plots which is ``True`` by default.
+- Initial typing information.
 
 Changed
 ^^^^^^^
@@ -30,6 +31,12 @@ Changed
   *name_on_all_numbers*, so that, e.g., the degree sign is always shown.
 - BREAKING: All functions in :mod:`mplsignal.scipyplot` now use a constrained layout. This
   will in general make the plot clearer, although at the expense of margin.
+
+Fixed
+^^^^^
+
+- ``freq_unit`` was not propagated properly in all ``freq_plots.zfreq*`` functions and
+  ``style``-combinations.
 
 [0.2.0] - 2023-03-05
 --------------------

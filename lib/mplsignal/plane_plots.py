@@ -12,6 +12,7 @@ __all__ = [
 ]
 
 import math
+from typing import Optional
 
 import adjustText
 import matplotlib.pyplot as plt
@@ -23,16 +24,16 @@ def zplane(
     poles=None,
     ax=None,
     adjust=1,
-    spinelinewidth=0.2,
+    spinelinewidth: float = 0.2,
     spinecolor='black',
     zeromarker='o',
     polemarker='x',
-    unitcircle=True,
+    unitcircle: bool = True,
     markercolor=None,
     zerofillstyle='none',
     polefillstyle='none',
-    reallabel=None,
-    imaglabel=None,
+    reallabel: Optional[str] = None,
+    imaglabel: Optional[str] = None,
     zero_props=None,
     pole_props=None,
     multiplicity_props=None,
