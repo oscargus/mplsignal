@@ -17,9 +17,8 @@ The currently available styles are:
 """
 
 import matplotlib.pyplot as plt
-from scipy import signal
-
 from mplsignal import freqz
+from scipy import signal
 
 b, a = signal.ellip(7, 1, 60, 0.4)
 

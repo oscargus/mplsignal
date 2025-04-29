@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# coding: utf-8
 
 # Copyright (c) Oscar Gustafsson.
 # Distributed under the terms of the Modified BSD License.
@@ -8,7 +7,6 @@
 import math
 
 import numpy as np
-
 from mplsignal.ticker import PiFormatter, PiLocator, PiRationalFormatter
 
 

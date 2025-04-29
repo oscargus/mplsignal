@@ -2,6 +2,7 @@
 mplsignal is a Matplotlib extension with some functions and classes aimed
 at creating signal processing-related plots.
 """
+
 # Copyright (c) Oscar Gustafsson.
 # Distributed under the terms of the Modified BSD License.
 

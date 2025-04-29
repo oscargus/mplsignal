@@ -31,6 +31,7 @@ Changed
   *name_on_all_numbers*, so that, e.g., the degree sign is always shown.
 - BREAKING: All functions in :mod:`mplsignal.scipyplot` now use a constrained layout. This
   will in general make the plot clearer, although at the expense of margin.
+- Minimum Python version is increased to 3.10.
 
 Fixed
 ^^^^^

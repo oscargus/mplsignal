@@ -17,12 +17,13 @@ Documentation can be found [here](https://mplsignal.readthedocs.io/).
 
 mplsignal currently consists of four main parts:
 
-   * `plane_plots`: various `splane` and `zplane` for plotting pole-zero diagrams
-   * `freq_plots`: various `freqs` and `freqz` methods for plotting magnitude and phase responses of transfer functions
-   * `ticker`: tickers and formatters suitable for `freqs`/`freqz`-plots
-   * `scipyplot`: convenience functions that can be directly fed to `scipy.signal.freqs` and ` scipy.signal.freqz`
+- `plane_plots`: various `splane` and `zplane` for plotting pole-zero diagrams
+- `freq_plots`: various `freqs` and `freqz` methods for plotting magnitude and phase responses of transfer functions
+- `ticker`: tickers and formatters suitable for `freqs`/`freqz`-plots
+- `scipyplot`: convenience functions that can be directly fed to `scipy.signal.freqs` and ` scipy.signal.freqz`
 
 ## Dependencies
+
 mplsignal is only useful if you also have [Matplotlib](https://matplotlib.org/) installed.
 In addition, it relies on [adjustText](https://adjusttext.readthedocs.io/) to position the multiplicity
 numbers next to poles and zeros.
