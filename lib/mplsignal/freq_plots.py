@@ -394,7 +394,7 @@ def _mag_plot_z(
         magnitude = 20 * np.log10(np.abs(h))
     wscale = _get_freq_scale(freq_unit, fs)
     w = wscale * w
-    ax.plot(w, magnitude, label="Magnitude", **kwargs)
+    ax.plot(w, magnitude, label=kwargs.pop("label", "Magnitude"), **kwargs)
 
     if xlabel is not None:
         ax.set_xlabel(xlabel)
@@ -441,7 +441,7 @@ def _phase_plot_z(
         phase = 180 / np.pi * phase
     wscale = _get_freq_scale(freq_unit, fs)
     w = wscale * w
-    ax.plot(w, phase, label="Phase", **kwargs)
+    ax.plot(w, phase, label=kwargs.pop("label", "Phase"), **kwargs)
 
     if xlabel is not None:
         ax.set_xlabel(xlabel)
@@ -488,7 +488,7 @@ def _group_delay_plot_z(
     wscale = _get_freq_scale(freq_unit, fs)
     w = wscale * w
 
-    ax.plot(w, gd, label="Group delay", **kwargs)
+    ax.plot(w, gd, label=kwargs.pop("label", "Group delay"), **kwargs)
 
     if xlabel is not None:
         ax.set_xlabel(xlabel)
