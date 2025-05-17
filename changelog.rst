@@ -31,14 +31,17 @@ Changed
 - BREAKING: The *only_name_when_one* argument to :class:`.FactorFormatter` was replaced with
   *name_on_all_numbers*, so that, e.g., the degree sign is always shown.
 - BREAKING: All functions in :mod:`mplsignal.scipyplot` now use a constrained layout. This
-  will in general make the plot clearer, although at the expense of margin.
+  will in general make the plot clearer, although at the expense of less margin.
 - Minimum Python version is increased to 3.10.
+- Minimum adjustText version is set to 1.3.
+- Minimum Matplotlib version is increased to 3.9.
 
 Fixed
 ^^^^^
 
 - ``freq_unit`` was not propagated properly in all ``freq_plots.zfreq*`` functions and
   ``style``-combinations.
+- The ``adjust`` argument to the ``*plane`` functions is removed as it is not supported by newer versions of adjustText.
 
 [0.2.0] - 2023-03-05
 --------------------

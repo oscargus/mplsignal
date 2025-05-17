@@ -22,7 +22,6 @@ def zplane(
     zeros=None,
     poles=None,
     ax=None,
-    adjust=1,
     spinelinewidth: float = 0.2,
     spinecolor='black',
     zeromarker='o',
@@ -51,9 +50,6 @@ def zplane(
 
     ax : :class:`~matplotlib.axes.Axes`, optional
         Axes to plot in.
-
-    adjust : int, default: 1
-        Number of times to execute text adjustment. Set to 0 to disable.
 
     spinelinewidth : float, default: 0.2
         Line width of spines.
@@ -162,7 +158,7 @@ def zplane(
                 linewidth=spinelinewidth,
             )
         )
-    texts = _plot_plane(
+    xvals, yvals, texts = _plot_plane(
         zeros,
         poles,
         ax=ax,
@@ -173,12 +169,9 @@ def zplane(
         multiplicity_props=multiplicity_props,
         **kwargs,
     )
-    if texts:
-        for _ in range(adjust):
-            # Fix for adjustText = 0.8
-            ax.figure.draw_without_rendering()
-            adjustText.adjust_text(texts, ax=ax)
     ax.axis('equal')
+    if texts:
+        adjustText.adjust_text(texts, x=xvals, y=yvals, ax=ax)
     return ax
 
 
@@ -292,7 +285,9 @@ def _plot_plane(
     -------
     List of texts.
     """
-    ret = []
+    text_items = []
+    xvals = []
+    yvals = []
     if multiplicity_props is None:
         multiplicity_props = {}
     if zeros is not None:
@@ -304,7 +299,11 @@ def _plot_plane(
             **zero_props,
             **kwargs,
         )
-        ret += [ax.text(x, y, text, **multiplicity_props) for x, y, text in texts]
+        xvals.extend(x_pos)
+        yvals.extend(y_pos)
+        text_items.extend(
+            ax.text(x, y, text, **multiplicity_props) for x, y, text in texts
+        )
 
     if poles is not None:
         poles_d = _get_multiplicities(poles)
@@ -315,11 +314,15 @@ def _plot_plane(
             **pole_props,
             **kwargs,
         )
-        ret += [ax.text(x, y, text, **multiplicity_props) for x, y, text in texts]
+        xvals.extend(x_pos)
+        yvals.extend(y_pos)
+        text_items.extend(
+            ax.text(x, y, text, **multiplicity_props) for x, y, text in texts
+        )
 
     ax.set_xlabel(reallabel)
     ax.set_ylabel(imaglabel)
-    return ret
+    return xvals, yvals, text_items
 
 
 def _is_close(x, y):
