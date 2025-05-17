@@ -262,27 +262,6 @@ def test_adding_axes_tristacked(fig_test, fig_ref):
     freqz(num=num, den=den, ax=ax, style='tristacked')
 
 
-def test_incorrect_axes():
-    _, ax = plt.subplots()
-    num = [1, 2, 1]
-    den = [1, -1.2, 0.5]
-    with pytest.raises(
-        ValueError, match="Must have at least two axes for 'stacked' or 'twin'."
-    ):
-        freqz(num=num, den=den, style='stacked')
-
-    with pytest.raises(
-        ValueError, match="Must have at least two axes for 'stacked' or 'twin'."
-    ):
-        freqz(num=num, den=den, style='twin')
-
-    _, ax = plt.subplots(2, 1)
-    with pytest.raises(
-        ValueError, match="Must have at least three axes for 'tristacked'."
-    ):
-        freqz(num=num, den=den, style='tristacked')
-
-
 @image_comparison(['freqz_partial_freq_range.png'], style='mpl20')
 def test_freqz_partial_freq_range():
     fig, axes = plt.subplots(3, 1, figsize=(3, 6), layout='constrained')
@@ -338,3 +317,28 @@ def test_freqz_tf(fig_test, fig_ref):
 
     ax_test = fig_test.subplots(2, 1)
     freqz_tf(num, den, ax=ax_test)
+
+
+def test_stacked_freqz_with_current_figure():
+    fig1, _ = plt.subplots()
+    assert len(fig1.axes) == 1
+    num = [1, 2, 1]
+    den = [1, -1.2, 0.5]
+    fig2 = freqz(num=num, den=den)
+    assert fig1 is not fig2
+    assert len(fig2.axes) == 2
+
+
+def test_tristacked_freqz_with_current_figure():
+    fig1, _ = plt.subplots()
+    assert len(fig1.axes) == 1
+    num = [1, 2, 1]
+    den = [1, -1.2, 0.5]
+    fig2 = freqz(num=num, den=den, style="tristacked")
+    assert fig1 is not fig2
+    assert len(fig2.axes) == 3
+    fig3, _ = plt.subplots(2, 1)
+    assert len(fig3.axes) == 2
+    fig4 = freqz(num=num, den=den, style="tristacked")
+    assert fig3 is not fig4
+    assert len(fig2.axes) == 3

@@ -11,7 +11,8 @@ __all__ = [
     "freqz_zpk",
     "freqz_fir",
 ]
-from typing import Literal
+from collections.abc import Sequence
+from typing import TYPE_CHECKING, Literal, Union
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -24,6 +25,10 @@ from mplsignal.ticker import (
     SampleFrequencyFormatter,
 )
 
+if TYPE_CHECKING:
+    from matplotlib.axes import Axes
+    from matplotlib.figure import Figure
+
 
 def freqz(
     num=None,
@@ -34,7 +39,7 @@ def freqz(
     w=None,
     freq_unit: Literal['rad', 'deg', 'norm', 'fs', 'normfs'] = 'rad',
     phase_unit: Literal['rad', 'deg'] = 'rad',
-    ax=None,
+    ax: Union["Axes", Sequence["Axes"], None] = None,
     style: Literal[
         'stacked', 'twin', 'magnitude', 'phase', 'group_delay', 'tristacked'
     ] = 'stacked',
@@ -45,7 +50,7 @@ def freqz(
     fs: float = 2 * np.pi,
     align_ylabels: bool = True,
     **kwargs,
-):
+) -> "Figure":
     """
     Plot the frequency response of a discrete-time system.
 
@@ -80,11 +85,11 @@ def freqz(
     frequency_scale : {'linear', 'log'}, default: 'linear'
         Whether frequency is plotted in linear or logarithmic scale.
     whole : bool, default: False
-        Plot from 0 to :math:`2\\pi` if True. Otherwise, plot from 0 to
-        :math:`\\pi`.
+        Plot from 0 to *fs* if True. Otherwise, plot from 0 to
+        *fs*/2.
     include_nyquist : bool, default: False
         If *whole* is False and *w* is an integer, setting *include_nyquist*
-        to True will include the last frequency (Nyquist frequency) and is
+        to True will include the last frequency (Nyquist frequency, *fs/2*) and is
         otherwise ignored.
     fs : float, optional
         Sample frequency.
@@ -211,6 +216,9 @@ def _plot_h(
                     ax = plt.gca()
                     _ = ax.twinx()
                     ax = fig.axes
+            elif len(fig.axes) == 1 and style == 'stacked':
+                # Current figure only has one axes: create new figure
+                fig, ax = plt.subplots(2, 1)
             else:
                 ax = fig.axes
         else:
@@ -218,8 +226,6 @@ def _plot_h(
                 _ = ax[0].twinx()
                 ax = ax[0].figure.axes
             fig = ax[0].figure
-        if len(ax) < 2:
-            raise ValueError("Must have at least two axes for 'stacked' or 'twin'.")
 
         _mag_plot_z(
             ax[0],
@@ -319,12 +325,12 @@ def _plot_h(
             fig = plt.gcf()
             if len(fig.axes) == 0:
                 ax = fig.subplots(3, 1)
+            elif len(fig.axes) < 3:
+                fig, ax = plt.subplots(3, 1)
             else:
                 ax = fig.axes
         else:
             fig = ax[0].figure
-        if len(ax) < 3:
-            raise ValueError("Must have at least three axes for 'tristacked'.")
         _mag_plot_z(
             ax[0],
             w,

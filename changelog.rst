@@ -42,6 +42,7 @@ Fixed
 - ``freq_unit`` was not propagated properly in all ``freq_plots.zfreq*`` functions and
   ``style``-combinations.
 - The ``adjust`` argument to the ``*plane`` functions is removed as it is not supported by newer versions of adjustText.
+- If the active figure, ```plt.gcf()``, does not have enough axes, a new figure is created and returned.
 
 [0.2.0] - 2023-03-05
 --------------------
